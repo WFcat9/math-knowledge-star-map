@@ -1,0 +1,485 @@
+{
+  "seedVersion": "1.0.0",
+  "description": "阶段4：按缩减范围只保留高一核心知识，覆盖集合、函数概念与性质、幂函数、指数函数、对数函数及基础函数建模。",
+  "nodes": [
+    {
+      "id": "set",
+      "name": "集合",
+      "aliases": ["集合与元素"],
+      "stage": "senior",
+      "domain": "functions",
+      "sectionPath": ["senior", "functions", "sets-logic"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "foundation",
+      "summary": "集合把对象按条件组织起来，是定义域、值域和解集表达的统一语言。",
+      "definition": "把满足确定条件的对象作为一个整体来研究，这个整体叫集合。",
+      "keyFormulas": ["x ∈ A", "A ⊆ B"],
+      "commonMistakes": ["只会写符号，不会把题目条件翻译成集合关系。"],
+      "reviewStatus": "approved",
+      "tags": ["集合", "逻辑"]
+    },
+    {
+      "id": "set-operations",
+      "name": "子集与交并补",
+      "aliases": ["集合运算"],
+      "stage": "senior",
+      "domain": "functions",
+      "sectionPath": ["senior", "functions", "sets-logic"],
+      "nodeType": "theorem_property",
+      "difficultyLevel": "foundation",
+      "summary": "交、并、补把多个条件组合成清晰范围，是表达函数和方程限制条件的常用工具。",
+      "keyFormulas": ["A∩B", "A∪B", "CUA"],
+      "reviewStatus": "approved",
+      "tags": ["集合", "运算"]
+    },
+    {
+      "id": "necessary-sufficient",
+      "name": "充分条件与必要条件",
+      "aliases": ["充要条件"],
+      "stage": "senior",
+      "domain": "functions",
+      "sectionPath": ["senior", "functions", "sets-logic"],
+      "nodeType": "theorem_property",
+      "difficultyLevel": "standard",
+      "summary": "充分必要条件帮助学生区分“能推出”和“必须满足”的逻辑方向。",
+      "keyFormulas": ["p => q", "p <=> q"],
+      "reviewStatus": "approved",
+      "tags": ["逻辑", "条件"]
+    },
+    {
+      "id": "function-domain-range",
+      "name": "函数定义域与值域",
+      "aliases": ["定义域", "值域"],
+      "stage": "senior",
+      "domain": "functions",
+      "sectionPath": ["senior", "functions", "functions-senior"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "定义域和值域把函数从“会代数运算”提升到“知道在哪儿能算、结果落在哪儿”。",
+      "definition": "定义域是自变量允许取值的集合，值域是函数值可能取到的集合。",
+      "keyFormulas": ["x 的允许范围", "y 的可能范围"],
+      "commonMistakes": ["只会算，不先检查根号、分母、对数真数等限制。"],
+      "reviewStatus": "approved",
+      "tags": ["函数", "范围"]
+    },
+    {
+      "id": "function-monotonicity",
+      "name": "函数单调性",
+      "aliases": ["增减性"],
+      "stage": "senior",
+      "domain": "functions",
+      "sectionPath": ["senior", "functions", "functions-senior"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "单调性描述函数在区间上持续增大或减小，是研究零点和应用题变化趋势的中轴概念。",
+      "definition": "当自变量在某区间增大时，函数值始终增大或始终减小，就称函数在该区间单调。",
+      "keyFormulas": ["增函数", "减函数"],
+      "commonMistakes": ["用几个样本点代替整个区间判断单调性。"],
+      "reviewStatus": "approved",
+      "tags": ["函数性质", "区间"]
+    },
+    {
+      "id": "function-parity",
+      "name": "奇偶性",
+      "aliases": ["函数奇偶性"],
+      "stage": "senior",
+      "domain": "functions",
+      "sectionPath": ["senior", "functions", "functions-senior"],
+      "nodeType": "theorem_property",
+      "difficultyLevel": "standard",
+      "summary": "奇偶性把函数图像与代数式的对称特征联系起来，是读图和简化运算的重要性质。",
+      "keyFormulas": ["f(-x)=f(x)", "f(-x)=-f(x)"],
+      "reviewStatus": "approved",
+      "tags": ["对称", "性质"]
+    },
+    {
+      "id": "elementary-function",
+      "name": "基本初等函数",
+      "aliases": ["高一函数主线"],
+      "stage": "senior",
+      "domain": "functions",
+      "sectionPath": ["senior", "functions", "elementary-functions"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "幂函数、指数函数、对数函数构成高一函数主线，是后续建模和图像理解的骨架。",
+      "definition": "由幂函数、指数函数、对数函数等典型模型组成的基本函数家族。",
+      "keyFormulas": ["y = x^a", "y = a^x", "y = log_a x"],
+      "commonMistakes": ["把不同函数族的定义域、图像和增长规律混为一谈。"],
+      "reviewStatus": "approved",
+      "tags": ["函数族", "高一"]
+    },
+    {
+      "id": "power-function",
+      "name": "幂函数",
+      "aliases": ["y=x^a"],
+      "stage": "senior",
+      "domain": "functions",
+      "sectionPath": ["senior", "functions", "elementary-functions"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "幂函数统一了 y=x、y=x^2、y=x^3 等模型，是从初中一次、二次函数走向函数家族的第一步。",
+      "definition": "形如 y=x^a 的函数叫幂函数，其中 a 为常数。",
+      "keyFormulas": ["y = x^a"],
+      "commonMistakes": ["把幂函数与指数函数的“谁是变量”混淆。"],
+      "reviewStatus": "approved",
+      "tags": ["幂函数", "图像"]
+    },
+    {
+      "id": "exponential-function",
+      "name": "指数函数",
+      "aliases": ["a的x次幂函数"],
+      "stage": "senior",
+      "domain": "functions",
+      "sectionPath": ["senior", "functions", "elementary-functions"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "指数函数刻画固定倍率变化，是高中最重要的增长模型之一。",
+      "definition": "形如 y=a^x 且 a>0 且 a≠1 的函数叫指数函数。",
+      "keyFormulas": ["y = a^x"],
+      "commonMistakes": ["把底数条件漏掉，或把指数变量与幂函数混淆。"],
+      "reviewStatus": "approved",
+      "tags": ["指数", "增长"]
+    },
+    {
+      "id": "logarithm-function",
+      "name": "对数函数",
+      "aliases": ["log函数"],
+      "stage": "senior",
+      "domain": "functions",
+      "sectionPath": ["senior", "functions", "elementary-functions"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "对数函数把指数关系反过来表达，是高一函数系统中的另一条主线。",
+      "definition": "形如 y=log_a x 且 a>0 且 a≠1 的函数叫对数函数。",
+      "keyFormulas": ["y = log_a x"],
+      "commonMistakes": ["忽略真数必须大于 0。"],
+      "reviewStatus": "approved",
+      "tags": ["对数", "反向表达"]
+    },
+    {
+      "id": "function-transformation",
+      "name": "函数图像变换",
+      "aliases": ["平移伸缩对称变换"],
+      "stage": "senior",
+      "domain": "functions",
+      "sectionPath": ["senior", "functions", "elementary-functions"],
+      "nodeType": "method",
+      "difficultyLevel": "standard",
+      "summary": "图像变换让学生从结构角度读函数，不必每次都从头列表描点。",
+      "keyFormulas": ["y=f(x)+k", "y=f(x-h)", "y=af(x)"],
+      "reviewStatus": "approved",
+      "tags": ["图像", "变换"]
+    },
+    {
+      "id": "function-modeling-senior",
+      "name": "高一函数建模",
+      "aliases": ["高一函数应用"],
+      "stage": "senior",
+      "domain": "modeling_inquiry",
+      "sectionPath": ["senior", "modeling_inquiry", "modeling-inquiry"],
+      "nodeType": "application",
+      "difficultyLevel": "standard",
+      "summary": "把实际中的增长、衰减、分段收费和最基本优化问题抽象成高一函数模型。",
+      "reviewStatus": "approved",
+      "tags": ["建模", "高一"]
+    }
+  ],
+  "relations": [
+    {
+      "id": "set_to_set_operations",
+      "from": "set",
+      "to": "set-operations",
+      "type": "prerequisite",
+      "reason": "先理解元素、集合和子集，才能进一步谈交、并、补等集合运算。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "set_to_function_domain_range",
+      "from": "set",
+      "to": "function-domain-range",
+      "type": "prerequisite",
+      "reason": "函数定义域和值域本质上都是集合，没有集合语言就无法精确表达函数范围。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "set_to_necessary_sufficient",
+      "from": "set",
+      "to": "necessary-sufficient",
+      "type": "combines_with",
+      "reason": "集合包含关系能帮助学生把充分条件和必要条件看成范围关系，更容易分清逻辑方向。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "set_operations_to_function_domain_range",
+      "from": "set-operations",
+      "to": "function-domain-range",
+      "type": "applies_to",
+      "reason": "多个条件同时限制定义域时，往往要用交集表达；多个允许区间合并时，则常用并集表达。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "necessary_sufficient_to_zero",
+      "from": "necessary-sufficient",
+      "to": "zero",
+      "type": "applies_to",
+      "reason": "讨论某点是不是函数零点时，常要区分“函数值为零”是结论还是判定条件，从而避免逻辑方向混乱。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "function_domain_range_to_function_concept",
+      "from": "function-domain-range",
+      "to": "function-concept",
+      "type": "develops_to",
+      "reason": "初中函数概念强调唯一对应，高一则把这种对应关系进一步精确到定义域和值域两个集合层面。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "function_domain_range_to_inverse_proportion",
+      "from": "function-domain-range",
+      "to": "inverse-proportion",
+      "type": "develops_to",
+      "reason": "初中反比例函数让学生第一次感受到定义域不是全体实数，高一在此基础上把范围意识系统化。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "function_domain_range_to_elementary_function",
+      "from": "function-domain-range",
+      "to": "elementary-function",
+      "type": "prerequisite",
+      "reason": "幂函数、指数函数、对数函数都需要先搞清定义域和值域差异，才能真正分清不同函数族。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "function_domain_range_to_zero",
+      "from": "function-domain-range",
+      "to": "zero",
+      "type": "prerequisite",
+      "reason": "讨论零点前，必须先确认函数在哪些自变量取值下有意义，否则零点讨论缺少前提。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "function_monotonicity_to_linear",
+      "from": "function-monotonicity",
+      "to": "linear",
+      "type": "develops_to",
+      "reason": "初中一次函数通过斜率直观表现单调性，高一把这种经验抽象成区间上的单调定义。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "function_monotonicity_to_quadratic",
+      "from": "function-monotonicity",
+      "to": "quadratic",
+      "type": "develops_to",
+      "reason": "二次函数让学生首次接触不同区间单调性不同，高一单调性正是对这种现象的系统化概括。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "function_monotonicity_to_power_function",
+      "from": "function-monotonicity",
+      "to": "power-function",
+      "type": "applies_to",
+      "reason": "不同指数下幂函数在不同区间的增减趋势不同，单调性是比较幂函数图像的核心工具。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "function_monotonicity_to_exponential_function",
+      "from": "function-monotonicity",
+      "to": "exponential-function",
+      "type": "applies_to",
+      "reason": "指数函数底数大于 1 或介于 0 和 1 之间时，图像增减方向完全不同，单调性是辨析它的核心。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "function_monotonicity_to_logarithm_function",
+      "from": "function-monotonicity",
+      "to": "logarithm-function",
+      "type": "applies_to",
+      "reason": "对数函数的单调方向同样受底数影响，掌握单调性后才能安全处理比较大小和应用题趋势判断。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "function_monotonicity_to_function_modeling_senior",
+      "from": "function-monotonicity",
+      "to": "function-modeling-senior",
+      "type": "applies_to",
+      "reason": "高一函数应用题常要判断随自变量增大，某个量是在增还是减，单调性因此直接服务建模解释。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "function_parity_to_power_function",
+      "from": "function-parity",
+      "to": "power-function",
+      "type": "applies_to",
+      "reason": "幂函数是讲清奇偶性的最好载体，例如 x^2 和 x^3 的图像对称方式明显不同。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "function_parity_to_quadratic",
+      "from": "function-parity",
+      "to": "quadratic",
+      "type": "combines_with",
+      "reason": "特殊二次函数如 y=x^2 能帮助学生把奇偶性与图像轴对称联系起来，形成初高中过渡。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "elementary_function_to_power_function",
+      "from": "elementary-function",
+      "to": "power-function",
+      "type": "develops_to",
+      "reason": "幂函数是高一函数家族里最接近初中一次、二次函数经验的入口模型。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "elementary_function_to_exponential_function",
+      "from": "elementary-function",
+      "to": "exponential-function",
+      "type": "develops_to",
+      "reason": "指数函数代表固定倍率变化，是高一基本初等函数中的核心成员之一。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "elementary_function_to_logarithm_function",
+      "from": "elementary-function",
+      "to": "logarithm-function",
+      "type": "develops_to",
+      "reason": "对数函数补齐了高一函数系统的另一条主线，让学生学会从指数关系反向思考。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "elementary_function_to_function_transformation",
+      "from": "elementary-function",
+      "to": "function-transformation",
+      "type": "combines_with",
+      "reason": "高一大量函数题都会先从母函数出发，再通过平移、伸缩和对称得到具体图像。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "elementary_function_to_function_modeling_senior",
+      "from": "elementary-function",
+      "to": "function-modeling-senior",
+      "type": "applies_to",
+      "reason": "高一建模主要依赖基本函数族来刻画增长、衰减和费用变化，因此基本函数直接服务实际问题。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "power_function_to_quadratic",
+      "from": "power-function",
+      "to": "quadratic",
+      "type": "develops_to",
+      "reason": "初中二次函数中的 y=x^2 本身就是幂函数的典型例子，高一是把这个特例推广到更一般的指数 a。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "power_function_to_function_parity",
+      "from": "power-function",
+      "to": "function-parity",
+      "type": "combines_with",
+      "reason": "幂函数图像最适合用来观察奇偶性和对称性，是学生建立性质直觉的高频例题来源。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "power_function_to_function_transformation",
+      "from": "power-function",
+      "to": "function-transformation",
+      "type": "applies_to",
+      "reason": "幂函数作为母函数时，图像变换能帮助学生快速生成更复杂但本质相近的图像。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "exponential_function_to_logarithm_function",
+      "from": "exponential-function",
+      "to": "logarithm-function",
+      "type": "equivalent_to",
+      "reason": "对数函数与指数函数互为逆向表达，一个回答结果是多少，一个回答要乘几次。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "exponential_function_to_function_monotonicity",
+      "from": "exponential-function",
+      "to": "function-monotonicity",
+      "type": "combines_with",
+      "reason": "指数函数的增长或衰减方向完全由底数决定，是高一单调性分析的经典对象。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "exponential_function_to_function_modeling_senior",
+      "from": "exponential-function",
+      "to": "function-modeling-senior",
+      "type": "applies_to",
+      "reason": "复利增长、细胞繁殖和人口扩张等固定倍率变化过程，适合用指数函数建模。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "logarithm_function_to_function_domain_range",
+      "from": "logarithm-function",
+      "to": "function-domain-range",
+      "type": "combines_with",
+      "reason": "对数函数最容易暴露定义域的重要性，因为真数必须大于 0，值域却可以扩展到全体实数。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "logarithm_function_to_function_monotonicity",
+      "from": "logarithm-function",
+      "to": "function-monotonicity",
+      "type": "combines_with",
+      "reason": "对数函数的单调方向同样由底数决定，是高一图像、比较大小和应用题中的高频判断点。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "logarithm_function_to_function_modeling_senior",
+      "from": "logarithm-function",
+      "to": "function-modeling-senior",
+      "type": "applies_to",
+      "reason": "对数模型适合描述增长逐渐放缓或把乘方关系线性化的情境，是高一应用拓展中的重要补充。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "function_transformation_to_linear",
+      "from": "function-transformation",
+      "to": "linear",
+      "type": "applies_to",
+      "reason": "一次函数图像的平移和截距变化是学生最早能看懂的函数变换案例，便于迁移到更复杂函数。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "function_transformation_to_quadratic",
+      "from": "function-transformation",
+      "to": "quadratic",
+      "type": "equivalent_to",
+      "reason": "二次函数标准式、顶点式与图像平移之间的对应关系，是函数变换思想在初高中过渡中的典型例子。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "function_transformation_to_cartesian_plane",
+      "from": "function-transformation",
+      "to": "cartesian-plane",
+      "type": "combines_with",
+      "reason": "图像变换只有放回坐标系中，平移方向、对称轴和伸缩效果才会被清楚观察出来。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "function_modeling_senior_to_rate_plan_modeling",
+      "from": "function-modeling-senior",
+      "to": "rate-plan-modeling",
+      "type": "develops_to",
+      "reason": "初中的收费与效率模型是高一函数建模的朴素原型，高一只是换用更丰富的函数族来描述现实变化。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "function_modeling_senior_to_interdisciplinary_modeling",
+      "from": "function-modeling-senior",
+      "to": "interdisciplinary-modeling",
+      "type": "develops_to",
+      "reason": "高一函数应用与初中综合实践建模共享真实问题导向，只是变量关系表达更正式、图像分析更完整。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "function_modeling_senior_to_direct_proportion_function",
+      "from": "function-modeling-senior",
+      "to": "direct-proportion-function",
+      "type": "develops_to",
+      "reason": "高一复杂建模仍建立在初中正比例、一次函数模型经验之上，是从简单关系走向函数家族的自然升级。",
+      "reviewStatus": "approved"
+    }
+  ]
+}

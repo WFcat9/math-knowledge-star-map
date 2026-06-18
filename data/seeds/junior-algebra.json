@@ -1,0 +1,782 @@
+{
+  "seedVersion": "1.0.0",
+  "description": "阶段2：初中数与代数扩充数据，重点覆盖数、式、方程、不等式、函数及其高关联连接。",
+  "nodes": [
+    {
+      "id": "real-number",
+      "name": "实数",
+      "aliases": ["有理数与无理数"],
+      "stage": "junior",
+      "domain": "number_algebra",
+      "sectionPath": ["junior", "number_algebra", "real-number-system"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "foundation",
+      "summary": "实数把数轴上的点与数一一对应，是后续运算、列式和函数研究的共同基础。",
+      "definition": "实数包括有理数和无理数，能够完整表示数轴上的位置与大小关系。",
+      "keyFormulas": ["有理数 + 无理数 -> 实数系统"],
+      "commonMistakes": ["把无理数误当成有限小数或循环小数。"],
+      "reviewStatus": "approved",
+      "tags": ["数系", "基础"]
+    },
+    {
+      "id": "absolute-value",
+      "name": "绝对值",
+      "aliases": ["数的绝对值"],
+      "stage": "junior",
+      "domain": "number_algebra",
+      "sectionPath": ["junior", "number_algebra", "real-number-system"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "foundation",
+      "summary": "绝对值表示一个数在数轴上到原点的距离，常用于比较大小和表示范围。",
+      "definition": "绝对值是数轴距离意义下的量，因此结果一定是非负数。",
+      "keyFormulas": ["|a| >= 0"],
+      "commonMistakes": ["只记结果非负，却忽略绝对值的距离含义。"],
+      "reviewStatus": "approved",
+      "tags": ["数轴", "范围"]
+    },
+    {
+      "id": "square-root",
+      "name": "平方根与算术平方根",
+      "aliases": ["平方根", "算术平方根"],
+      "stage": "junior",
+      "domain": "number_algebra",
+      "sectionPath": ["junior", "number_algebra", "real-number-system"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "平方根把平方运算反过来思考，是进入根式、配方法和二次方程的关键桥梁。",
+      "definition": "若 x^2 = a，则 x 叫做 a 的平方根；其中非负的平方根叫算术平方根。",
+      "keyFormulas": ["x^2 = a", "sqrt(a) >= 0"],
+      "commonMistakes": ["把平方根和算术平方根混为一谈。"],
+      "reviewStatus": "approved",
+      "tags": ["根式", "反向运算"]
+    },
+    {
+      "id": "scientific-notation",
+      "name": "科学记数法",
+      "aliases": ["10的幂表示法"],
+      "stage": "junior",
+      "domain": "number_algebra",
+      "sectionPath": ["junior", "number_algebra", "real-number-system"],
+      "nodeType": "formula",
+      "difficultyLevel": "foundation",
+      "summary": "把较大或较小的数写成 a×10^n 的形式，方便比较数量级与计算。",
+      "keyFormulas": ["a x 10^n", "1 <= |a| < 10"],
+      "reviewStatus": "approved",
+      "tags": ["幂", "表示"]
+    },
+    {
+      "id": "power-operation-laws",
+      "name": "幂的运算性质",
+      "aliases": ["整数指数幂运算"],
+      "stage": "junior",
+      "domain": "number_algebra",
+      "sectionPath": ["junior", "number_algebra", "real-number-system"],
+      "nodeType": "formula",
+      "difficultyLevel": "standard",
+      "summary": "幂的运算性质统一了数、式、根式中的指数化简规则。",
+      "keyFormulas": ["a^m x a^n = a^(m+n)", "(a^m)^n = a^(mn)"],
+      "reviewStatus": "approved",
+      "tags": ["指数", "化简"]
+    },
+    {
+      "id": "algebraic-expression",
+      "name": "整式",
+      "aliases": ["单项式与多项式"],
+      "stage": "junior",
+      "domain": "number_algebra",
+      "sectionPath": ["junior", "number_algebra", "algebraic-expression"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "foundation",
+      "summary": "整式是用字母表示数量关系的基本语言，也是列方程、研究函数的入口。",
+      "definition": "由数与字母经过有限次加减乘得到的式子叫整式。",
+      "keyFormulas": ["ax + b", "ax^2 + bx + c"],
+      "commonMistakes": ["合并同类项时只看字母，不看字母指数。"],
+      "reviewStatus": "approved",
+      "tags": ["列式", "化简"]
+    },
+    {
+      "id": "perfect-square-identity",
+      "name": "乘法公式",
+      "aliases": ["平方差公式", "完全平方公式"],
+      "stage": "junior",
+      "domain": "number_algebra",
+      "sectionPath": ["junior", "number_algebra", "algebraic-expression"],
+      "nodeType": "formula",
+      "difficultyLevel": "standard",
+      "summary": "乘法公式把特殊乘法结构直接压缩成标准结果，也能反向用于因式分解和配方。",
+      "keyFormulas": ["(a+b)^2 = a^2 + 2ab + b^2", "a^2-b^2 = (a-b)(a+b)"],
+      "reviewStatus": "approved",
+      "tags": ["公式", "因式分解"]
+    },
+    {
+      "id": "fraction-expression",
+      "name": "分式",
+      "aliases": ["有字母分母的式子"],
+      "stage": "junior",
+      "domain": "number_algebra",
+      "sectionPath": ["junior", "number_algebra", "fraction-expression"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "分式把整式关系扩展到分母不为零的情形，是理解反比例关系的重要表达形式。",
+      "definition": "形如 A/B 且 B 中含有字母并且 B 不等于 0 的式子叫分式。",
+      "keyFormulas": ["B != 0"],
+      "commonMistakes": ["约分时忽略分母不能为零这一前提。"],
+      "reviewStatus": "approved",
+      "tags": ["约分", "定义域"]
+    },
+    {
+      "id": "radical-expression",
+      "name": "二次根式",
+      "aliases": ["根式"],
+      "stage": "junior",
+      "domain": "number_algebra",
+      "sectionPath": ["junior", "number_algebra", "fraction-expression"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "二次根式把平方根放进式子运算中，是数到式再到方程过渡的重要层级。",
+      "definition": "形如 sqrt(a) 且 a >= 0 的式子叫二次根式。",
+      "keyFormulas": ["sqrt(a) 有意义需 a >= 0"],
+      "commonMistakes": ["忽略被开方数非负的条件。"],
+      "reviewStatus": "approved",
+      "tags": ["根式", "条件"]
+    },
+    {
+      "id": "cross-multiplication",
+      "name": "去分母转化",
+      "aliases": ["去分母", "同乘最简公分母"],
+      "stage": "junior",
+      "domain": "number_algebra",
+      "sectionPath": ["junior", "number_algebra", "fraction-expression"],
+      "nodeType": "method",
+      "difficultyLevel": "standard",
+      "summary": "通过同乘最简公分母，把分式问题转化成整式问题处理。",
+      "keyFormulas": ["同乘最简公分母"],
+      "reviewStatus": "approved",
+      "tags": ["转化", "方法"]
+    },
+    {
+      "id": "linear-equation",
+      "name": "一元一次方程",
+      "aliases": ["一次方程"],
+      "stage": "junior",
+      "domain": "number_algebra",
+      "sectionPath": ["junior", "number_algebra", "equation-inequality"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "foundation",
+      "summary": "一元一次方程是列式解决未知量问题的第一种标准模型。",
+      "definition": "只含一个未知数，未知数次数为 1，并且能化成 ax+b=0 形式的方程。",
+      "keyFormulas": ["ax + b = 0"],
+      "commonMistakes": ["移项时忽略符号变化。"],
+      "reviewStatus": "approved",
+      "tags": ["方程", "基础模型"]
+    },
+    {
+      "id": "binary-linear-system",
+      "name": "二元一次方程组",
+      "aliases": ["一次方程组"],
+      "stage": "junior",
+      "domain": "number_algebra",
+      "sectionPath": ["junior", "number_algebra", "equation-inequality"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "二元一次方程组适合处理两个未知量之间同时成立的数量关系。",
+      "definition": "由两个一次方程共同限制两个未知量的取值范围。",
+      "keyFormulas": ["a1x + b1y = c1", "a2x + b2y = c2"],
+      "commonMistakes": ["只解其中一个方程，就误以为得到方程组的解。"],
+      "reviewStatus": "approved",
+      "tags": ["方程组", "联立"]
+    },
+    {
+      "id": "substitution-elimination",
+      "name": "代入与加减消元",
+      "aliases": ["代入消元", "加减消元"],
+      "stage": "junior",
+      "domain": "number_algebra",
+      "sectionPath": ["junior", "number_algebra", "equation-inequality"],
+      "nodeType": "method",
+      "difficultyLevel": "standard",
+      "summary": "通过消去一个未知量，把方程组转化为一元一次方程。",
+      "keyFormulas": ["先消元，再回代"],
+      "reviewStatus": "approved",
+      "tags": ["方程组", "转化"]
+    },
+    {
+      "id": "fraction-equation",
+      "name": "分式方程",
+      "aliases": ["含分式的方程"],
+      "stage": "junior",
+      "domain": "number_algebra",
+      "sectionPath": ["junior", "number_algebra", "equation-inequality"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "分式方程把未知量放进分母，需要先去分母，再特别检查增根问题。",
+      "definition": "分母中含有未知数的方程叫分式方程。",
+      "keyFormulas": ["先去分母，后验根"],
+      "commonMistakes": ["解完转化后的整式方程后忘记验根。"],
+      "reviewStatus": "approved",
+      "tags": ["方程", "验根"]
+    },
+    {
+      "id": "linear-inequality",
+      "name": "一元一次不等式",
+      "aliases": ["一次不等式"],
+      "stage": "junior",
+      "domain": "number_algebra",
+      "sectionPath": ["junior", "number_algebra", "equation-inequality"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "一元一次不等式把未知量的取值从单个结果扩展成区间范围。",
+      "definition": "只含一个未知数，未知数次数为 1 的不等式。",
+      "keyFormulas": ["ax + b > 0"],
+      "commonMistakes": ["两边同乘负数后忘记改变不等号方向。"],
+      "reviewStatus": "approved",
+      "tags": ["范围", "不等式"]
+    },
+    {
+      "id": "inequality-properties",
+      "name": "不等式的基本性质",
+      "aliases": ["不等号方向规则"],
+      "stage": "junior",
+      "domain": "number_algebra",
+      "sectionPath": ["junior", "number_algebra", "equation-inequality"],
+      "nodeType": "theorem_property",
+      "difficultyLevel": "foundation",
+      "summary": "不等式运算允许移项、加减和乘除，但乘除负数时方向必须改变。",
+      "keyFormulas": ["若 a>b 且 c<0，则 ac<bc"],
+      "reviewStatus": "approved",
+      "tags": ["性质", "规则"]
+    },
+    {
+      "id": "cartesian-plane",
+      "name": "平面直角坐标系",
+      "aliases": ["坐标系"],
+      "stage": "junior",
+      "domain": "number_algebra",
+      "sectionPath": ["junior", "number_algebra", "functions-junior"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "foundation",
+      "summary": "平面直角坐标系把代数关系变成图像关系，是从式到形的关键接口。",
+      "definition": "用有序数对确定平面上点的位置，并以图像呈现数量变化关系。",
+      "keyFormulas": ["点 P(x, y)"],
+      "commonMistakes": ["把横坐标和纵坐标位置写反。"],
+      "reviewStatus": "approved",
+      "tags": ["数形结合", "图像"]
+    },
+    {
+      "id": "function-concept",
+      "name": "函数概念",
+      "aliases": ["变量对应关系"],
+      "stage": "junior",
+      "domain": "number_algebra",
+      "sectionPath": ["junior", "number_algebra", "functions-junior"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "函数用一个变量唯一决定另一个变量，统一了表格、解析式和图像三种表达方式。",
+      "definition": "在某个变化过程中，如果一个变量确定时，另一个变量也唯一确定，那么后者是前者的函数。",
+      "keyFormulas": ["y = f(x)"],
+      "commonMistakes": ["把有关系误当成函数，而没有检查是否唯一对应。"],
+      "reviewStatus": "approved",
+      "tags": ["对应", "图像"]
+    },
+    {
+      "id": "direct-proportion-function",
+      "name": "正比例函数",
+      "aliases": ["y=kx"],
+      "stage": "junior",
+      "domain": "number_algebra",
+      "sectionPath": ["junior", "number_algebra", "functions-junior"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "foundation",
+      "summary": "正比例函数是函数入门中最纯粹的线性关系，图像一定经过原点。",
+      "definition": "形如 y=kx 且 k 不等于 0 的函数叫正比例函数。",
+      "keyFormulas": ["y = kx"],
+      "commonMistakes": ["把 y=b 或 y=kx+b 也误判为正比例函数。"],
+      "reviewStatus": "approved",
+      "tags": ["线性", "原点"]
+    },
+    {
+      "id": "inverse-proportion",
+      "name": "反比例函数",
+      "aliases": ["y=k/x"],
+      "stage": "junior",
+      "domain": "number_algebra",
+      "sectionPath": ["junior", "number_algebra", "functions-junior"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "反比例函数把乘积不变的关系转成函数模型，能直接连接分式与图像。",
+      "definition": "形如 y=k/x 且 k 不等于 0 的函数叫反比例函数。",
+      "keyFormulas": ["y = k/x", "xy = k"],
+      "commonMistakes": ["只会记公式，不会从乘积不变中识别模型。"],
+      "reviewStatus": "approved",
+      "tags": ["分式", "函数"]
+    },
+    {
+      "id": "rate-plan-modeling",
+      "name": "收费与效率模型",
+      "aliases": ["方案收费题"],
+      "stage": "junior",
+      "domain": "modeling_inquiry",
+      "sectionPath": ["cross_stage", "modeling_inquiry", "modeling-inquiry"],
+      "nodeType": "application",
+      "difficultyLevel": "standard",
+      "summary": "用方程或函数比较不同收费方案、效率方案的拐点与优劣。",
+      "reviewStatus": "approved",
+      "tags": ["应用", "建模"]
+    },
+    {
+      "id": "mixture-balance-problem",
+      "name": "配比与数量关系题",
+      "aliases": ["配套购买题"],
+      "stage": "junior",
+      "domain": "number_algebra",
+      "sectionPath": ["junior", "number_algebra", "equation-inequality"],
+      "nodeType": "problem_pattern",
+      "difficultyLevel": "standard",
+      "summary": "根据总量、单价、份数等两个条件联立方程组求解。",
+      "reviewStatus": "approved",
+      "tags": ["题型", "方程组"]
+    }
+  ],
+  "relations": [
+    {
+      "id": "real_number_to_absolute_value",
+      "from": "real-number",
+      "to": "absolute-value",
+      "type": "equivalent_to",
+      "reason": "绝对值建立在实数数轴的距离意义上，只有先理解实数与数轴对应，才能真正理解绝对值不是单纯去掉符号。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "real_number_to_square_root",
+      "from": "real-number",
+      "to": "square-root",
+      "type": "prerequisite",
+      "reason": "平方根的存在范围、大小比较和无理数结果都属于实数系统中的内容，先有实数观念才能解释根号数。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "real_number_to_scientific_notation",
+      "from": "real-number",
+      "to": "scientific-notation",
+      "type": "applies_to",
+      "reason": "科学记数法本质上是在实数范围内重新表示很大或很小的量，强调数量级而不是改变数的大小。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "real_number_to_algebraic_expression",
+      "from": "real-number",
+      "to": "algebraic-expression",
+      "type": "prerequisite",
+      "reason": "整式中的系数和运算规则都来源于实数运算，数的运算经验会直接迁移到式的化简与变形。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "absolute_value_to_linear_inequality",
+      "from": "absolute-value",
+      "to": "linear-inequality",
+      "type": "combines_with",
+      "reason": "绝对值问题常转化成距离范围问题，例如 |x-a|<b 最终要落回一元一次不等式求区间。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "absolute_value_to_square_root",
+      "from": "absolute-value",
+      "to": "square-root",
+      "type": "confused_with",
+      "reason": "学生容易把 |a| 和 sqrt(a^2) 混成同一个操作；两者结果都非负，但一个是距离概念，一个是开方运算。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "square_root_to_radical_expression",
+      "from": "square-root",
+      "to": "radical-expression",
+      "type": "prerequisite",
+      "reason": "二次根式就是把平方根写进式子的运算对象，先弄清平方根的意义，根式运算才不容易机械套规则。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "square_root_to_equation",
+      "from": "square-root",
+      "to": "equation",
+      "type": "develops_to",
+      "reason": "解一元二次方程中的配方法会把方程转成 x^2=a 的形式，最后回到平方根来求解。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "scientific_notation_to_power_operation_laws",
+      "from": "scientific-notation",
+      "to": "power-operation-laws",
+      "type": "prerequisite",
+      "reason": "科学记数法的有效运算要依赖 10 的幂的乘除与化简规则，因此幂的运算性质是它的底层工具。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "power_operation_laws_to_radical_expression",
+      "from": "power-operation-laws",
+      "to": "radical-expression",
+      "type": "develops_to",
+      "reason": "把根式理解成分数指数的运算对象后，幂的性质能够帮助学生统一看待乘方、开方与化简。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "power_operation_laws_to_algebraic_expression",
+      "from": "power-operation-laws",
+      "to": "algebraic-expression",
+      "type": "applies_to",
+      "reason": "整式乘方、同底数幂相乘等变形都依赖幂的运算性质，公式记忆背后其实是同一套指数规则。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "algebraic_expression_to_factor",
+      "from": "algebraic-expression",
+      "to": "factor",
+      "type": "develops_to",
+      "reason": "因式分解是在整式基础上的结构化变形，先会观察项的组成，才能把和式变成积式。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "algebraic_expression_to_fraction_expression",
+      "from": "algebraic-expression",
+      "to": "fraction-expression",
+      "type": "develops_to",
+      "reason": "分式的分子分母本身都是整式，整式的因式分解和通分经验会直接升级成分式运算能力。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "algebraic_expression_to_linear_equation",
+      "from": "algebraic-expression",
+      "to": "linear-equation",
+      "type": "prerequisite",
+      "reason": "列一元一次方程的前提是能先用整式准确表达题中的数量关系，再把相等条件写成方程。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "algebraic_expression_to_function_concept",
+      "from": "algebraic-expression",
+      "to": "function-concept",
+      "type": "prerequisite",
+      "reason": "函数解析式本质上是代数式对变量关系的表达，没有整式与代数式基础，就难以读懂函数规则。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "perfect_square_identity_to_factor",
+      "from": "perfect-square-identity",
+      "to": "factor",
+      "type": "combines_with",
+      "reason": "平方差与完全平方公式既能正向展开，也能反向识别为因式分解的捷径，是整式结构观察的核心工具。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "perfect_square_identity_to_equation",
+      "from": "perfect-square-identity",
+      "to": "equation",
+      "type": "applies_to",
+      "reason": "一元二次方程常通过因式分解或配方法求解，而乘法公式正是这两种处理方式的常用桥梁。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "perfect_square_identity_to_quadratic",
+      "from": "perfect-square-identity",
+      "to": "quadratic",
+      "type": "equivalent_to",
+      "reason": "把二次函数写成顶点式时，经常要利用完全平方公式完成配方，从标准式转到更容易读图的形式。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "fraction_expression_to_fraction_equation",
+      "from": "fraction-expression",
+      "to": "fraction-equation",
+      "type": "prerequisite",
+      "reason": "先理解分式的定义、约分和最简公分母，才能在分式方程中知道为什么要去分母以及为什么必须验根。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "fraction_expression_to_inverse_proportion",
+      "from": "fraction-expression",
+      "to": "inverse-proportion",
+      "type": "prerequisite",
+      "reason": "反比例函数 y=k/x 的解析式本身就是分式结构，因此分式观念会直接影响对它的定义域和变化特点的理解。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "fraction_expression_to_radical_expression",
+      "from": "fraction-expression",
+      "to": "radical-expression",
+      "type": "similar_to",
+      "reason": "分式与二次根式都比整式多了一层条件限制，学生都需要先检查式子有意义的范围，再做化简与变形。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "fraction_expression_to_cross_multiplication",
+      "from": "fraction-expression",
+      "to": "cross-multiplication",
+      "type": "combines_with",
+      "reason": "分式运算和分式方程常通过同乘最简公分母去掉分母，核心思想就是把复杂形式转回熟悉的整式问题。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "radical_expression_to_equation",
+      "from": "radical-expression",
+      "to": "equation",
+      "type": "develops_to",
+      "reason": "配方法把二次方程整理后会出现根式解，学生会从根式表示再次回到方程根的意义。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "cross_multiplication_to_fraction_equation",
+      "from": "cross-multiplication",
+      "to": "fraction-equation",
+      "type": "equivalent_to",
+      "reason": "解分式方程时的关键转化就是同乘最简公分母，先消掉分母，再处理转化后的整式方程。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "cross_multiplication_to_linear_equation",
+      "from": "cross-multiplication",
+      "to": "linear-equation",
+      "type": "develops_to",
+      "reason": "许多分式方程去分母以后会落成一元一次方程，因此这一方法本质上是在为线性求解服务。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "linear_equation_to_binary_linear_system",
+      "from": "linear-equation",
+      "to": "binary-linear-system",
+      "type": "develops_to",
+      "reason": "一元一次方程解决一个未知量，二元一次方程组则把同样的线性思想扩展到两个未知量同时求解。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "linear_equation_to_linear_inequality",
+      "from": "linear-equation",
+      "to": "linear-inequality",
+      "type": "similar_to",
+      "reason": "一元一次不等式和一元一次方程的变形步骤很像，但最终结果从一个数变成一个区间，这正是学生最容易混淆的地方。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "linear_equation_to_linear_function",
+      "from": "linear-equation",
+      "to": "linear",
+      "type": "equivalent_to",
+      "reason": "把一次函数 y=kx+b 中的 y 固定为某个常数，就得到一元一次方程；反过来看，方程解也能在函数图像上解释。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "linear_equation_to_rate_plan_modeling",
+      "from": "linear-equation",
+      "to": "rate-plan-modeling",
+      "type": "applies_to",
+      "reason": "收费方案、打车计费和工作效率题经常先用一元一次方程找到临界点，再判断哪种方案更划算。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "binary_linear_system_to_substitution_elimination",
+      "from": "binary-linear-system",
+      "to": "substitution-elimination",
+      "type": "prerequisite",
+      "reason": "代入法和加减消元法是二元一次方程组的核心解法，学生需要根据系数结构选择更省力的那一种。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "binary_linear_system_to_cartesian_plane",
+      "from": "binary-linear-system",
+      "to": "cartesian-plane",
+      "type": "equivalent_to",
+      "reason": "二元一次方程组的解可以在坐标系里解释为两条直线的交点，这让代数求解与图像理解能够互相验证。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "binary_linear_system_to_linear_function",
+      "from": "binary-linear-system",
+      "to": "linear",
+      "type": "combines_with",
+      "reason": "把方程组中的每个方程都改写成一次函数后，解的个数就变成两条直线相交、平行或重合的图像问题。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "binary_linear_system_to_mixture_balance_problem",
+      "from": "binary-linear-system",
+      "to": "mixture-balance-problem",
+      "type": "applies_to",
+      "reason": "配比、单价和总量类问题通常同时给出两个条件，用二元一次方程组最容易把两个未知量一起锁定。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "substitution_elimination_to_linear_equation",
+      "from": "substitution-elimination",
+      "to": "linear-equation",
+      "type": "combines_with",
+      "reason": "无论是代入还是消元，最后都会把方程组压缩成一元一次方程，所以这一步其实是在调用线性求解基本功。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "substitution_elimination_to_binary_linear_system",
+      "from": "substitution-elimination",
+      "to": "binary-linear-system",
+      "type": "equivalent_to",
+      "reason": "代入与加减消元不是额外知识点，而是方程组解法本身的标准实现路径，代表着从联立到单变量的转化。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "fraction_equation_to_equation",
+      "from": "fraction-equation",
+      "to": "equation",
+      "type": "develops_to",
+      "reason": "部分分式方程去分母后会转化成一元二次方程，因此它常常是从线性问题过渡到二次问题的中间层。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "fraction_equation_to_linear_equation",
+      "from": "fraction-equation",
+      "to": "linear-equation",
+      "type": "equivalent_to",
+      "reason": "很多入门型分式方程去分母后恰好得到一元一次方程，解题关键在于看见它其实回到了熟悉的线性结构。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "linear_inequality_to_inequality_properties",
+      "from": "linear-inequality",
+      "to": "inequality-properties",
+      "type": "prerequisite",
+      "reason": "不等式的每一步变形都受基本性质控制，尤其是乘除负数改变方向这一点，决定了答案区间是否正确。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "linear_inequality_to_zero",
+      "from": "linear-inequality",
+      "to": "zero",
+      "type": "equivalent_to",
+      "reason": "把 ax+b>0 看成一次函数值的正负，就能通过函数零点把不等式解区间解释成图像在 x 轴上方或下方的部分。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "linear_inequality_to_rate_plan_modeling",
+      "from": "linear-inequality",
+      "to": "rate-plan-modeling",
+      "type": "applies_to",
+      "reason": "比较两种收费方案何时更省，本质上常是求某个一次关系大于或小于另一个一次关系的区间。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "cartesian_plane_to_function_concept",
+      "from": "cartesian-plane",
+      "to": "function-concept",
+      "type": "prerequisite",
+      "reason": "函数如果只停留在表格和式子层面会很抽象，坐标系提供了图像视角，帮助学生看到变量怎样一起变化。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "cartesian_plane_to_linear_function",
+      "from": "cartesian-plane",
+      "to": "linear",
+      "type": "equivalent_to",
+      "reason": "一次函数图像是直线，坐标系让斜率、截距和增减趋势都能被直接观察出来。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "cartesian_plane_to_direct_proportion_function",
+      "from": "cartesian-plane",
+      "to": "direct-proportion-function",
+      "type": "equivalent_to",
+      "reason": "正比例函数的图像一定过原点，这一特征只有放到坐标系里才能被学生一眼识别和对比。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "cartesian_plane_to_inverse_proportion",
+      "from": "cartesian-plane",
+      "to": "inverse-proportion",
+      "type": "equivalent_to",
+      "reason": "反比例函数的双曲线图像能直观呈现增减性和象限分布，帮助学生摆脱只记公式的状态。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "cartesian_plane_to_quadratic",
+      "from": "cartesian-plane",
+      "to": "quadratic",
+      "type": "equivalent_to",
+      "reason": "二次函数的开口方向、对称轴和顶点都要通过坐标系中的抛物线来解释，数形结合在这里最明显。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "function_concept_to_direct_proportion_function",
+      "from": "function-concept",
+      "to": "direct-proportion-function",
+      "type": "develops_to",
+      "reason": "正比例函数是函数概念最直接的入门模型，唯一对应关系和解析式规则都表现得最清楚。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "function_concept_to_inverse_proportion",
+      "from": "function-concept",
+      "to": "inverse-proportion",
+      "type": "develops_to",
+      "reason": "反比例函数把“函数不一定是直线”这件事讲清楚，让学生看到变量关系可以通过不同模型来刻画。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "function_concept_to_quadratic",
+      "from": "function-concept",
+      "to": "quadratic",
+      "type": "develops_to",
+      "reason": "二次函数是在一次函数之后继续升级的模型，它保留了解析式与图像的双表达，但变化规律更加复杂。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "function_concept_to_zero",
+      "from": "function-concept",
+      "to": "zero",
+      "type": "develops_to",
+      "reason": "只有先理解函数值 f(x)，学生才能真正理解“使函数值等于 0 的自变量”就是函数零点。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "function_concept_to_linear_function",
+      "from": "function-concept",
+      "to": "linear",
+      "type": "develops_to",
+      "reason": "一次函数是函数概念在初中阶段最常见的展开形式，也是连接方程、图像与建模的关键主线。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "direct_proportion_function_to_linear_function",
+      "from": "direct-proportion-function",
+      "to": "linear",
+      "type": "develops_to",
+      "reason": "正比例函数其实是一次函数中 b=0 的特殊情形，先看特殊再推广到一般，能帮助学生建立层级结构。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "direct_proportion_function_to_inverse_proportion",
+      "from": "direct-proportion-function",
+      "to": "inverse-proportion",
+      "type": "confused_with",
+      "reason": "两者都常出现在“一个量变另一个量也变”的题里，但一个是比值不变、一个是乘积不变，辨析价值很高。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "direct_proportion_function_to_rate_plan_modeling",
+      "from": "direct-proportion-function",
+      "to": "rate-plan-modeling",
+      "type": "applies_to",
+      "reason": "单价固定、速度固定、单位时间产量固定等情境，通常都能抽象成正比例函数模型。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "inverse_proportion_to_linear_function",
+      "from": "inverse-proportion",
+      "to": "linear",
+      "type": "confused_with",
+      "reason": "学生常因为两者都能列表描点而混淆，但一次函数变化率恒定，反比例函数则体现乘积不变和双曲线特征。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "inverse_proportion_to_rate_plan_modeling",
+      "from": "inverse-proportion",
+      "to": "rate-plan-modeling",
+      "type": "applies_to",
+      "reason": "工作总量一定时，效率与时间、单价与数量等关系常呈反比例，是初中建模里非常高频的函数原型。",
+      "reviewStatus": "approved"
+    }
+  ]
+}

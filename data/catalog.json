@@ -1,0 +1,384 @@
+{
+  "catalogVersion": "1.0.0",
+  "lastUpdated": "2026-06-11",
+  "juniorHigh": {
+    "label": "初中数学",
+    "domains": [
+      {
+        "id": "junior-number-algebra",
+        "name": "数与代数",
+        "sections": [
+          {
+            "id": "real-number-system",
+            "name": "数与运算",
+            "suggestedCoreNodes": [
+              "有理数",
+              "实数",
+              "绝对值",
+              "平方根",
+              "立方根",
+              "科学记数法"
+            ]
+          },
+          {
+            "id": "algebraic-expression",
+            "name": "整式与因式分解",
+            "suggestedCoreNodes": [
+              "单项式",
+              "多项式",
+              "整式加减",
+              "幂的运算",
+              "乘法公式",
+              "因式分解"
+            ]
+          },
+          {
+            "id": "fraction-expression",
+            "name": "分式与根式",
+            "suggestedCoreNodes": [
+              "分式",
+              "分式方程",
+              "二次根式",
+              "最简二次根式",
+              "二次根式运算"
+            ]
+          },
+          {
+            "id": "equation-inequality",
+            "name": "方程与不等式",
+            "suggestedCoreNodes": [
+              "一元一次方程",
+              "二元一次方程组",
+              "一元二次方程",
+              "判别式",
+              "一元一次不等式",
+              "一元一次不等式组",
+              "二次不等式"
+            ]
+          },
+          {
+            "id": "functions-junior",
+            "name": "函数",
+            "suggestedCoreNodes": [
+              "平面直角坐标系",
+              "函数概念",
+              "正比例函数",
+              "一次函数",
+              "反比例函数",
+              "二次函数",
+              "函数零点",
+              "图像与性质",
+              "最值问题"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "junior-geometry",
+        "name": "图形与几何",
+        "sections": [
+          {
+            "id": "basic-geometry",
+            "name": "基础图形与角",
+            "suggestedCoreNodes": [
+              "线段",
+              "角",
+              "余角与补角",
+              "平行线",
+              "垂线"
+            ]
+          },
+          {
+            "id": "triangle",
+            "name": "三角形",
+            "suggestedCoreNodes": [
+              "三角形内角和",
+              "全等三角形",
+              "相似三角形",
+              "勾股定理",
+              "锐角三角函数"
+            ]
+          },
+          {
+            "id": "quadrilateral-circle",
+            "name": "四边形与圆",
+            "suggestedCoreNodes": [
+              "平行四边形",
+              "矩形",
+              "菱形",
+              "正方形",
+              "梯形",
+              "圆",
+              "圆心角",
+              "圆周角",
+              "切线"
+            ]
+          },
+          {
+            "id": "transform-coordinate",
+            "name": "图形变化与坐标",
+            "suggestedCoreNodes": [
+              "轴对称",
+              "中心对称",
+              "平移",
+              "旋转",
+              "位似",
+              "图形与坐标"
+            ]
+          },
+          {
+            "id": "measurement-proof",
+            "name": "证明与度量",
+            "suggestedCoreNodes": [
+              "面积公式",
+              "体积公式",
+              "几何证明",
+              "作图"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "junior-statistics-probability",
+        "name": "统计与概率",
+        "sections": [
+          {
+            "id": "data-analysis-junior",
+            "name": "数据整理与分析",
+            "suggestedCoreNodes": [
+              "数据收集",
+              "平均数",
+              "中位数",
+              "众数",
+              "方差",
+              "频数分布"
+            ]
+          },
+          {
+            "id": "probability-junior",
+            "name": "随机现象与概率",
+            "suggestedCoreNodes": [
+              "随机事件",
+              "概率",
+              "频率与概率",
+              "树状图",
+              "列表法"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "junior-integrated-practice",
+        "name": "综合与实践",
+        "sections": [
+          {
+            "id": "integrated-practice-junior",
+            "name": "综合实践项目",
+            "suggestedCoreNodes": [
+              "测量与估算",
+              "方案比较",
+              "数学建模入门",
+              "跨学科实践"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "seniorHigh": {
+    "label": "高中数学",
+    "domains": [
+      {
+        "id": "senior-sets-functions",
+        "name": "集合、函数与导数",
+        "sections": [
+          {
+            "id": "sets-logic",
+            "name": "集合与常用逻辑",
+            "suggestedCoreNodes": [
+              "集合",
+              "子集",
+              "交并补",
+              "充分条件",
+              "必要条件",
+              "充要条件"
+            ]
+          },
+          {
+            "id": "functions-senior",
+            "name": "函数概念与性质",
+            "suggestedCoreNodes": [
+              "函数定义域",
+              "值域",
+              "单调性",
+              "奇偶性",
+              "周期性",
+              "函数零点"
+            ]
+          },
+          {
+            "id": "elementary-functions",
+            "name": "基本初等函数",
+            "suggestedCoreNodes": [
+              "幂函数",
+              "指数函数",
+              "对数函数",
+              "指数对数互化",
+              "函数图像变换"
+            ]
+          },
+          {
+            "id": "derivative",
+            "name": "导数及其应用",
+            "suggestedCoreNodes": [
+              "导数概念",
+              "导数运算",
+              "切线",
+              "单调性与导数",
+              "极值",
+              "最值",
+              "函数建模"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "senior-sequences-inequalities",
+        "name": "数列与不等式",
+        "sections": [
+          {
+            "id": "sequence",
+            "name": "数列",
+            "suggestedCoreNodes": [
+              "数列概念",
+              "等差数列",
+              "等比数列",
+              "数列求和",
+              "递推数列"
+            ]
+          },
+          {
+            "id": "inequality-senior",
+            "name": "不等式",
+            "suggestedCoreNodes": [
+              "基本不等式",
+              "均值不等式",
+              "绝对值不等式",
+              "不等式证明",
+              "线性规划"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "senior-trigonometry-vector",
+        "name": "三角与向量",
+        "sections": [
+          {
+            "id": "trigonometry",
+            "name": "三角函数",
+            "suggestedCoreNodes": [
+              "任意角",
+              "弧度制",
+              "正弦函数",
+              "余弦函数",
+              "正切函数",
+              "同角关系",
+              "诱导公式",
+              "和差倍半角公式",
+              "解三角形"
+            ]
+          },
+          {
+            "id": "vector",
+            "name": "平面向量",
+            "suggestedCoreNodes": [
+              "向量概念",
+              "向量加减",
+              "数乘向量",
+              "向量坐标表示",
+              "数量积",
+              "向量与几何证明"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "senior-analytic-solid-geometry",
+        "name": "解析几何与立体几何",
+        "sections": [
+          {
+            "id": "analytic-geometry",
+            "name": "解析几何",
+            "suggestedCoreNodes": [
+              "直线方程",
+              "两直线位置关系",
+              "圆的方程",
+              "椭圆",
+              "双曲线",
+              "抛物线",
+              "轨迹方程"
+            ]
+          },
+          {
+            "id": "solid-geometry",
+            "name": "立体几何",
+            "suggestedCoreNodes": [
+              "空间点线面",
+              "平行关系",
+              "垂直关系",
+              "空间角",
+              "空间距离",
+              "三视图",
+              "几何体体积"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "senior-probability-statistics-modeling",
+        "name": "概率统计、排列组合与建模",
+        "sections": [
+          {
+            "id": "counting-probability",
+            "name": "计数原理与概率",
+            "suggestedCoreNodes": [
+              "分类加法原理",
+              "分步乘法原理",
+              "排列",
+              "组合",
+              "二项式定理",
+              "古典概型",
+              "条件概率",
+              "独立事件",
+              "离散型随机变量"
+            ]
+          },
+          {
+            "id": "statistics-inference",
+            "name": "统计与数据分析",
+            "suggestedCoreNodes": [
+              "抽样",
+              "样本估计总体",
+              "平均数方差",
+              "线性回归",
+              "正态分布",
+              "统计决策"
+            ]
+          },
+          {
+            "id": "modeling-inquiry",
+            "name": "数学建模与探究",
+            "suggestedCoreNodes": [
+              "函数建模",
+              "最优化建模",
+              "几何建模",
+              "概率统计建模",
+              "数学探究报告"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

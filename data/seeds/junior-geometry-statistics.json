@@ -1,0 +1,1185 @@
+{
+  "seedVersion": "1.0.0",
+  "description": "阶段3：初中图形与几何、统计与概率、综合实践扩充数据。",
+  "nodes": [
+    {
+      "id": "angle-measure",
+      "name": "角与角度关系",
+      "aliases": ["角度关系"],
+      "stage": "junior",
+      "domain": "geometry",
+      "sectionPath": ["junior", "geometry", "basic-geometry"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "foundation",
+      "summary": "角的和差、余补关系和位置关系是几何推理最早也最常用的语言。",
+      "definition": "角可以用大小和位置关系描述图形结构，是平行、三角形和圆问题中的基础元素。",
+      "keyFormulas": ["平角 = 180°", "周角 = 360°"],
+      "commonMistakes": ["只记结论，不先标清图中的对应角和公共角。"],
+      "reviewStatus": "approved",
+      "tags": ["几何基础", "角"]
+    },
+    {
+      "id": "parallel-line",
+      "name": "平行线与角关系",
+      "aliases": ["平行线判定与性质"],
+      "stage": "junior",
+      "domain": "geometry",
+      "sectionPath": ["junior", "geometry", "basic-geometry"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "foundation",
+      "summary": "平行线把角关系转成稳定规则，是三角形、四边形证明的高频入口。",
+      "definition": "两条直线在同一平面内不相交时叫平行线，并伴随同位角、内错角、同旁内角等性质。",
+      "keyFormulas": ["同位角相等", "内错角相等"],
+      "commonMistakes": ["没有先确认截线与被截线的位置，就匆忙套用角关系。"],
+      "reviewStatus": "approved",
+      "tags": ["平行", "证明"]
+    },
+    {
+      "id": "congruent-triangle",
+      "name": "全等三角形",
+      "aliases": ["三角形全等"],
+      "stage": "junior",
+      "domain": "geometry",
+      "sectionPath": ["junior", "geometry", "triangle"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "全等三角形保证对应边、对应角完全相等，是长度与角度证明的核心工具。",
+      "definition": "能够完全重合的两个三角形叫全等三角形。",
+      "keyFormulas": ["SSS", "SAS", "ASA", "AAS", "HL"],
+      "commonMistakes": ["只看有几个元素相等，却没有判断它们是否对应。"],
+      "reviewStatus": "approved",
+      "tags": ["三角形", "证明"]
+    },
+    {
+      "id": "similar-triangle",
+      "name": "相似三角形",
+      "aliases": ["三角形相似"],
+      "stage": "junior",
+      "domain": "geometry",
+      "sectionPath": ["junior", "geometry", "triangle"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "相似三角形把形状相同、大小可变的图形联系起来，是比例、测量和函数图像理解的重要桥梁。",
+      "definition": "对应角相等、对应边成比例的两个三角形叫相似三角形。",
+      "keyFormulas": ["AA", "SAS", "SSS"],
+      "commonMistakes": ["只验证边成比例，却没有核对边的对应顺序。"],
+      "reviewStatus": "approved",
+      "tags": ["比例", "三角形"]
+    },
+    {
+      "id": "pythagorean-theorem",
+      "name": "勾股定理",
+      "aliases": ["勾股"],
+      "stage": "junior",
+      "domain": "geometry",
+      "sectionPath": ["junior", "geometry", "triangle"],
+      "nodeType": "theorem_property",
+      "difficultyLevel": "standard",
+      "summary": "勾股定理把直角三角形的边长关系公式化，是长度计算和坐标距离的基础。",
+      "keyFormulas": ["a^2 + b^2 = c^2"],
+      "reviewStatus": "approved",
+      "tags": ["直角三角形", "长度"]
+    },
+    {
+      "id": "acute-trig-ratio",
+      "name": "锐角三角函数",
+      "aliases": ["sin cos tan 初步"],
+      "stage": "junior",
+      "domain": "geometry",
+      "sectionPath": ["junior", "geometry", "triangle"],
+      "nodeType": "theorem_property",
+      "difficultyLevel": "standard",
+      "summary": "锐角三角函数把边长比固定为角的函数值，为高中三角函数做最早铺垫。",
+      "keyFormulas": ["sin A = 对边/斜边", "tan A = 对边/邻边"],
+      "reviewStatus": "approved",
+      "tags": ["三角函数", "比值"]
+    },
+    {
+      "id": "parallelogram",
+      "name": "平行四边形",
+      "aliases": ["特殊平行四边形基础"],
+      "stage": "junior",
+      "domain": "geometry",
+      "sectionPath": ["junior", "geometry", "quadrilateral-circle"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "平行四边形汇集了平行、全等和对称性质，是四边形章节的中心节点。",
+      "definition": "两组对边分别平行的四边形叫平行四边形。",
+      "keyFormulas": ["对边平行", "对角相等", "对角线互相平分"],
+      "commonMistakes": ["把矩形、菱形、正方形的额外条件误当成所有平行四边形都具备。"],
+      "reviewStatus": "approved",
+      "tags": ["四边形", "性质"]
+    },
+    {
+      "id": "circle",
+      "name": "圆",
+      "aliases": ["圆的基本性质"],
+      "stage": "junior",
+      "domain": "geometry",
+      "sectionPath": ["junior", "geometry", "quadrilateral-circle"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "圆把距离相等的点组织成一个整体，是角、弦、切线和轨迹思想的重要承载体。",
+      "definition": "平面内到定点距离等于定长的点的集合叫圆。",
+      "keyFormulas": ["r", "d = 2r"],
+      "commonMistakes": ["只记零散结论，忽略“到圆心距离相等”这个根本定义。"],
+      "reviewStatus": "approved",
+      "tags": ["圆", "轨迹"]
+    },
+    {
+      "id": "inscribed-angle",
+      "name": "圆周角与圆心角",
+      "aliases": ["圆周角定理"],
+      "stage": "junior",
+      "domain": "geometry",
+      "sectionPath": ["junior", "geometry", "quadrilateral-circle"],
+      "nodeType": "theorem_property",
+      "difficultyLevel": "standard",
+      "summary": "圆周角与圆心角关系把弧、角和弦联系起来，是圆中证明的关键规则。",
+      "keyFormulas": ["同弧所对圆周角相等", "圆周角 = 对应圆心角的一半"],
+      "reviewStatus": "approved",
+      "tags": ["圆", "角"]
+    },
+    {
+      "id": "geometric-transformation",
+      "name": "图形变换",
+      "aliases": ["平移旋转对称位似"],
+      "stage": "junior",
+      "domain": "geometry",
+      "sectionPath": ["junior", "geometry", "transform-coordinate"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "图形变换把全等、相似和坐标联系起来，让静态图形转变为动态结构理解。",
+      "definition": "平移、旋转、对称、位似等操作可以在保持或按比例改变图形形状的同时改变位置。",
+      "keyFormulas": ["刚体变换保持长度和角度", "位似保持形状"],
+      "commonMistakes": ["只会画图，不会从变换角度解释为什么两个图形全等或相似。"],
+      "reviewStatus": "approved",
+      "tags": ["变换", "坐标"]
+    },
+    {
+      "id": "area-relationship",
+      "name": "面积关系方法",
+      "aliases": ["面积法"],
+      "stage": "junior",
+      "domain": "geometry",
+      "sectionPath": ["junior", "geometry", "measurement-proof"],
+      "nodeType": "method",
+      "difficultyLevel": "standard",
+      "summary": "面积法通过同底同高、比例分割等思路，把形状问题转成数量关系。",
+      "keyFormulas": ["S = 1/2ah", "S = ab"],
+      "reviewStatus": "approved",
+      "tags": ["面积", "方法"]
+    },
+    {
+      "id": "geometric-proof",
+      "name": "几何证明策略",
+      "aliases": ["证明思路"],
+      "stage": "junior",
+      "domain": "geometry",
+      "sectionPath": ["junior", "geometry", "measurement-proof"],
+      "nodeType": "method",
+      "difficultyLevel": "standard",
+      "summary": "几何证明需要把条件转成角、边、平行和相似等结构，再按目标选择路径。",
+      "keyFormulas": ["已知 -> 推理链 -> 结论"],
+      "reviewStatus": "approved",
+      "tags": ["证明", "方法"]
+    },
+    {
+      "id": "data-collection",
+      "name": "数据收集与整理",
+      "aliases": ["统计调查"],
+      "stage": "junior",
+      "domain": "statistics_probability",
+      "sectionPath": ["junior", "statistics_probability", "data-analysis-junior"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "foundation",
+      "summary": "统计结论是否可信，首先取决于数据收集方式是否合理、完整、可比较。",
+      "definition": "围绕问题设计调查对象、记录方式和整理规则的全过程叫数据收集与整理。",
+      "keyFormulas": ["明确对象", "统一口径"],
+      "commonMistakes": ["直接算平均数，却没有先检查数据来源是否可比。"],
+      "reviewStatus": "approved",
+      "tags": ["统计", "调查"]
+    },
+    {
+      "id": "average-mean",
+      "name": "平均数",
+      "aliases": ["算术平均数"],
+      "stage": "junior",
+      "domain": "statistics_probability",
+      "sectionPath": ["junior", "statistics_probability", "data-analysis-junior"],
+      "nodeType": "formula",
+      "difficultyLevel": "foundation",
+      "summary": "平均数适合描述整体水平，是从原始数据走向模型判断的常用指标。",
+      "keyFormulas": ["平均数 = 总和/个数"],
+      "reviewStatus": "approved",
+      "tags": ["统计量", "平均"]
+    },
+    {
+      "id": "median-mode",
+      "name": "中位数与众数",
+      "aliases": ["中位数", "众数"],
+      "stage": "junior",
+      "domain": "statistics_probability",
+      "sectionPath": ["junior", "statistics_probability", "data-analysis-junior"],
+      "nodeType": "theorem_property",
+      "difficultyLevel": "foundation",
+      "summary": "中位数和众数能弥补平均数对极端值敏感的不足，更适合判断典型水平。",
+      "keyFormulas": ["排序后取中间", "出现次数最多"],
+      "reviewStatus": "approved",
+      "tags": ["统计量", "典型值"]
+    },
+    {
+      "id": "frequency-distribution",
+      "name": "频数分布",
+      "aliases": ["频数统计图表"],
+      "stage": "junior",
+      "domain": "statistics_probability",
+      "sectionPath": ["junior", "statistics_probability", "data-analysis-junior"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "频数分布把散乱数据转成结构化图表，是后续读趋势、估概率的基础。",
+      "definition": "把数据按类别或区间统计出现次数，并用表格或图表表示。",
+      "keyFormulas": ["频数", "频率 = 频数/总次数"],
+      "commonMistakes": ["图表画出来了，但不会回到原问题解释它说明了什么。"],
+      "reviewStatus": "approved",
+      "tags": ["图表", "频率"]
+    },
+    {
+      "id": "probability-basic",
+      "name": "概率",
+      "aliases": ["古典概率初步"],
+      "stage": "junior",
+      "domain": "statistics_probability",
+      "sectionPath": ["junior", "statistics_probability", "probability-junior"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "概率用数来描述随机事件发生的可能性，把不确定现象变成可比较的量。",
+      "definition": "在等可能情形下，事件发生的可能性大小可以用概率表示。",
+      "keyFormulas": ["P(A) = 满足条件的结果数/全部等可能结果数"],
+      "commonMistakes": ["把“看起来更容易”当成概率大小，而不去数结果。"],
+      "reviewStatus": "approved",
+      "tags": ["概率", "随机"]
+    },
+    {
+      "id": "tree-diagram",
+      "name": "树状图与列表法",
+      "aliases": ["列表法"],
+      "stage": "junior",
+      "domain": "statistics_probability",
+      "sectionPath": ["junior", "statistics_probability", "probability-junior"],
+      "nodeType": "method",
+      "difficultyLevel": "foundation",
+      "summary": "树状图和列表法帮助学生不重不漏地枚举所有可能结果。",
+      "keyFormulas": ["逐步列举", "不重不漏"],
+      "reviewStatus": "approved",
+      "tags": ["枚举", "方法"]
+    },
+    {
+      "id": "experimental-probability",
+      "name": "频率与实验概率",
+      "aliases": ["实验概率"],
+      "stage": "junior",
+      "domain": "statistics_probability",
+      "sectionPath": ["junior", "statistics_probability", "probability-junior"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "实验概率强调大量重复试验后的稳定趋势，是从数据经验走向概率观念的重要台阶。",
+      "definition": "通过重复试验得到的频率，可以作为事件概率的经验估计。",
+      "keyFormulas": ["频率 ≈ 概率（大量重复时）"],
+      "commonMistakes": ["做了一两次实验就把结果当成稳定概率。"],
+      "reviewStatus": "approved",
+      "tags": ["频率", "实验"]
+    },
+    {
+      "id": "survey-sampling",
+      "name": "抽样与样本估计",
+      "aliases": ["抽样调查"],
+      "stage": "junior",
+      "domain": "statistics_probability",
+      "sectionPath": ["junior", "statistics_probability", "data-analysis-junior"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "抽样调查用局部样本估计整体情况，是统计走向现实决策的关键一步。",
+      "definition": "从总体中选取有代表性的样本，通过样本数据推测总体特征。",
+      "keyFormulas": ["样本 -> 估计总体"],
+      "commonMistakes": ["把方便取到的数据当成有代表性的样本。"],
+      "reviewStatus": "approved",
+      "tags": ["抽样", "估计"]
+    },
+    {
+      "id": "measurement-estimation",
+      "name": "测量与估算",
+      "aliases": ["实际测量项目"],
+      "stage": "junior",
+      "domain": "integrated_practice",
+      "sectionPath": ["junior", "integrated_practice", "integrated-practice-junior"],
+      "nodeType": "application",
+      "difficultyLevel": "standard",
+      "summary": "测量与估算把比例、勾股和面积方法带回真实情境，是几何综合实践的典型任务。",
+      "reviewStatus": "approved",
+      "tags": ["实践", "测量"]
+    },
+    {
+      "id": "interdisciplinary-modeling",
+      "name": "跨学科数据建模",
+      "aliases": ["综合实践建模"],
+      "stage": "junior",
+      "domain": "integrated_practice",
+      "sectionPath": ["junior", "integrated_practice", "integrated-practice-junior"],
+      "nodeType": "application",
+      "difficultyLevel": "standard",
+      "summary": "把调查数据、图表、概率判断和函数变化结合起来，用于解释真实生活中的问题。",
+      "reviewStatus": "approved",
+      "tags": ["实践", "建模"]
+    },
+    {
+      "id": "special-quadrilateral",
+      "name": "特殊平行四边形",
+      "aliases": ["矩形菱形正方形"],
+      "stage": "junior",
+      "domain": "geometry",
+      "sectionPath": ["junior", "geometry", "quadrilateral-circle"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "从平行四边形增加角、边或对角线条件，形成矩形、菱形和正方形的性质与判定体系。",
+      "reviewStatus": "approved",
+      "tags": ["四边形", "判定", "性质"]
+    },
+    {
+      "id": "circle-tangent",
+      "name": "圆的切线",
+      "aliases": ["切线性质与判定"],
+      "stage": "junior",
+      "domain": "geometry",
+      "sectionPath": ["junior", "geometry", "quadrilateral-circle"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "与圆只有一个公共点的直线，核心性质是切线垂直于经过切点的半径。",
+      "reviewStatus": "approved",
+      "tags": ["圆", "切线", "垂直"]
+    },
+    {
+      "id": "circle-measurement",
+      "name": "圆的度量",
+      "aliases": ["圆周长与圆面积"],
+      "stage": "junior",
+      "domain": "geometry",
+      "sectionPath": ["junior", "geometry", "quadrilateral-circle"],
+      "nodeType": "formula",
+      "difficultyLevel": "foundation",
+      "summary": "利用半径、圆周率计算圆的周长、面积以及弧长和扇形面积。",
+      "keyFormulas": ["C=2πr", "S=πr²", "l=nπr/180", "S扇形=nπr²/360"],
+      "reviewStatus": "approved",
+      "tags": ["圆", "度量", "公式"]
+    },
+    {
+      "id": "ruler-compass-construction",
+      "name": "尺规作图",
+      "aliases": ["基本作图"],
+      "stage": "junior",
+      "domain": "geometry",
+      "sectionPath": ["junior", "geometry", "measurement-proof"],
+      "nodeType": "method",
+      "difficultyLevel": "standard",
+      "summary": "仅用无刻度直尺和圆规完成作线段、角、垂线、角平分线等几何构造。",
+      "reviewStatus": "approved",
+      "tags": ["作图", "几何构造"]
+    },
+    {
+      "id": "solid-views-net",
+      "name": "三视图与展开图",
+      "aliases": ["几何体视图与展开"],
+      "stage": "junior",
+      "domain": "geometry",
+      "sectionPath": ["junior", "geometry", "measurement-proof"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "通过主视图、俯视图、左视图及平面展开图，在二维表示与三维几何体之间转换。",
+      "reviewStatus": "approved",
+      "tags": ["空间观念", "视图", "展开图"]
+    },
+    {
+      "id": "solid-surface-volume",
+      "name": "几何体表面积与体积",
+      "aliases": ["立体图形度量"],
+      "stage": "junior",
+      "domain": "geometry",
+      "sectionPath": ["junior", "geometry", "measurement-proof"],
+      "nodeType": "formula",
+      "difficultyLevel": "standard",
+      "summary": "根据几何体结构、视图和展开图计算表面积与体积，并处理实际容积问题。",
+      "reviewStatus": "approved",
+      "tags": ["空间几何", "面积", "体积"]
+    },
+    {
+      "id": "variance-dispersion",
+      "name": "方差与数据波动",
+      "aliases": ["方差"],
+      "stage": "junior",
+      "domain": "statistics_probability",
+      "sectionPath": ["junior", "statistics_probability", "data-analysis-junior"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "用各数据与平均数偏差平方的平均值刻画一组数据的离散程度。",
+      "keyFormulas": ["s²=[(x₁-x̄)²+…+(xₙ-x̄)²]/n"],
+      "reviewStatus": "approved",
+      "tags": ["统计", "方差", "稳定性"]
+    },
+    {
+      "id": "statistical-chart-selection",
+      "name": "统计图选择与辨析",
+      "aliases": ["统计图表辨析"],
+      "stage": "junior",
+      "domain": "statistics_probability",
+      "sectionPath": ["junior", "statistics_probability", "data-analysis-junior"],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "根据数据目的选择条形图、折线图、扇形图或频数分布图，并识别误导性表达。",
+      "reviewStatus": "approved",
+      "tags": ["统计图", "数据表达", "辨析"]
+    },
+    {
+      "id": "geometric-modeling",
+      "name": "几何测量建模",
+      "aliases": ["几何建模实践"],
+      "stage": "junior",
+      "domain": "integrated_practice",
+      "sectionPath": ["junior", "integrated_practice", "integrated-practice-junior"],
+      "nodeType": "application",
+      "difficultyLevel": "advanced",
+      "summary": "把实地测量、图形性质、比例和计算组织成可检验的几何模型。",
+      "reviewStatus": "approved",
+      "tags": ["几何", "测量", "建模"]
+    }
+  ],
+  "relations": [
+    {
+      "id": "angle_measure_to_parallel_line",
+      "from": "angle-measure",
+      "to": "parallel-line",
+      "type": "prerequisite",
+      "reason": "平行线中的同位角、内错角和同旁内角都建立在角关系的准确识别上，角不会找，平行线性质就无法使用。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "angle_measure_to_congruent_triangle",
+      "from": "angle-measure",
+      "to": "congruent-triangle",
+      "type": "combines_with",
+      "reason": "全等判定中的 ASA、AAS 以及很多辅助角证明，都依赖角的和差与对应角关系来补足条件。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "angle_measure_to_circle",
+      "from": "angle-measure",
+      "to": "circle",
+      "type": "applies_to",
+      "reason": "圆中很多性质最终都会回到角的比较，例如圆心角、圆周角和切线角都需要角度语言表达。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "angle_measure_to_geometric_transformation",
+      "from": "angle-measure",
+      "to": "geometric-transformation",
+      "type": "equivalent_to",
+      "reason": "旋转、轴对称等变换会保持角度大小不变，因此角既是识别变换结果的依据，也是验证全等的直观标准。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "parallel_line_to_congruent_triangle",
+      "from": "parallel-line",
+      "to": "congruent-triangle",
+      "type": "prerequisite",
+      "reason": "很多全等证明要先借助平行线构造对应角相等，再配合公共边或已知边得到全等条件。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "parallel_line_to_similar_triangle",
+      "from": "parallel-line",
+      "to": "similar-triangle",
+      "type": "prerequisite",
+      "reason": "平行于三角形一边的直线会制造一组对应角相等，这是判定三角形相似的典型来源。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "parallel_line_to_parallelogram",
+      "from": "parallel-line",
+      "to": "parallelogram",
+      "type": "prerequisite",
+      "reason": "平行四边形的定义和判定都围绕两组对边平行展开，所以平行线性质是整个四边形章节的底座。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "parallel_line_to_cartesian_plane",
+      "from": "parallel-line",
+      "to": "cartesian-plane",
+      "type": "equivalent_to",
+      "reason": "在坐标系里，平行线会表现为方向一致或斜率相同的直线，这让几何关系可以转写为代数条件。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "congruent_triangle_to_similar_triangle",
+      "from": "congruent-triangle",
+      "to": "similar-triangle",
+      "type": "develops_to",
+      "reason": "全等三角形可以看作相似比等于 1 的特殊相似三角形，先掌握全等，再过渡到相似更自然。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "congruent_triangle_to_parallelogram",
+      "from": "congruent-triangle",
+      "to": "parallelogram",
+      "type": "combines_with",
+      "reason": "平行四边形中常利用对角线把图形拆成两个全等三角形，再反推出边、角和对角线性质。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "congruent_triangle_to_geometric_proof",
+      "from": "congruent-triangle",
+      "to": "geometric-proof",
+      "type": "prerequisite",
+      "reason": "初中几何证明里，全等几乎是最常见的中间桥梁，很多边相等、角相等的目标都要通过它完成。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "congruent_triangle_to_geometric_transformation",
+      "from": "congruent-triangle",
+      "to": "geometric-transformation",
+      "type": "equivalent_to",
+      "reason": "刚体变换后的图形与原图形全等，因此从变换视角理解全等，能让结论不再只是静态判定。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "similar_triangle_to_pythagorean_theorem",
+      "from": "similar-triangle",
+      "to": "pythagorean-theorem",
+      "type": "develops_to",
+      "reason": "勾股定理的常见证明方法之一就是构造相似三角形，因此相似是直角三角形边长关系的重要来源。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "similar_triangle_to_acute_trig_ratio",
+      "from": "similar-triangle",
+      "to": "acute-trig-ratio",
+      "type": "develops_to",
+      "reason": "同一个锐角对应的直角三角形都相似，所以某个边长比会固定下来，这正是锐角三角函数的起点。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "similar_triangle_to_measurement_estimation",
+      "from": "similar-triangle",
+      "to": "measurement-estimation",
+      "type": "applies_to",
+      "reason": "不能直接量的高度、宽度和距离，常通过构造相似三角形间接测量，这是综合实践里的高频场景。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "similar_triangle_to_direct_proportion_function",
+      "from": "similar-triangle",
+      "to": "direct-proportion-function",
+      "type": "similar_to",
+      "reason": "相似比和正比例关系都体现“一个量变大多少，另一个量同步按固定倍数变化”，二者在比例观念上高度相通。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "pythagorean_theorem_to_square_root",
+      "from": "pythagorean-theorem",
+      "to": "square-root",
+      "type": "combines_with",
+      "reason": "用勾股定理求未知边时，最终经常要从平方关系回到开平方求长度，所以平方根是计算落点。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "pythagorean_theorem_to_cartesian_plane",
+      "from": "pythagorean-theorem",
+      "to": "cartesian-plane",
+      "type": "develops_to",
+      "reason": "坐标系中的两点距离公式，本质上就是在横纵方向构成直角三角形后应用勾股定理。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "pythagorean_theorem_to_quadratic",
+      "from": "pythagorean-theorem",
+      "to": "quadratic",
+      "type": "applies_to",
+      "reason": "几何最值和轨迹问题中，边长平方关系常会整理成二次函数或二次方程，因此勾股定理能自然连接到代数模型。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "acute_trig_ratio_to_similar_triangle",
+      "from": "acute-trig-ratio",
+      "to": "similar-triangle",
+      "type": "prerequisite",
+      "reason": "锐角三角函数之所以与三角形大小无关，核心依据就是同角直角三角形相似后边长比保持不变。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "acute_trig_ratio_to_measurement_estimation",
+      "from": "acute-trig-ratio",
+      "to": "measurement-estimation",
+      "type": "applies_to",
+      "reason": "测楼高、河宽和坡度时，经常借助锐角三角函数把角度信息转成长度计算。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "parallelogram_to_geometric_transformation",
+      "from": "parallelogram",
+      "to": "geometric-transformation",
+      "type": "develops_to",
+      "reason": "平行四边形关于对角线交点具有中心对称特征，因此它是把四边形性质和变换观点结合起来的好载体。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "parallelogram_to_area_relationship",
+      "from": "parallelogram",
+      "to": "area-relationship",
+      "type": "applies_to",
+      "reason": "平行四边形面积、等底等高转化和割补思路，是面积法中最常见的几何背景。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "parallelogram_to_cartesian_plane",
+      "from": "parallelogram",
+      "to": "cartesian-plane",
+      "type": "equivalent_to",
+      "reason": "把平行四边形放进坐标系后，可以用中点、斜率和向量化长度关系进行代数化证明。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "circle_to_inscribed_angle",
+      "from": "circle",
+      "to": "inscribed-angle",
+      "type": "prerequisite",
+      "reason": "圆周角和圆心角都是建立在圆的弧、弦和半径结构上的，没有圆的整体定义就无法理解这些角的来源。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "circle_to_geometric_transformation",
+      "from": "circle",
+      "to": "geometric-transformation",
+      "type": "equivalent_to",
+      "reason": "圆在旋转下保持不变，在轴对称下也能保持结构，因此它是理解对称性最自然的几何对象之一。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "circle_to_cartesian_plane",
+      "from": "circle",
+      "to": "cartesian-plane",
+      "type": "develops_to",
+      "reason": "圆放进坐标系后会过渡到解析几何中的圆方程，因此它是初中轨迹思想通往高中解析几何的桥头堡。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "circle_to_geometric_proof",
+      "from": "circle",
+      "to": "geometric-proof",
+      "type": "combines_with",
+      "reason": "圆中的证明常要综合半径相等、弧角关系和切线性质，是训练多条件联动推理的典型场景。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "inscribed_angle_to_congruent_triangle",
+      "from": "inscribed-angle",
+      "to": "congruent-triangle",
+      "type": "combines_with",
+      "reason": "圆中证明角相等后，常进一步配合边或半径关系构造全等三角形，从而推出弦、切线等更多结论。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "geometric_transformation_to_cartesian_plane",
+      "from": "geometric-transformation",
+      "to": "cartesian-plane",
+      "type": "equivalent_to",
+      "reason": "平移、对称和旋转在坐标系中可以直接表现为点坐标的变化规则，图形变换因此能被代数化表达。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "geometric_transformation_to_quadratic",
+      "from": "geometric-transformation",
+      "to": "quadratic",
+      "type": "applies_to",
+      "reason": "二次函数图像的平移、对称轴和开口观察，本质上都可以借助图形变换来理解，而不是死记公式。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "geometric_transformation_to_similar_triangle",
+      "from": "geometric-transformation",
+      "to": "similar-triangle",
+      "type": "develops_to",
+      "reason": "位似变换保持角度并按固定比例放缩边长，因此相似三角形可以从图形变换视角得到更统一的理解。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "area_relationship_to_similar_triangle",
+      "from": "area-relationship",
+      "to": "similar-triangle",
+      "type": "combines_with",
+      "reason": "相似三角形的面积比与相似比平方有关，面积法能帮助学生从数量角度理解相似不只是边角关系。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "area_relationship_to_measurement_estimation",
+      "from": "area-relationship",
+      "to": "measurement-estimation",
+      "type": "applies_to",
+      "reason": "实际测量场景中，面积法常用于估算场地、平面图和材料消耗，是几何知识落地的直接路径。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "geometric_proof_to_parallel_line",
+      "from": "geometric-proof",
+      "to": "parallel-line",
+      "type": "combines_with",
+      "reason": "很多证明会先通过角相等判定平行，或由平行推出角关系，因此平行线几乎是几何推理中的常驻中转站。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "geometric_proof_to_similar_triangle",
+      "from": "geometric-proof",
+      "to": "similar-triangle",
+      "type": "combines_with",
+      "reason": "比例关系、线段乘积和长度求解，经常都要通过构造相似三角形形成完整证明链条。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "data_collection_to_frequency_distribution",
+      "from": "data-collection",
+      "to": "frequency-distribution",
+      "type": "prerequisite",
+      "reason": "频数分布图表不是凭空生成的，必须先有规范的数据收集和分类口径，图表才有可解释性。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "data_collection_to_survey_sampling",
+      "from": "data-collection",
+      "to": "survey-sampling",
+      "type": "develops_to",
+      "reason": "当总体太大时，统计会从全面收集发展到抽样调查，这正是数据收集方法上的升级。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "data_collection_to_probability_basic",
+      "from": "data-collection",
+      "to": "probability-basic",
+      "type": "prerequisite",
+      "reason": "学生理解随机事件时，经常先通过收集实验结果感受“可能性”，再进一步上升到概率这个数量指标。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "data_collection_to_interdisciplinary_modeling",
+      "from": "data-collection",
+      "to": "interdisciplinary-modeling",
+      "type": "applies_to",
+      "reason": "真实项目建模的第一步往往不是算，而是明确要收集哪些数据以及怎样保证数据可靠。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "average_mean_to_frequency_distribution",
+      "from": "average-mean",
+      "to": "frequency-distribution",
+      "type": "combines_with",
+      "reason": "频数分布整理好后，平均数才更容易被快速计算和合理解释，尤其是在分组数据背景下更明显。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "average_mean_to_rate_plan_modeling",
+      "from": "average-mean",
+      "to": "rate-plan-modeling",
+      "type": "applies_to",
+      "reason": "平均费用、平均速度和平均产出常是方案比较的第一层指标，能帮助学生把统计量带回实际选择。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "median_mode_to_frequency_distribution",
+      "from": "median-mode",
+      "to": "frequency-distribution",
+      "type": "combines_with",
+      "reason": "中位数和众数只有放回排序结果或频数分布中，学生才能看懂它们分别描述了数据的哪一部分特征。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "median_mode_to_data_collection",
+      "from": "median-mode",
+      "to": "data-collection",
+      "type": "applies_to",
+      "reason": "当调查数据受到极端值影响时，中位数和众数常比平均数更能代表真实情况，所以要根据数据背景选指标。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "frequency_distribution_to_average_mean",
+      "from": "frequency-distribution",
+      "to": "average-mean",
+      "type": "applies_to",
+      "reason": "频数分布能帮助学生不只是算出平均数，还能判断平均数是否真的代表大多数数据所在水平。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "frequency_distribution_to_experimental_probability",
+      "from": "frequency-distribution",
+      "to": "experimental-probability",
+      "type": "prerequisite",
+      "reason": "实验概率依赖多次试验结果的频率统计，而这些频率必须通过频数分布先整理清楚。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "frequency_distribution_to_probability_basic",
+      "from": "frequency-distribution",
+      "to": "probability-basic",
+      "type": "combines_with",
+      "reason": "学生常通过比较频率图表和理论概率值，逐渐理解“经验结果会围绕理论概率波动并趋稳”的思想。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "frequency_distribution_to_survey_sampling",
+      "from": "frequency-distribution",
+      "to": "survey-sampling",
+      "type": "applies_to",
+      "reason": "样本数据整理成频数分布后，才更容易观察整体结构并尝试用样本特征估计总体特征。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "probability_basic_to_tree_diagram",
+      "from": "probability-basic",
+      "to": "tree-diagram",
+      "type": "prerequisite",
+      "reason": "求概率前必须先把所有等可能结果枚举完整，而树状图和列表法正是解决“不重不漏”问题的核心方法。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "probability_basic_to_experimental_probability",
+      "from": "probability-basic",
+      "to": "experimental-probability",
+      "type": "similar_to",
+      "reason": "理论概率关注等可能模型，实验概率关注试验频率，两者都在描述可能性，但来源不同、用途互补。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "probability_basic_to_survey_sampling",
+      "from": "probability-basic",
+      "to": "survey-sampling",
+      "type": "combines_with",
+      "reason": "随机抽样是否公平、样本是否代表总体，都与随机思想和概率观念密切相关。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "probability_basic_to_interdisciplinary_modeling",
+      "from": "probability-basic",
+      "to": "interdisciplinary-modeling",
+      "type": "applies_to",
+      "reason": "天气判断、风险决策和游戏规则分析等综合实践，都需要把概率大小转成现实判断依据。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "experimental_probability_to_frequency_distribution",
+      "from": "experimental-probability",
+      "to": "frequency-distribution",
+      "type": "equivalent_to",
+      "reason": "实验概率并不是单次试验感觉，而是由频数、频率整理出来的经验结果，所以它与频数分布天然相连。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "experimental_probability_to_tree_diagram",
+      "from": "experimental-probability",
+      "to": "tree-diagram",
+      "type": "confused_with",
+      "reason": "学生容易把实验得到的频率直接当成理论枚举结果，需要通过树状图区分“经验结果”和“全部可能”。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "experimental_probability_to_survey_sampling",
+      "from": "experimental-probability",
+      "to": "survey-sampling",
+      "type": "applies_to",
+      "reason": "抽样结论的稳定性往往要通过重复试验和频率观察来理解，这与实验概率的思想是一致的。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "survey_sampling_to_average_mean",
+      "from": "survey-sampling",
+      "to": "average-mean",
+      "type": "applies_to",
+      "reason": "样本平均数是估计总体水平最常见的方式之一，因此抽样调查和平均数天然联系紧密。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "survey_sampling_to_interdisciplinary_modeling",
+      "from": "survey-sampling",
+      "to": "interdisciplinary-modeling",
+      "type": "applies_to",
+      "reason": "真实项目往往无法收集全部对象，只能通过抽样调查与样本分析给出近似但可用的结论。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "measurement_estimation_to_pythagorean_theorem",
+      "from": "measurement-estimation",
+      "to": "pythagorean-theorem",
+      "type": "applies_to",
+      "reason": "现实测量里遇到直角结构时，勾股定理常是把看不见的长度算出来的最快工具。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "measurement_estimation_to_cartesian_plane",
+      "from": "measurement-estimation",
+      "to": "cartesian-plane",
+      "type": "combines_with",
+      "reason": "把实际位置放进坐标系后，长度、位移和变化趋势更容易被统一分析，测量问题也更容易模型化。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "interdisciplinary_modeling_to_function_concept",
+      "from": "interdisciplinary-modeling",
+      "to": "function-concept",
+      "type": "combines_with",
+      "reason": "很多综合实践最终都要把数据变化整理成变量之间的对应关系，因此函数思想会成为统计解释的下一步。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "parallelogram_to_special_quadrilateral",
+      "from": "parallelogram",
+      "to": "special-quadrilateral",
+      "type": "develops_to",
+      "reason": "矩形、菱形和正方形都以平行四边形为基础，再分别增加直角、邻边相等等条件形成更强性质。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "special_quadrilateral_to_congruent_triangle",
+      "from": "special-quadrilateral",
+      "to": "congruent-triangle",
+      "type": "combines_with",
+      "reason": "特殊四边形的对角线常把图形分成全等三角形，可用于证明边、角和对角线关系。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "special_quadrilateral_to_geometric_proof",
+      "from": "special-quadrilateral",
+      "to": "geometric-proof",
+      "type": "applies_to",
+      "reason": "特殊四边形的性质与判定提供了双向证明链，是综合几何证明中的高频目标与工具。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "special_quadrilateral_to_area_relationship",
+      "from": "special-quadrilateral",
+      "to": "area-relationship",
+      "type": "applies_to",
+      "reason": "矩形、菱形和正方形具有不同但相通的面积表达，可借助分割和对角线建立面积关系。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "circle_to_circle_tangent",
+      "from": "circle",
+      "to": "circle-tangent",
+      "type": "develops_to",
+      "reason": "切线研究圆与直线恰有一个公共点的特殊位置关系，是圆的性质向综合证明的延伸。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "circle_tangent_to_parallel_line",
+      "from": "circle-tangent",
+      "to": "parallel-line",
+      "type": "combines_with",
+      "reason": "切线垂直半径，结合平行线或垂线性质可以快速构造等角和证明位置关系。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "circle_tangent_to_pythagorean_theorem",
+      "from": "circle-tangent",
+      "to": "pythagorean-theorem",
+      "type": "combines_with",
+      "reason": "半径与切线在切点处垂直，常形成直角三角形并调用勾股定理计算切线段或圆心距。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "circle_tangent_to_geometric_proof",
+      "from": "circle-tangent",
+      "to": "geometric-proof",
+      "type": "applies_to",
+      "reason": "证明直线是圆的切线通常要证明其垂直于过切点的半径，是典型的目标转化证明。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "circle_to_circle_measurement",
+      "from": "circle",
+      "to": "circle-measurement",
+      "type": "applies_to",
+      "reason": "圆的半径、圆心角等结构量决定周长、面积、弧长和扇形面积的计算。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "circle_measurement_to_area_relationship",
+      "from": "circle-measurement",
+      "to": "area-relationship",
+      "type": "combines_with",
+      "reason": "圆与扇形的面积常要和三角形、四边形面积组合或相减，形成阴影面积问题。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "circle_measurement_to_quadratic",
+      "from": "circle-measurement",
+      "to": "quadratic",
+      "type": "combines_with",
+      "reason": "圆面积与半径的平方成正比，面积变化问题天然会出现二次数量关系。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ruler_compass_to_geometric_proof",
+      "from": "ruler-compass-construction",
+      "to": "geometric-proof",
+      "type": "combines_with",
+      "reason": "尺规作图不仅要画出目标图形，还要依据全等、垂直平分线等性质说明构造为何成立。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ruler_compass_to_congruent_triangle",
+      "from": "ruler-compass-construction",
+      "to": "congruent-triangle",
+      "type": "applies_to",
+      "reason": "作角平分线、垂直平分线等经典构造的正确性通常由全等三角形证明。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ruler_compass_to_circle",
+      "from": "ruler-compass-construction",
+      "to": "circle",
+      "type": "combines_with",
+      "reason": "圆规通过等半径建立等距点集合，是尺规作图中复制长度和寻找轨迹的基本工具。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "solid_views_to_solid_surface_volume",
+      "from": "solid-views-net",
+      "to": "solid-surface-volume",
+      "type": "prerequisite",
+      "reason": "只有从视图或展开图还原几何体结构与尺寸，才能准确计算表面积和体积。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "solid_views_to_geometric_transformation",
+      "from": "solid-views-net",
+      "to": "geometric-transformation",
+      "type": "similar_to",
+      "reason": "展开与折叠同样要求跟踪图形位置和对应关系，与平面图形变换共享空间想象能力。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "solid_views_to_measurement_estimation",
+      "from": "solid-views-net",
+      "to": "measurement-estimation",
+      "type": "applies_to",
+      "reason": "工程、包装与建筑测量常先用视图表达物体，再根据尺寸估算材料用量与空间容量。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "solid_views_to_geometric_modeling",
+      "from": "solid-views-net",
+      "to": "geometric-modeling",
+      "type": "applies_to",
+      "reason": "把真实物体抽象为视图和展开图，是建立空间几何模型的重要步骤。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "solid_surface_volume_to_measurement_estimation",
+      "from": "solid-surface-volume",
+      "to": "measurement-estimation",
+      "type": "applies_to",
+      "reason": "包装材料、容积和用料估算都需要将实测尺寸代入表面积或体积模型。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "average_mean_to_variance_dispersion",
+      "from": "average-mean",
+      "to": "variance-dispersion",
+      "type": "prerequisite",
+      "reason": "方差以平均数为中心计算每个数据的偏离程度，因此平均数是理解数据波动的前置量。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "variance_to_frequency_distribution",
+      "from": "variance-dispersion",
+      "to": "frequency-distribution",
+      "type": "combines_with",
+      "reason": "频数分布图直观展示数据分散范围，方差则用数值概括同一组数据的波动程度。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "variance_to_survey_sampling",
+      "from": "variance-dispersion",
+      "to": "survey-sampling",
+      "type": "applies_to",
+      "reason": "比较不同样本的方差可以判断数据稳定性，并提醒调查者留意样本差异。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "variance_to_interdisciplinary_modeling",
+      "from": "variance-dispersion",
+      "to": "interdisciplinary-modeling",
+      "type": "applies_to",
+      "reason": "成绩稳定性、产品质量波动等真实判断不能只看平均数，还需要方差提供离散程度信息。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "data_collection_to_statistical_chart",
+      "from": "data-collection",
+      "to": "statistical-chart-selection",
+      "type": "develops_to",
+      "reason": "数据收集整理后必须选择合适图表表达，图表类型应由比较、趋势、占比或分布等目的决定。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "statistical_chart_to_frequency_distribution",
+      "from": "statistical-chart-selection",
+      "to": "frequency-distribution",
+      "type": "combines_with",
+      "reason": "频数分布直方图是展示连续或分组数据分布特征的重要统计图，读图需要理解组距和频数。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "statistical_chart_to_function_graph",
+      "from": "statistical-chart-selection",
+      "to": "graph",
+      "type": "confused_with",
+      "reason": "统计图呈现已收集数据，函数图像表达变量间的确定对应关系，外形相似但数学含义不同。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "statistical_chart_to_interdisciplinary_modeling",
+      "from": "statistical-chart-selection",
+      "to": "interdisciplinary-modeling",
+      "type": "applies_to",
+      "reason": "综合实践报告需要用恰当图表呈现证据，同时识别截断坐标轴等可能造成的误导。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "geometric_modeling_to_measurement_estimation",
+      "from": "geometric-modeling",
+      "to": "measurement-estimation",
+      "type": "combines_with",
+      "reason": "几何建模从可获得的实测量出发，通过估算和误差意识决定模型是否足够可信。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "geometric_modeling_to_similar_triangle",
+      "from": "geometric-modeling",
+      "to": "similar-triangle",
+      "type": "applies_to",
+      "reason": "测量不可直接到达的高度或距离时，常通过影长、比例尺和相似三角形建立可计算模型。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "geometric_modeling_to_cartesian_plane",
+      "from": "geometric-modeling",
+      "to": "cartesian-plane",
+      "type": "combines_with",
+      "reason": "将测量对象放入坐标系，可把几何位置、距离和路径转写为数值关系。",
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "geometric_modeling_to_interdisciplinary_modeling",
+      "from": "geometric-modeling",
+      "to": "interdisciplinary-modeling",
+      "type": "develops_to",
+      "reason": "几何测量模型加入调查数据、函数变化或成本条件后，就能发展为更完整的跨学科实践模型。",
+      "reviewStatus": "approved"
+    }
+  ]
+}

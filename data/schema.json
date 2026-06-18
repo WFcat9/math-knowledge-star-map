@@ -1,0 +1,128 @@
+{
+  "schemaVersion": "1.0.0",
+  "description": "数学知识星图统一数据规范。用于节点、关系、来源、审核状态、别名和教材映射。",
+  "enums": {
+    "stage": [
+      "junior",
+      "senior",
+      "cross_stage"
+    ],
+    "domain": [
+      "number_algebra",
+      "geometry",
+      "statistics_probability",
+      "integrated_practice",
+      "functions",
+      "geometry_algebra",
+      "modeling_inquiry"
+    ],
+    "nodeType": [
+      "domain",
+      "section",
+      "core_concept",
+      "theorem_property",
+      "formula",
+      "method",
+      "problem_pattern",
+      "mistake_point",
+      "application"
+    ],
+    "relationType": [
+      "contains",
+      "prerequisite",
+      "develops_to",
+      "equivalent_to",
+      "similar_to",
+      "confused_with",
+      "combines_with",
+      "applies_to"
+    ],
+    "sourceType": [
+      "curriculum_standard",
+      "textbook_mapping",
+      "teacher_review",
+      "ai_candidate"
+    ],
+    "reviewStatus": [
+      "approved",
+      "draft",
+      "candidate",
+      "deprecated"
+    ],
+    "difficultyLevel": [
+      "foundation",
+      "standard",
+      "advanced"
+    ]
+  },
+  "node": {
+    "required": [
+      "id",
+      "name",
+      "stage",
+      "domain",
+      "nodeType",
+      "reviewStatus",
+      "summary"
+    ],
+    "fields": {
+      "id": "稳定英文 ID，全局唯一，不跟随教材章节编号变化。",
+      "name": "中文主名称，全局唯一。",
+      "aliases": "中文或英文别名数组，用于搜索、去重和教材差异映射。",
+      "stage": "学段：junior、senior 或 cross_stage。",
+      "domain": "知识领域枚举。",
+      "sectionPath": "目录路径数组，例如 ['junior', 'number_algebra', 'functions']。",
+      "nodeType": "节点类型枚举。",
+      "difficultyLevel": "基础、标准或提高。",
+      "summary": "一句话解释知识点。",
+      "definition": "较完整定义，可选。",
+      "keyFormulas": "关键公式数组。",
+      "prerequisiteIds": "前置知识节点 ID 数组。",
+      "followupIds": "后续知识节点 ID 数组。",
+      "relatedMethodIds": "常搭配的方法或题型节点 ID 数组。",
+      "commonMistakes": "常见错误数组。",
+      "applicationScenarios": "应用场景数组。",
+      "textbookMappings": "教材映射数组，元素包含版本、册次、章节和标题。",
+      "sources": "来源数组，元素包含 sourceType、title、note、reviewer、date。",
+      "reviewStatus": "审核状态枚举。",
+      "reviewNotes": "审核说明。",
+      "tags": "用于搜索和筛选的标签数组。",
+      "metadata": "扩展对象，用于存储 UI 种子信息、掌握度或阶段性统计。"
+    }
+  },
+  "relation": {
+    "required": [
+      "id",
+      "from",
+      "to",
+      "type",
+      "reason",
+      "reviewStatus"
+    ],
+    "fields": {
+      "id": "稳定英文 ID，全局唯一。",
+      "from": "起点节点 ID。",
+      "to": "终点节点 ID。",
+      "type": "关系类型枚举。",
+      "reason": "简短、具体的连接原因。",
+      "bidirectional": "是否双向关系。",
+      "strength": "1 到 5 的关系强度，可选。",
+      "crossSection": "是否跨章节连接。",
+      "reviewStatus": "审核状态枚举。",
+      "sources": "来源数组，结构与节点来源一致。",
+      "uiHint": "可选，用于界面中设置线条颜色、线型或标签。"
+    }
+  },
+  "catalog": {
+    "required": [
+      "catalogVersion",
+      "juniorHigh",
+      "seniorHigh"
+    ],
+    "fields": {
+      "juniorHigh": "初中目录树，按领域与章节组织建议核心节点。",
+      "seniorHigh": "高中目录树，按主题与章节组织建议核心节点。",
+      "suggestedCoreNodes": "建议优先录入的核心节点清单，后续阶段可逐步落地为真实节点。"
+    }
+  }
+}

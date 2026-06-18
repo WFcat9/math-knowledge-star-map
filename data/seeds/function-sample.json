@@ -1,0 +1,845 @@
+{
+  "seedVersion": "1.0.0",
+  "description": "当前函数样板的独立种子数据。用于保持原型可运行，并作为后续阶段扩充的起点。",
+  "relationMeta": {
+    "prerequisite": {
+      "label": "先修关系",
+      "color": "#1677ff",
+      "dash": []
+    },
+    "transform": {
+      "label": "等价 / 转化",
+      "color": "#00aebd",
+      "dash": []
+    },
+    "confusion": {
+      "label": "容易混淆",
+      "color": "#ef5c55",
+      "dash": [
+        7,
+        7
+      ]
+    },
+    "application": {
+      "label": "应用拓展",
+      "color": "#d18a09",
+      "dash": [
+        3,
+        7
+      ]
+    }
+  },
+  "nodes": [
+    {
+      "id": "quadratic",
+      "name": "二次函数",
+      "aliases": [
+        "抛物线函数"
+      ],
+      "stage": "cross_stage",
+      "domain": "functions",
+      "sectionPath": [
+        "junior",
+        "number_algebra",
+        "functions"
+      ],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "形如 y = ax^2 + bx + c（a ≠ 0）的函数，图像是一条抛物线。",
+      "definition": "形如 y = ax^2 + bx + c（a ≠ 0）的函数，图像是一条抛物线。",
+      "keyFormulas": [
+        "y = ax^2 + bx + c",
+        "x = -b / 2a"
+      ],
+      "prerequisiteIds": [
+        "equation",
+        "discriminant",
+        "factor"
+      ],
+      "followupIds": [
+        "maximum",
+        "modeling"
+      ],
+      "relatedMethodIds": [
+        "graph",
+        "zero"
+      ],
+      "commonMistakes": [
+        "忽略 a 的正负对开口方向和最值的影响。"
+      ],
+      "applicationScenarios": [
+        "最优化问题",
+        "面积建模",
+        "运动轨迹"
+      ],
+      "textbookMappings": [
+        {
+          "publisher": "人教版",
+          "volume": "九年级下",
+          "chapter": "二次函数",
+          "title": "二次函数及其图像"
+        }
+      ],
+      "sources": [
+        {
+          "sourceType": "teacher_review",
+          "title": "函数样板种子数据",
+          "note": "用于第一阶段数据架构验证。",
+          "reviewer": "Codex",
+          "date": "2026-06-11"
+        }
+      ],
+      "reviewStatus": "approved",
+      "reviewNotes": "当前为样板核心节点。",
+      "tags": [
+        "函数",
+        "代数",
+        "图像"
+      ],
+      "metadata": {
+        "mastery": 65,
+        "uiKind": "核心知识点"
+      }
+    },
+    {
+      "id": "equation",
+      "name": "一元二次方程",
+      "aliases": [
+        "二次方程"
+      ],
+      "stage": "junior",
+      "domain": "number_algebra",
+      "sectionPath": [
+        "junior",
+        "number_algebra",
+        "equation-inequality"
+      ],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "只含一个未知数，且未知数最高次数为 2 的整式方程。",
+      "keyFormulas": [
+        "ax^2 + bx + c = 0"
+      ],
+      "prerequisiteIds": [
+        "factor"
+      ],
+      "followupIds": [
+        "quadratic",
+        "zero"
+      ],
+      "relatedMethodIds": [
+        "discriminant"
+      ],
+      "commonMistakes": [
+        "忘记检查 a ≠ 0。"
+      ],
+      "sources": [
+        {
+          "sourceType": "teacher_review",
+          "title": "函数样板种子数据",
+          "note": "函数样板中的前置知识节点。",
+          "reviewer": "Codex",
+          "date": "2026-06-11"
+        }
+      ],
+      "reviewStatus": "approved",
+      "tags": [
+        "方程",
+        "求根"
+      ],
+      "metadata": {
+        "mastery": 72,
+        "uiKind": "先修知识"
+      }
+    },
+    {
+      "id": "discriminant",
+      "name": "判别式",
+      "aliases": [
+        "Delta",
+        "Δ"
+      ],
+      "stage": "junior",
+      "domain": "number_algebra",
+      "sectionPath": [
+        "junior",
+        "number_algebra",
+        "equation-inequality"
+      ],
+      "nodeType": "formula",
+      "difficultyLevel": "standard",
+      "summary": "用于判断一元二次方程实数根个数的代数式。",
+      "keyFormulas": [
+        "Δ = b^2 - 4ac"
+      ],
+      "prerequisiteIds": [
+        "equation"
+      ],
+      "followupIds": [
+        "quadratic"
+      ],
+      "commonMistakes": [
+        "代入 b 时漏掉负号。"
+      ],
+      "sources": [
+        {
+          "sourceType": "teacher_review",
+          "title": "函数样板种子数据",
+          "note": "函数样板中的前置公式节点。",
+          "reviewer": "Codex",
+          "date": "2026-06-11"
+        }
+      ],
+      "reviewStatus": "approved",
+      "tags": [
+        "方程",
+        "公式"
+      ],
+      "metadata": {
+        "mastery": 58,
+        "uiKind": "先修方法"
+      }
+    },
+    {
+      "id": "zero",
+      "name": "函数零点",
+      "aliases": [
+        "零点",
+        "x轴交点横坐标"
+      ],
+      "stage": "senior",
+      "domain": "functions",
+      "sectionPath": [
+        "senior",
+        "functions",
+        "functions-senior"
+      ],
+      "nodeType": "core_concept",
+      "difficultyLevel": "standard",
+      "summary": "使函数值等于 0 的自变量值，对应图像与 x 轴交点的横坐标。",
+      "keyFormulas": [
+        "f(x) = 0"
+      ],
+      "prerequisiteIds": [
+        "equation",
+        "quadratic"
+      ],
+      "followupIds": [
+        "maximum"
+      ],
+      "commonMistakes": [
+        "把零点误认为坐标点，而不是横坐标。"
+      ],
+      "sources": [
+        {
+          "sourceType": "teacher_review",
+          "title": "函数样板种子数据",
+          "note": "跨初高中连接节点。",
+          "reviewer": "Codex",
+          "date": "2026-06-11"
+        }
+      ],
+      "reviewStatus": "approved",
+      "tags": [
+        "函数",
+        "转化"
+      ],
+      "metadata": {
+        "mastery": 78,
+        "uiKind": "等价转化"
+      }
+    },
+    {
+      "id": "graph",
+      "name": "图像与性质",
+      "aliases": [
+        "抛物线图像"
+      ],
+      "stage": "cross_stage",
+      "domain": "functions",
+      "sectionPath": [
+        "cross_stage",
+        "functions",
+        "functions-senior"
+      ],
+      "nodeType": "theorem_property",
+      "difficultyLevel": "standard",
+      "summary": "从抛物线的开口、对称轴和顶点理解二次函数的变化规律。",
+      "keyFormulas": [
+        "x = -b / 2a"
+      ],
+      "prerequisiteIds": [
+        "quadratic"
+      ],
+      "followupIds": [
+        "maximum"
+      ],
+      "commonMistakes": [
+        "只记公式，不结合图像判断变化趋势。"
+      ],
+      "sources": [
+        {
+          "sourceType": "teacher_review",
+          "title": "函数样板种子数据",
+          "note": "函数性质节点。",
+          "reviewer": "Codex",
+          "date": "2026-06-11"
+        }
+      ],
+      "reviewStatus": "approved",
+      "tags": [
+        "图像",
+        "性质"
+      ],
+      "metadata": {
+        "mastery": 81,
+        "uiKind": "等价转化"
+      }
+    },
+    {
+      "id": "linear",
+      "name": "一次函数",
+      "aliases": [
+        "线性函数"
+      ],
+      "stage": "junior",
+      "domain": "number_algebra",
+      "sectionPath": [
+        "junior",
+        "number_algebra",
+        "functions-junior"
+      ],
+      "nodeType": "core_concept",
+      "difficultyLevel": "foundation",
+      "summary": "最高次数为 1 的函数，图像是一条直线。",
+      "keyFormulas": [
+        "y = kx + b"
+      ],
+      "prerequisiteIds": [
+        "functions-junior"
+      ],
+      "followupIds": [
+        "quadratic"
+      ],
+      "commonMistakes": [
+        "将一次函数的线性变化套用到二次函数。"
+      ],
+      "sources": [
+        {
+          "sourceType": "teacher_review",
+          "title": "函数样板种子数据",
+          "note": "易混对比节点。",
+          "reviewer": "Codex",
+          "date": "2026-06-11"
+        }
+      ],
+      "reviewStatus": "approved",
+      "tags": [
+        "函数",
+        "对比"
+      ],
+      "metadata": {
+        "mastery": 86,
+        "uiKind": "容易混淆"
+      }
+    },
+    {
+      "id": "inequality",
+      "name": "二次不等式",
+      "aliases": [
+        "二次函数正负区间"
+      ],
+      "stage": "senior",
+      "domain": "functions",
+      "sectionPath": [
+        "senior",
+        "sequences_inequalities",
+        "inequality-senior"
+      ],
+      "nodeType": "problem_pattern",
+      "difficultyLevel": "standard",
+      "summary": "利用二次函数图像在 x 轴上方或下方求解不等式。",
+      "keyFormulas": [
+        "ax^2 + bx + c > 0"
+      ],
+      "prerequisiteIds": [
+        "equation",
+        "quadratic"
+      ],
+      "followupIds": [
+        "maximum"
+      ],
+      "commonMistakes": [
+        "只看根，不结合开口方向判断正负区间。"
+      ],
+      "sources": [
+        {
+          "sourceType": "teacher_review",
+          "title": "函数样板种子数据",
+          "note": "题型节点。",
+          "reviewer": "Codex",
+          "date": "2026-06-11"
+        }
+      ],
+      "reviewStatus": "approved",
+      "tags": [
+        "不等式",
+        "题型"
+      ],
+      "metadata": {
+        "mastery": 54,
+        "uiKind": "容易混淆"
+      }
+    },
+    {
+      "id": "maximum",
+      "name": "最值问题",
+      "aliases": [
+        "最优化问题"
+      ],
+      "stage": "cross_stage",
+      "domain": "modeling_inquiry",
+      "sectionPath": [
+        "cross_stage",
+        "modeling_inquiry",
+        "modeling-inquiry"
+      ],
+      "nodeType": "problem_pattern",
+      "difficultyLevel": "standard",
+      "summary": "利用顶点或配方法寻找实际问题中的最大值或最小值。",
+      "keyFormulas": [
+        "min / max"
+      ],
+      "prerequisiteIds": [
+        "quadratic",
+        "graph"
+      ],
+      "followupIds": [
+        "modeling"
+      ],
+      "commonMistakes": [
+        "忽略实际问题给出的自变量取值范围。"
+      ],
+      "sources": [
+        {
+          "sourceType": "teacher_review",
+          "title": "函数样板种子数据",
+          "note": "应用场景节点。",
+          "reviewer": "Codex",
+          "date": "2026-06-11"
+        }
+      ],
+      "reviewStatus": "approved",
+      "tags": [
+        "最值",
+        "应用"
+      ],
+      "metadata": {
+        "mastery": 62,
+        "uiKind": "应用拓展"
+      }
+    },
+    {
+      "id": "modeling",
+      "name": "实际建模",
+      "aliases": [
+        "函数建模"
+      ],
+      "stage": "cross_stage",
+      "domain": "modeling_inquiry",
+      "sectionPath": [
+        "cross_stage",
+        "modeling_inquiry",
+        "modeling-inquiry"
+      ],
+      "nodeType": "application",
+      "difficultyLevel": "advanced",
+      "summary": "将实际数量关系抽象为二次函数，并用函数性质解决问题。",
+      "keyFormulas": [
+        "面积 / 运动 / 利润"
+      ],
+      "prerequisiteIds": [
+        "quadratic",
+        "maximum"
+      ],
+      "followupIds": [],
+      "commonMistakes": [
+        "得到数学结果后，没有检验是否符合实际情境。"
+      ],
+      "sources": [
+        {
+          "sourceType": "teacher_review",
+          "title": "函数样板种子数据",
+          "note": "应用场景节点。",
+          "reviewer": "Codex",
+          "date": "2026-06-11"
+        }
+      ],
+      "reviewStatus": "approved",
+      "tags": [
+        "建模",
+        "应用"
+      ],
+      "metadata": {
+        "mastery": 44,
+        "uiKind": "应用拓展"
+      }
+    },
+    {
+      "id": "factor",
+      "name": "因式分解",
+      "aliases": [
+        "多项式分解"
+      ],
+      "stage": "junior",
+      "domain": "number_algebra",
+      "sectionPath": [
+        "junior",
+        "number_algebra",
+        "algebraic-expression"
+      ],
+      "nodeType": "method",
+      "difficultyLevel": "foundation",
+      "summary": "把一个多项式化为几个整式乘积的形式。",
+      "keyFormulas": [
+        "(x-m)(x-n)"
+      ],
+      "prerequisiteIds": [],
+      "followupIds": [
+        "equation"
+      ],
+      "commonMistakes": [
+        "分解后没有检查乘回去是否等于原式。"
+      ],
+      "sources": [
+        {
+          "sourceType": "teacher_review",
+          "title": "函数样板种子数据",
+          "note": "学习路径起点。",
+          "reviewer": "Codex",
+          "date": "2026-06-11"
+        }
+      ],
+      "reviewStatus": "approved",
+      "tags": [
+        "整式",
+        "方法"
+      ],
+      "metadata": {
+        "mastery": 88,
+        "uiKind": "基础工具"
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "equation_to_quadratic",
+      "from": "equation",
+      "to": "quadratic",
+      "type": "prerequisite",
+      "reason": "把方程左侧看作函数值后，方程的实根就对应二次函数图像与 x 轴交点的横坐标。",
+      "bidirectional": false,
+      "crossSection": true,
+      "reviewStatus": "approved",
+      "sources": [
+        {
+          "sourceType": "teacher_review",
+          "title": "函数样板种子数据",
+          "date": "2026-06-11"
+        }
+      ]
+    },
+    {
+      "id": "discriminant_to_quadratic",
+      "from": "discriminant",
+      "to": "quadratic",
+      "type": "prerequisite",
+      "reason": "判别式的正、零、负，分别对应抛物线与 x 轴有两个、一个或没有交点。",
+      "bidirectional": false,
+      "crossSection": true,
+      "reviewStatus": "approved",
+      "sources": [
+        {
+          "sourceType": "teacher_review",
+          "title": "函数样板种子数据",
+          "date": "2026-06-11"
+        }
+      ]
+    },
+    {
+      "id": "quadratic_to_zero",
+      "from": "quadratic",
+      "to": "zero",
+      "type": "equivalent_to",
+      "reason": "函数零点是图像与 x 轴交点的横坐标；令 y=0 后，二次函数就转化为一元二次方程。",
+      "bidirectional": true,
+      "crossSection": true,
+      "reviewStatus": "approved",
+      "sources": [
+        {
+          "sourceType": "teacher_review",
+          "title": "函数样板种子数据",
+          "date": "2026-06-11"
+        }
+      ]
+    },
+    {
+      "id": "quadratic_to_graph",
+      "from": "quadratic",
+      "to": "graph",
+      "type": "equivalent_to",
+      "reason": "解析式中的系数决定抛物线的开口、对称轴和顶点，图像则直观呈现函数性质。",
+      "bidirectional": true,
+      "crossSection": false,
+      "reviewStatus": "approved",
+      "sources": [
+        {
+          "sourceType": "teacher_review",
+          "title": "函数样板种子数据",
+          "date": "2026-06-11"
+        }
+      ]
+    },
+    {
+      "id": "quadratic_to_linear",
+      "from": "quadratic",
+      "to": "linear",
+      "type": "confused_with",
+      "reason": "一次函数的变化率恒定，二次函数的变化率会改变，需要通过图像与解析式共同辨析。",
+      "bidirectional": true,
+      "crossSection": false,
+      "reviewStatus": "approved",
+      "sources": [
+        {
+          "sourceType": "teacher_review",
+          "title": "函数样板种子数据",
+          "date": "2026-06-11"
+        }
+      ]
+    },
+    {
+      "id": "quadratic_to_inequality",
+      "from": "quadratic",
+      "to": "inequality",
+      "type": "confused_with",
+      "reason": "二次函数图像位于 x 轴上方或下方的区间，分别对应二次不等式的正解集或负解集。",
+      "bidirectional": true,
+      "crossSection": true,
+      "reviewStatus": "approved",
+      "sources": [
+        {
+          "sourceType": "teacher_review",
+          "title": "函数样板种子数据",
+          "date": "2026-06-11"
+        }
+      ]
+    },
+    {
+      "id": "quadratic_to_maximum",
+      "from": "quadratic",
+      "to": "maximum",
+      "type": "applies_to",
+      "reason": "抛物线的顶点决定函数最值，结合自变量范围可以解决面积、利润等优化问题。",
+      "bidirectional": false,
+      "crossSection": true,
+      "reviewStatus": "approved",
+      "sources": [
+        {
+          "sourceType": "teacher_review",
+          "title": "函数样板种子数据",
+          "date": "2026-06-11"
+        }
+      ]
+    },
+    {
+      "id": "quadratic_to_modeling",
+      "from": "quadratic",
+      "to": "modeling",
+      "type": "applies_to",
+      "reason": "许多面积、利润和运动情境都含有二次数量关系，可以抽象为二次函数模型。",
+      "bidirectional": false,
+      "crossSection": true,
+      "reviewStatus": "approved",
+      "sources": [
+        {
+          "sourceType": "teacher_review",
+          "title": "函数样板种子数据",
+          "date": "2026-06-11"
+        }
+      ]
+    },
+    {
+      "id": "equation_to_discriminant",
+      "from": "equation",
+      "to": "discriminant",
+      "type": "develops_to",
+      "reason": "判别式是研究一元二次方程根的个数与类型的核心公式，能把求根问题转化为代数判断。",
+      "bidirectional": false,
+      "crossSection": false,
+      "reviewStatus": "approved",
+      "sources": [
+        {
+          "sourceType": "teacher_review",
+          "title": "函数样板种子数据",
+          "date": "2026-06-11"
+        }
+      ]
+    },
+    {
+      "id": "equation_to_zero",
+      "from": "equation",
+      "to": "zero",
+      "type": "equivalent_to",
+      "reason": "把一元二次方程看成函数值等于 0 的条件时，方程的根就对应函数零点的横坐标。",
+      "bidirectional": true,
+      "crossSection": true,
+      "reviewStatus": "approved",
+      "sources": [
+        {
+          "sourceType": "teacher_review",
+          "title": "函数样板种子数据",
+          "date": "2026-06-11"
+        }
+      ]
+    },
+    {
+      "id": "linear_to_zero",
+      "from": "linear",
+      "to": "zero",
+      "type": "equivalent_to",
+      "reason": "一次函数的零点由 y = 0 得到，本质上也是用方程思想寻找图像与 x 轴的交点。",
+      "bidirectional": true,
+      "crossSection": true,
+      "reviewStatus": "approved",
+      "sources": [
+        {
+          "sourceType": "teacher_review",
+          "title": "函数样板种子数据",
+          "date": "2026-06-11"
+        }
+      ]
+    },
+    {
+      "id": "linear_to_modeling",
+      "from": "linear",
+      "to": "modeling",
+      "type": "applies_to",
+      "reason": "一次函数适合描述匀速变化、单价收费等线性情境，也是理解二次模型前最重要的基础建模经验。",
+      "bidirectional": false,
+      "crossSection": true,
+      "reviewStatus": "approved",
+      "sources": [
+        {
+          "sourceType": "teacher_review",
+          "title": "函数样板种子数据",
+          "date": "2026-06-11"
+        }
+      ]
+    },
+    {
+      "id": "factor_to_equation",
+      "from": "factor",
+      "to": "equation",
+      "type": "prerequisite",
+      "reason": "因式分解是求解一元二次方程的重要方法之一。",
+      "bidirectional": false,
+      "crossSection": false,
+      "reviewStatus": "approved",
+      "sources": [
+        {
+          "sourceType": "teacher_review",
+          "title": "函数样板种子数据",
+          "date": "2026-06-11"
+        }
+      ]
+    }
+  ],
+  "layout": {
+    "equation": {
+      "x": 37,
+      "y": 17
+    },
+    "discriminant": {
+      "x": 63,
+      "y": 17
+    },
+    "zero": {
+      "x": 17,
+      "y": 43
+    },
+    "graph": {
+      "x": 20,
+      "y": 70
+    },
+    "linear": {
+      "x": 83,
+      "y": 43
+    },
+    "inequality": {
+      "x": 80,
+      "y": 70
+    },
+    "maximum": {
+      "x": 40,
+      "y": 87
+    },
+    "modeling": {
+      "x": 65,
+      "y": 87
+    }
+  },
+  "learningPath": [
+    "factor",
+    "equation",
+    "zero",
+    "quadratic",
+    "maximum"
+  ],
+  "connectionSteps": {
+    "quadratic": [
+      "令函数值 y = 0",
+      "得到方程 ax^2 + bx + c = 0",
+      "方程实根就是 x 轴交点横坐标"
+    ],
+    "equation": [
+      "将方程左侧看作函数值",
+      "绘制对应二次函数图像",
+      "用 x 轴交点解释方程的根"
+    ],
+    "discriminant": [
+      "建立对应的一元二次方程",
+      "计算 Δ = b^2 - 4ac",
+      "用 Δ 判断图像与 x 轴交点个数"
+    ],
+    "zero": [
+      "令函数值 y = 0",
+      "解对应的一元二次方程",
+      "将实根还原为图像交点横坐标"
+    ],
+    "graph": [
+      "读取 a、b、c 的符号和数值",
+      "确定开口、对称轴与顶点",
+      "用图像解释增减区间与最值"
+    ],
+    "linear": [
+      "比较解析式的最高次数",
+      "比较直线与抛物线的形状",
+      "比较恒定变化率与非恒定变化率"
+    ],
+    "inequality": [
+      "先求对应方程的根",
+      "结合开口方向判断函数正负",
+      "将正负区间写成不等式解集"
+    ],
+    "maximum": [
+      "把解析式化为顶点式",
+      "确定开口方向和顶点",
+      "结合自变量范围确认最值"
+    ],
+    "modeling": [
+      "确定实际问题中的变量",
+      "建立二次函数关系",
+      "利用图像与最值解释实际结果"
+    ]
+  }
+}
