@@ -29,8 +29,10 @@ import {
 
 const STAGE_WIDTH = 2400;
 const STAGE_HEIGHT = 1600;
-const DEFAULT_SELECTED_ID = "quadratic";
-const DEFAULT_ZOOM = 82;
+const DEFAULT_SELECTED_ID = null;
+const DEFAULT_ZOOM = 42;
+const MIN_ZOOM = 25;
+const MAX_ZOOM = 120;
 const MAX_HIGHLIGHT_DEPTH = 3;
 
 const stageLabelMap = { junior: "初中", senior: "高一" };
@@ -125,6 +127,7 @@ function getNodeRelations(nodeId, enabledRelations) {
 }
 
 function getHighlightLevels(selectedId, enabledRelations) {
+  if (!selectedId) return {};
   const levelMap = { [selectedId]: 0 };
   let frontier = [selectedId];
 
@@ -146,7 +149,7 @@ function getHighlightLevels(selectedId, enabledRelations) {
 }
 
 function getVisibleNodeIds(selectedId, expandedNodeIds, enabledRelations) {
-  const visibleIds = new Set([selectedId]);
+  const visibleIds = new Set(selectedId ? [selectedId] : []);
 
   for (const nodeId of expandedNodeIds) {
     visibleIds.add(nodeId);
@@ -454,25 +457,42 @@ function KnowledgeGraph({
   labelsVisible,
   reasonsVisible,
   canvasRef,
+  isPanning,
   zoom,
   onSelectNode,
   onZoom,
   onReset,
+  onCanvasPointerDown,
   onNodePointerDown,
 }) {
   const visibleRelations = knowledgeRelations.filter(
     (relation) =>
       enabledRelations[relation.type] &&
       nodePositions[relation.from] &&
-      nodePositions[relation.to],
+      nodePositions[relation.to] &&
+      (expandedNodeIds.has(relation.from) || expandedNodeIds.has(relation.to)),
   );
 
   return (
-    <div className="web-canvas" ref={canvasRef}>
+    <div
+      className={`web-canvas ${isPanning ? "is-panning" : ""}`}
+      ref={canvasRef}
+      onPointerDown={onCanvasPointerDown}
+    >
       <div className="web-hint">
         <Sparkle weight="fill" />
-        当前从「{knowledgeNodeMap[selectedId].name}」发散出 {Object.keys(nodePositions).length} 个知识点，已展开 {totalExpandedCount} 个发散点
+        {selectedId
+          ? `当前从「${knowledgeNodeMap[selectedId].name}」发散出 ${Object.keys(nodePositions).length} 个知识点，已展开 ${totalExpandedCount} 个发散点`
+          : "先从左侧目录或顶部搜索选择一个知识点，再逐层发散成知识网络"}
       </div>
+
+      {!selectedId ? (
+        <div className="empty-network">
+          <Sparkle weight="fill" />
+          <strong>请选择一个知识点开始发散</strong>
+          <p>点击左侧章节或知识点，画布会从一个核心节点开始，一层一层长成网络。</p>
+        </div>
+      ) : null}
 
       <div className="web-stage-wrap">
         <div className="web-stage" style={{ transform: `scale(${zoom / 100})` }}>
@@ -557,11 +577,11 @@ function KnowledgeGraph({
       </div>
 
       <div className="canvas-tools">
-        <button title="放大" onClick={() => onZoom(Math.min(120, zoom + 8))}>
+        <button title="放大" onClick={() => onZoom(Math.min(MAX_ZOOM, zoom + 8))}>
           <Plus />
         </button>
         <span>{zoom}%</span>
-        <button title="缩小" onClick={() => onZoom(Math.max(55, zoom - 8))}>
+        <button title="缩小" onClick={() => onZoom(Math.max(MIN_ZOOM, zoom - 8))}>
           <Minus />
         </button>
         <button title="重排" onClick={onReset}>
@@ -573,6 +593,33 @@ function KnowledgeGraph({
 }
 
 function DetailPanel({ selectedId, enabledRelations, visible, onClose, onFocusNode }) {
+  if (!selectedId) {
+    return (
+      <aside className={`detail-panel ${visible ? "mobile-visible" : ""}`}>
+        <div className="detail-head">
+          <div>
+            <span className="node-tag">等待选择</span>
+            <h2>还没有开始发散</h2>
+            <p>从左侧目录或顶部搜索选择一个知识点。</p>
+          </div>
+          <button onClick={onClose}>
+            <X size={22} />
+          </button>
+        </div>
+
+        <div className="detail-scroll">
+          <section>
+            <h3>
+              <BookOpenText /> 使用方式
+            </h3>
+            <p>先点击一个章节或知识点，画布会出现第一层关联。之后点击任意节点，它会继续向外扩展下一层，逐渐形成知识网络。</p>
+            <p>拖动画布空白处可以移动视图，使用右下角按钮可以放大或缩小。</p>
+          </section>
+        </div>
+      </aside>
+    );
+  }
+
   const selectedNode = knowledgeNodeMap[selectedId];
   const allRelations = getNodeRelations(selectedId, enabledRelations);
   const conceptBlocks = buildConceptBlocks(selectedNode, allRelations);
@@ -666,16 +713,18 @@ export function App() {
   const [showDetail, setShowDetail] = useState(false);
   const [toast, setToast] = useState("");
   const [labelsVisible, setLabelsVisible] = useState(true);
-  const [reasonsVisible, setReasonsVisible] = useState(true);
+  const [reasonsVisible, setReasonsVisible] = useState(false);
   const [zoom, setZoom] = useState(DEFAULT_ZOOM);
   const [enabledRelations, setEnabledRelations] = useState(defaultEnabledRelations);
   const [nodePositions, setNodePositions] = useState(() => createInitialPositions());
-  const [expandedNodeIds, setExpandedNodeIds] = useState(() => new Set([DEFAULT_SELECTED_ID]));
+  const [expandedNodeIds, setExpandedNodeIds] = useState(() => new Set());
   const [draggingNodeId, setDraggingNodeId] = useState(null);
+  const [isPanning, setIsPanning] = useState(false);
   const [layoutVersion, setLayoutVersion] = useState(0);
   const canvasRef = useRef(null);
   const dragStateRef = useRef(null);
-  const selectedNode = knowledgeNodeMap[selectedId];
+  const panStateRef = useRef(null);
+  const selectedNode = selectedId ? knowledgeNodeMap[selectedId] : null;
   const highlightLevels = getHighlightLevels(selectedId, enabledRelations);
   const visibleNodeIds = getVisibleNodeIds(selectedId, expandedNodeIds, enabledRelations);
   const visibleNodePositions = pickVisiblePositions(nodePositions, visibleNodeIds);
@@ -720,7 +769,32 @@ export function App() {
   }, [draggingNodeId]);
 
   useEffect(() => {
-    if (draggingNodeId) return;
+    if (!isPanning) return undefined;
+
+    const handlePointerMove = (event) => {
+      const panState = panStateRef.current;
+      const canvas = canvasRef.current;
+      if (!panState || !canvas) return;
+
+      canvas.scrollLeft = panState.startScrollLeft - (event.clientX - panState.startClientX);
+      canvas.scrollTop = panState.startScrollTop - (event.clientY - panState.startClientY);
+    };
+
+    const handlePointerUp = () => {
+      panStateRef.current = null;
+      setIsPanning(false);
+    };
+
+    window.addEventListener("pointermove", handlePointerMove);
+    window.addEventListener("pointerup", handlePointerUp);
+    return () => {
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerup", handlePointerUp);
+    };
+  }, [isPanning]);
+
+  useEffect(() => {
+    if (!selectedId || draggingNodeId || isPanning) return;
     const canvas = canvasRef.current;
     const position = nodePositions[selectedId];
     if (!canvas || !position) return;
@@ -736,7 +810,7 @@ export function App() {
       top: nextTop,
       behavior: "smooth",
     });
-  }, [selectedId, zoom, layoutVersion, draggingNodeId, nodePositions]);
+  }, [selectedId, zoom, layoutVersion, draggingNodeId, isPanning, nodePositions]);
 
   const showToastMessage = (message) => {
     setToast(message);
@@ -766,11 +840,25 @@ export function App() {
   const resetLayout = () => {
     setNodePositions(createInitialPositions());
     setSelectedId(DEFAULT_SELECTED_ID);
-    setExpandedNodeIds(new Set([DEFAULT_SELECTED_ID]));
+    setExpandedNodeIds(new Set());
     setZoom(DEFAULT_ZOOM);
     setLayoutVersion((current) => current + 1);
     setShowDetail(false);
-    showToastMessage("已回到默认发散起点");
+    showToastMessage("已清空画布，请重新选择知识点");
+  };
+
+  const handleCanvasPointerDown = (event) => {
+    if (!canvasRef.current) return;
+    if (event.target.closest(".web-node") || event.target.closest(".canvas-tools")) return;
+
+    event.preventDefault();
+    panStateRef.current = {
+      startClientX: event.clientX,
+      startClientY: event.clientY,
+      startScrollLeft: canvasRef.current.scrollLeft,
+      startScrollTop: canvasRef.current.scrollTop,
+    };
+    setIsPanning(true);
   };
 
   const handleNodePointerDown = (event, nodeId) => {
@@ -925,15 +1013,24 @@ export function App() {
         <section className="main-stage">
           <div className="stage-heading">
             <div>
-              <span>当前焦点</span>
-              <strong>{stageLabelMap[selectedNode.stage]}</strong>
-              <CaretRight />
-              <strong>{domainLabelMap[selectedNode.domain] ?? selectedNode.domain}</strong>
-              <CaretRight />
-              <b>{selectedNode.name}</b>
+              {selectedNode ? (
+                <>
+                  <span>当前焦点</span>
+                  <strong>{stageLabelMap[selectedNode.stage]}</strong>
+                  <CaretRight />
+                  <strong>{domainLabelMap[selectedNode.domain] ?? selectedNode.domain}</strong>
+                  <CaretRight />
+                  <b>{selectedNode.name}</b>
+                </>
+              ) : (
+                <>
+                  <span>等待选择</span>
+                  <strong>从左侧目录或搜索开始</strong>
+                </>
+              )}
             </div>
             <span className="data-badge">
-              当前网络 {visibleNodeIds.size}/{knowledgeStats.nodeCount} 节点 · 点击节点继续发散
+              当前网络 {visibleNodeIds.size}/{knowledgeStats.nodeCount} 节点 · 空白拖拽平移
             </span>
           </div>
 
@@ -947,10 +1044,12 @@ export function App() {
             labelsVisible={labelsVisible}
             reasonsVisible={reasonsVisible}
             canvasRef={canvasRef}
+            isPanning={isPanning}
             zoom={zoom}
             onSelectNode={expandNetworkFromNode}
             onZoom={setZoom}
             onReset={resetLayout}
+            onCanvasPointerDown={handleCanvasPointerDown}
             onNodePointerDown={handleNodePointerDown}
           />
         </section>

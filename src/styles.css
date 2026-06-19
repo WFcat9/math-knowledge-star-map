@@ -916,7 +916,7 @@ body {
 }
 @keyframes line-grow {
   from { opacity: 0; stroke-dashoffset: 80; }
-  to { opacity: .42; stroke-dashoffset: 0; }
+  to { opacity: .18; stroke-dashoffset: 0; }
 }
 
 @media (max-width: 1180px) {
@@ -1032,6 +1032,9 @@ body {
 
 .web-canvas {
   min-height: 0;
+  cursor: grab;
+  scrollbar-width: none;
+  touch-action: none;
   background:
     radial-gradient(circle at 18% 22%, rgba(24, 119, 255, .13), transparent 20%),
     radial-gradient(circle at 76% 58%, rgba(0, 174, 189, .1), transparent 24%),
@@ -1040,6 +1043,50 @@ body {
     linear-gradient(90deg, rgba(24,119,255,.045) 1px, transparent 1px),
     #fbfdff;
   background-size: auto, auto, auto, 32px 32px, 32px 32px, auto;
+}
+
+.web-canvas::-webkit-scrollbar {
+  display: none;
+}
+
+.web-canvas.is-panning {
+  cursor: grabbing;
+}
+
+.empty-network {
+  position: sticky;
+  z-index: 8;
+  top: 38%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(420px, calc(100vw - 80px));
+  display: grid;
+  justify-items: center;
+  gap: 9px;
+  padding: 24px 26px;
+  color: #45627f;
+  text-align: center;
+  background: rgba(255, 255, 255, .76);
+  border: 1px solid rgba(137, 185, 239, .38);
+  border-radius: 24px;
+  box-shadow: 0 18px 55px rgba(34, 79, 136, .12);
+  backdrop-filter: blur(16px);
+}
+
+.empty-network svg {
+  color: #1677ff;
+  font-size: 28px;
+}
+
+.empty-network strong {
+  color: #143b68;
+  font-size: 18px;
+}
+
+.empty-network p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.8;
 }
 
 .web-canvas::before {
@@ -1075,26 +1122,26 @@ body {
 .web-lines path {
   fill: none;
   vector-effect: non-scaling-stroke;
-  stroke-width: 1.35;
+  stroke-width: 1.1;
   stroke-linecap: round;
-  opacity: .34;
+  opacity: .18;
   animation: line-grow .65s ease both;
   transition: opacity .2s ease, stroke-width .2s ease, filter .2s ease;
 }
 
 .web-lines path.active {
-  stroke-width: 2.7;
-  opacity: .95;
-  filter: drop-shadow(0 0 4px currentColor);
+  stroke-width: 1.8;
+  opacity: .48;
+  filter: drop-shadow(0 0 2px currentColor);
 }
 
 .edge-label-group {
-  opacity: .44;
+  opacity: .28;
   transition: opacity .2s ease;
 }
 
 .edge-label-group.active {
-  opacity: .96;
+  opacity: .72;
 }
 
 .edge-label-group rect {
