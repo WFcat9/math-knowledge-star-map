@@ -977,7 +977,10 @@ export function App() {
       </header>
 
       <div className="workspace">
-        <div className={`control-column ${showLeft ? "mobile-visible" : ""}`}>
+        <div
+          className={`control-column ${showLeft ? "mobile-visible" : ""}`}
+          style={showLeft ? { left: "0", transform: "none" } : undefined}
+        >
           <div className="directory-scroll">
             <KnowledgeDirectory
               grade={grade}
