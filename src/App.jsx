@@ -794,22 +794,40 @@ export function App() {
   }, [isPanning]);
 
   useEffect(() => {
-    if (!selectedId || draggingNodeId || isPanning) return;
-    const canvas = canvasRef.current;
-    const position = nodePositions[selectedId];
-    if (!canvas || !position) return;
+    if (!selectedId || draggingNodeId || isPanning) return undefined;
 
-    const scale = zoom / 100;
-    const maxLeft = Math.max(0, canvas.scrollWidth - canvas.clientWidth);
-    const maxTop = Math.max(0, canvas.scrollHeight - canvas.clientHeight);
-    const nextLeft = clamp(position.x * scale - canvas.clientWidth / 2, 0, maxLeft);
-    const nextTop = clamp(position.y * scale - canvas.clientHeight / 2, 0, maxTop);
+    let frameId = 0;
+    const timeoutIds = [];
 
-    canvas.scrollTo({
-      left: nextLeft,
-      top: nextTop,
-      behavior: "smooth",
+    const centerSelectedNode = () => {
+      const canvas = canvasRef.current;
+      const position = nodePositions[selectedId];
+      if (!canvas || !position) return;
+
+      const scale = zoom / 100;
+      const maxLeft = Math.max(0, canvas.scrollWidth - canvas.clientWidth);
+      const maxTop = Math.max(0, canvas.scrollHeight - canvas.clientHeight);
+      const nextLeft = clamp(position.x * scale - canvas.clientWidth / 2, 0, maxLeft);
+      const nextTop = clamp(position.y * scale - canvas.clientHeight / 2, 0, maxTop);
+
+      canvas.scrollTo({
+        left: nextLeft,
+        top: nextTop,
+        behavior: "smooth",
+      });
+    };
+
+    // 等节点完成本轮渲染后再居中，避免新发散节点贴在画布边缘。
+    frameId = window.requestAnimationFrame(() => {
+      centerSelectedNode();
+      timeoutIds.push(window.setTimeout(centerSelectedNode, 120));
+      timeoutIds.push(window.setTimeout(centerSelectedNode, 360));
     });
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      timeoutIds.forEach((timeoutId) => window.clearTimeout(timeoutId));
+    };
   }, [selectedId, zoom, layoutVersion, draggingNodeId, isPanning, nodePositions]);
 
   const showToastMessage = (message) => {
@@ -820,6 +838,7 @@ export function App() {
   const startNetworkFromNode = (nodeId) => {
     setSelectedId(nodeId);
     setExpandedNodeIds(new Set([nodeId]));
+    setLayoutVersion((current) => current + 1);
     setShowDetail(true);
     setShowSearch(false);
     showToastMessage(`已从「${knowledgeNodeMap[nodeId].name}」重新发散`);
@@ -832,6 +851,7 @@ export function App() {
       nextExpandedNodeIds.add(nodeId);
       return nextExpandedNodeIds;
     });
+    setLayoutVersion((current) => current + 1);
     setShowDetail(true);
     setShowSearch(false);
     showToastMessage(`已继续发散「${knowledgeNodeMap[nodeId].name}」`);
