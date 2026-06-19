@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
+  ArrowsClockwise,
   Atom,
   BookOpenText,
   CaretDown,
@@ -9,14 +10,11 @@ import {
   Eye,
   EyeSlash,
   FlowArrow,
-  GraduationCap,
   MagnifyingGlass,
   Minus,
   Plus,
   ShareNetwork,
   Sparkle,
-  Target,
-  TreeStructure,
   WarningCircle,
   X,
 } from "@phosphor-icons/react";
@@ -29,6 +27,12 @@ import {
   relationMetaMap,
 } from "./knowledgeRuntime.js";
 
+const STAGE_WIDTH = 2400;
+const STAGE_HEIGHT = 1600;
+const DEFAULT_SELECTED_ID = "quadratic";
+const DEFAULT_ZOOM = 82;
+const MAX_HIGHLIGHT_DEPTH = 3;
+
 const stageLabelMap = { junior: "初中", senior: "高一" };
 const domainLabelMap = {
   number_algebra: "数与代数",
@@ -38,26 +42,63 @@ const domainLabelMap = {
   statistics_probability: "统计与概率",
   comprehensive_practice: "综合实践",
 };
-const levelPalette = [
-  { background: "#eaf3ff", border: "#78b5ff", accent: "#1677ff", text: "#234c80" },
-  { background: "#e9fbf7", border: "#6ed5bd", accent: "#159878", text: "#205e52" },
-  { background: "#fff6e8", border: "#f2bd68", accent: "#d68812", text: "#74501d" },
-  { background: "#f4efff", border: "#bba0ef", accent: "#815ec9", text: "#553d86" },
-  { background: "#fff0ef", border: "#f2a09a", accent: "#dc625a", text: "#813d38" },
-];
+
+const groupCenterMap = {
+  "junior:number_algebra": { x: 430, y: 360 },
+  "junior:functions": { x: 980, y: 330 },
+  "junior:geometry": { x: 520, y: 980 },
+  "junior:statistics_probability": { x: 980, y: 1030 },
+  "junior:comprehensive_practice": { x: 740, y: 1390 },
+  "senior:functions": { x: 1500, y: 340 },
+  "senior:geometry_algebra": { x: 1940, y: 640 },
+  "senior:number_algebra": { x: 1460, y: 980 },
+  "senior:statistics_probability": { x: 1900, y: 1250 },
+};
+
+const levelPalette = {
+  root: {
+    fill: "#0c6cfd",
+    border: "#7ab3ff",
+    text: "#ffffff",
+    badge: "#ffffff",
+    badgeText: "#0c6cfd",
+  },
+  level1: {
+    fill: "#eaf9f5",
+    border: "#53c9ae",
+    text: "#1c6358",
+    badge: "#16a085",
+    badgeText: "#ffffff",
+  },
+  level2: {
+    fill: "#fff4e4",
+    border: "#efbd63",
+    text: "#7a5313",
+    badge: "#d89012",
+    badgeText: "#ffffff",
+  },
+  level3: {
+    fill: "#f4efff",
+    border: "#b79ced",
+    text: "#5c438d",
+    badge: "#835fcb",
+    badgeText: "#ffffff",
+  },
+  neutral: {
+    fill: "rgba(255,255,255,0.92)",
+    border: "#d7e4f1",
+    text: "#34516f",
+    badge: "#6f8aa8",
+    badgeText: "#ffffff",
+  },
+};
+
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
 
 function getRelatedNodeId(relation, nodeId) {
   return relation.from === nodeId ? relation.to : relation.from;
-}
-
-function getNodeRelations(nodeId, enabledRelations, limit = 8) {
-  return knowledgeRelations
-    .filter(
-      (relation) =>
-        enabledRelations[relation.type] &&
-        (relation.from === nodeId || relation.to === nodeId),
-    )
-    .slice(0, limit);
 }
 
 function getSearchText(node) {
@@ -65,51 +106,135 @@ function getSearchText(node) {
     node.name,
     ...(node.aliases ?? []),
     node.summary,
+    node.definition,
     ...(node.keyFormulas ?? []),
+    ...(node.applicationScenarios ?? []),
     ...(node.tags ?? []),
   ]
+    .filter(Boolean)
     .join(" ")
     .toLowerCase();
 }
 
-function buildRootPosition(rootIndex) {
-  const rootPositions = [
-    { x: 25, y: 32 },
-    { x: 72, y: 32 },
-    { x: 25, y: 72 },
-    { x: 72, y: 72 },
-    { x: 49, y: 50 },
-    { x: 88, y: 52 },
-  ];
-  return rootPositions[rootIndex % rootPositions.length];
+function getNodeRelations(nodeId, enabledRelations) {
+  return knowledgeRelations.filter(
+    (relation) =>
+      enabledRelations[relation.type] &&
+      (relation.from === nodeId || relation.to === nodeId),
+  );
 }
 
-function findOpenPosition(center, rootPosition, index, total, existingPositions, depth) {
-  const outwardAngle =
-    Math.abs(center.x - rootPosition.x) + Math.abs(center.y - rootPosition.y) < 2
-      ? -Math.PI / 2
-      : Math.atan2(center.y - rootPosition.y, center.x - rootPosition.x);
-  const fanAngle = total <= 1 ? 0 : ((index / (total - 1)) - 0.5) * Math.PI * 1.2;
+function getHighlightLevels(selectedId, enabledRelations) {
+  const levelMap = { [selectedId]: 0 };
+  let frontier = [selectedId];
 
-  for (const radius of [depth === 1 ? 23 : 20, 26, 30, 34]) {
-    for (const nudge of [0, 0.35, -0.35, 0.7, -0.7, Math.PI]) {
-      const angle = outwardAngle + fanAngle + nudge;
-      const candidate = {
-        x: Math.max(8, Math.min(92, center.x + Math.cos(angle) * radius)),
-        y: Math.max(11, Math.min(89, center.y + Math.sin(angle) * radius)),
-      };
-      const hasCollision = Object.values(existingPositions).some(
-        (position) =>
-          Math.abs(position.x - candidate.x) < 14 && Math.abs(position.y - candidate.y) < 12,
-      );
-      if (!hasCollision) return candidate;
+  for (let depth = 1; depth <= MAX_HIGHLIGHT_DEPTH; depth += 1) {
+    const nextFrontier = [];
+    for (const nodeId of frontier) {
+      for (const relation of getNodeRelations(nodeId, enabledRelations)) {
+        const relatedNodeId = getRelatedNodeId(relation, nodeId);
+        if (levelMap[relatedNodeId] !== undefined) continue;
+        levelMap[relatedNodeId] = depth;
+        nextFrontier.push(relatedNodeId);
+      }
     }
+    frontier = nextFrontier;
+    if (!frontier.length) break;
   }
 
-  return {
-    x: Math.max(8, Math.min(92, center.x + ((index % 3) - 1) * 15)),
-    y: Math.max(11, Math.min(89, center.y + (Math.floor(index / 3) + 1) * 13)),
-  };
+  return levelMap;
+}
+
+function getNodePalette(nodeId, highlightLevels) {
+  const level = highlightLevels[nodeId];
+  if (level === 0) return levelPalette.root;
+  if (level === 1) return levelPalette.level1;
+  if (level === 2) return levelPalette.level2;
+  if (level === 3) return levelPalette.level3;
+  return levelPalette.neutral;
+}
+
+function getRelationLineLabel(relation) {
+  return relationMetaMap[relation.type]?.label ?? relation.type;
+}
+
+function getStrongRelationExplanation(selectedNode, relatedNode, relation) {
+  const relationLabel = getRelationLineLabel(relation);
+  const directionText =
+    relation.from === selectedNode.id
+      ? `从「${selectedNode.name}」延伸到「${relatedNode.name}」`
+      : `理解「${selectedNode.name}」时会回到「${relatedNode.name}」`;
+
+  return `${relationLabel}：${directionText}，因为${relation.reason}`;
+}
+
+function buildConceptBlocks(node, allRelations) {
+  const directConnections = allRelations.slice(0, 4).map((relation) => {
+    const relatedNode = knowledgeNodeMap[getRelatedNodeId(relation, node.id)];
+    return `${getRelationLineLabel(relation)}：${relatedNode.name}`;
+  });
+
+  const understandingParagraphs = [
+    node.definition ?? node.summary,
+    `${node.name}属于${stageLabelMap[node.stage]}${domainLabelMap[node.domain] ?? "知识板块"}中的关键节点。它不仅独立成题，还会与${directConnections.join("、")}形成连续的解题链条。`,
+    node.applicationScenarios?.length
+      ? `常见使用场景包括：${node.applicationScenarios.join("、")}。`
+      : `常见使用场景包括概念判断、图像分析、条件转化和综合建模。`,
+  ];
+
+  const mistakeDetails = (node.commonMistakes ?? []).slice(0, 3).map((mistake) => ({
+    title: mistake,
+    detail: `${mistake}。处理时优先回到定义、适用条件和相关联知识点，再决定使用公式或图像判断。`,
+  }));
+
+  if (!mistakeDetails.length) {
+    mistakeDetails.push({
+      title: "忽略适用条件",
+      detail: "做题时先确认定义域、已知条件和对象范围，再进行代数或几何推导。",
+    });
+  }
+
+  return { understandingParagraphs, mistakeDetails };
+}
+
+function createInitialPositions() {
+  const nextPositions = {};
+  const groupedNodes = {};
+
+  for (const node of Object.values(knowledgeNodeMap)) {
+    const groupKey = `${node.stage}:${node.domain}`;
+    const groupList = groupedNodes[groupKey] ?? [];
+    groupList.push(node);
+    groupedNodes[groupKey] = groupList;
+  }
+
+  for (const [groupKey, groupNodes] of Object.entries(groupedNodes)) {
+    const center = groupCenterMap[groupKey] ?? { x: STAGE_WIDTH / 2, y: STAGE_HEIGHT / 2 };
+    const groupCount = groupNodes.length;
+
+    groupNodes
+      .sort((firstNode, secondNode) => firstNode.name.localeCompare(secondNode.name, "zh-CN"))
+      .forEach((node, index) => {
+        if (index === 0) {
+          nextPositions[node.id] = center;
+          return;
+        }
+
+        const ringIndex = Math.floor((index - 1) / 8) + 1;
+        const itemIndex = (index - 1) % 8;
+        const itemCount = Math.min(8, groupCount - (ringIndex - 1) * 8 - 1);
+        const angle = (Math.PI * 2 * itemIndex) / Math.max(itemCount, 1) - Math.PI / 2;
+        const radiusX = 110 + ringIndex * 105;
+        const radiusY = 80 + ringIndex * 85;
+
+        nextPositions[node.id] = {
+          x: clamp(center.x + Math.cos(angle) * radiusX, 80, STAGE_WIDTH - 80),
+          y: clamp(center.y + Math.sin(angle) * radiusY, 90, STAGE_HEIGHT - 90),
+        };
+      });
+  }
+
+  return nextPositions;
 }
 
 function RelationLegend({ enabledRelations, onToggle }) {
@@ -125,7 +250,10 @@ function RelationLegend({ enabledRelations, onToggle }) {
           />
           <span
             className="legend-line"
-            style={{ color: meta.color, borderTopStyle: meta.dash.length ? "dashed" : "solid" }}
+            style={{
+              color: meta.color,
+              borderTopStyle: meta.dash.length ? "dashed" : "solid",
+            }}
           />
           <span>{meta.label}</span>
         </label>
@@ -134,7 +262,14 @@ function RelationLegend({ enabledRelations, onToggle }) {
   );
 }
 
-function KnowledgeDirectory({ grade, onGradeChange, selectedId, onStartNetwork, visible, onClose }) {
+function KnowledgeDirectory({
+  grade,
+  onGradeChange,
+  selectedId,
+  onFocusNode,
+  visible,
+  onClose,
+}) {
   const [openDomains, setOpenDomains] = useState({});
   const stageKey = grade === "初中" ? "juniorHigh" : "seniorHigh";
   const stageValue = grade === "初中" ? "junior" : "senior";
@@ -145,7 +280,9 @@ function KnowledgeDirectory({ grade, onGradeChange, selectedId, onStartNetwork, 
     <aside className={`left-rail ${visible ? "mobile-visible" : ""}`}>
       <div className="mobile-panel-head">
         <strong>知识目录</strong>
-        <button onClick={onClose}><X size={20} /></button>
+        <button onClick={onClose}>
+          <X size={20} />
+        </button>
       </div>
 
       <div className="stage-tabs">
@@ -160,13 +297,14 @@ function KnowledgeDirectory({ grade, onGradeChange, selectedId, onStartNetwork, 
         ))}
       </div>
 
-      <p className="directory-tip">点击知识点，在画布上生成一张新知识网</p>
+      <p className="directory-tip">点击知识点，直接在总图中聚焦并高亮相关知识链。</p>
       <div className="tree">
         {stageCatalog.domains.map((domain) => {
           const isOpen = openDomains[domain.id] ?? true;
           const domainNodes = stageNodes.filter((node) =>
             domain.sections.some((section) => node.sectionPath?.includes(section.id)),
           );
+
           return (
             <div className="directory-domain" key={domain.id}>
               <button
@@ -179,12 +317,13 @@ function KnowledgeDirectory({ grade, onGradeChange, selectedId, onStartNetwork, 
                 {domain.name}
                 <small>{domainNodes.length}</small>
               </button>
+
               {isOpen
                 ? domainNodes.map((node) => (
                     <button
                       key={node.id}
                       className={`leaf ${selectedId === node.id ? "active" : ""}`}
-                      onClick={() => onStartNetwork(node.id)}
+                      onClick={() => onFocusNode(node.id)}
                     >
                       {node.name}
                       {selectedId === node.id ? <CheckCircle weight="fill" /> : null}
@@ -199,147 +338,206 @@ function KnowledgeDirectory({ grade, onGradeChange, selectedId, onStartNetwork, 
   );
 }
 
-function KnowledgeWeb({
+function KnowledgeGraph({
   selectedId,
-  visibleNodeIds,
   nodePositions,
-  rootNodeIds,
-  nodeLevels,
+  highlightLevels,
   enabledRelations,
   labelsVisible,
   reasonsVisible,
   zoom,
-  onSelectAndExpand,
+  onSelectNode,
   onZoom,
   onReset,
+  onNodePointerDown,
 }) {
-  const visibleSet = new Set(visibleNodeIds);
   const visibleRelations = knowledgeRelations.filter(
     (relation) =>
       enabledRelations[relation.type] &&
-      visibleSet.has(relation.from) &&
-      visibleSet.has(relation.to),
+      nodePositions[relation.from] &&
+      nodePositions[relation.to],
   );
 
   return (
     <div className="web-canvas">
       <div className="web-hint">
-        <Sparkle weight="fill" /> 点击任意节点继续发散，搜索新知识点生成另一张网
+        <Sparkle weight="fill" />
+        全量总图已展开，拖动节点可重排位置，点击任意节点可高亮它的关联层级
       </div>
 
       <div className="web-stage-wrap">
-      <div className="web-stage" style={{ transform: `scale(${zoom / 100})` }}>
-        <svg className="web-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
-          {visibleRelations.map((relation) => {
-            const from = nodePositions[relation.from];
-            const to = nodePositions[relation.to];
-            if (!from || !to) return null;
-            const meta = relationMetaMap[relation.type];
-            const active = selectedId === relation.from || selectedId === relation.to;
+        <div className="web-stage" style={{ transform: `scale(${zoom / 100})` }}>
+          <svg
+            className="web-lines"
+            viewBox={`0 0 ${STAGE_WIDTH} ${STAGE_HEIGHT}`}
+            preserveAspectRatio="none"
+          >
+            {visibleRelations.map((relation) => {
+              const fromPosition = nodePositions[relation.from];
+              const toPosition = nodePositions[relation.to];
+              const relationMeta = relationMetaMap[relation.type];
+              const isActive =
+                selectedId === relation.from ||
+                selectedId === relation.to ||
+                (highlightLevels[relation.from] !== undefined &&
+                  highlightLevels[relation.to] !== undefined);
+              const midX = (fromPosition.x + toPosition.x) / 2;
+              const midY = (fromPosition.y + toPosition.y) / 2;
+
+              return (
+                <g key={relation.id} className={isActive ? "active" : ""}>
+                  <line
+                    className={isActive ? "active" : ""}
+                    x1={fromPosition.x}
+                    y1={fromPosition.y}
+                    x2={toPosition.x}
+                    y2={toPosition.y}
+                    stroke={relationMeta.color}
+                    strokeDasharray={relationMeta.dash.join(" ")}
+                  />
+                  {reasonsVisible ? (
+                    <g className="edge-label-group" transform={`translate(${midX}, ${midY})`}>
+                      <rect x="-28" y="-9" width="56" height="18" rx="9" />
+                      <text textAnchor="middle" dominantBaseline="middle">
+                        {getRelationLineLabel(relation)}
+                      </text>
+                    </g>
+                  ) : null}
+                </g>
+              );
+            })}
+          </svg>
+
+          {Object.entries(nodePositions).map(([nodeId, position]) => {
+            const node = knowledgeNodeMap[nodeId];
+            const palette = getNodePalette(nodeId, highlightLevels);
+            const relationCount = getNodeRelations(nodeId, enabledRelations).length;
+            const isSelected = selectedId === nodeId;
+            const level = highlightLevels[nodeId];
+
             return (
-              <line
-                key={relation.id}
-                className={active ? "active" : ""}
-                x1={from.x}
-                y1={from.y}
-                x2={to.x}
-                y2={to.y}
-                stroke={meta.color}
-                strokeDasharray={meta.dash.join(" ")}
+              <button
+                key={nodeId}
+                className={`web-node ${isSelected ? "selected" : ""} ${
+                  level === 0 ? "root-node" : ""
+                }`}
+                style={{
+                  left: `${position.x}px`,
+                  top: `${position.y}px`,
+                  "--node-bg": palette.fill,
+                  "--node-border": palette.border,
+                  "--node-accent": palette.badge,
+                  "--node-text": palette.text,
+                  "--badge-text": palette.badgeText,
+                }}
+                title={`${node.name} · ${relationCount} 条关系`}
+                onClick={() => onSelectNode(nodeId)}
+                onPointerDown={(event) => onNodePointerDown(event, nodeId)}
               >
-                {reasonsVisible ? <title>{`${meta.label}：${relation.reason}`}</title> : null}
-              </line>
+                <span>{level === undefined ? "全" : level === 0 ? "焦" : level}</span>
+                <strong>{node.name}</strong>
+                {labelsVisible ? <small>{relationCount} 条关系</small> : null}
+              </button>
             );
           })}
-        </svg>
-
-        {visibleNodeIds.map((nodeId, index) => {
-          const node = knowledgeNodeMap[nodeId];
-          const position = nodePositions[nodeId];
-          if (!node || !position) return null;
-          const level = nodeLevels[nodeId] ?? 0;
-          const palette = levelPalette[level % levelPalette.length];
-          return (
-            <button
-              key={nodeId}
-              className={`web-node ${selectedId === nodeId ? "selected" : ""} ${
-                rootNodeIds.includes(nodeId) ? "root-node" : ""
-              }`}
-              style={{
-                left: `${position.x}%`,
-                top: `${position.y}%`,
-                "--node-delay": `${Math.min(index * 45, 500)}ms`,
-                "--node-bg": palette.background,
-                "--node-border": palette.border,
-                "--node-accent": palette.accent,
-                "--node-text": palette.text,
-              }}
-              onClick={() => onSelectAndExpand(nodeId)}
-              title={`点击继续发散：${node.name}`}
-            >
-              <span>{rootNodeIds.includes(nodeId) ? "根" : level}</span>
-              <strong>{node.name}</strong>
-              {labelsVisible ? (
-                <small>{getNodeRelations(nodeId, enabledRelations, 99).length} 条关联</small>
-              ) : null}
-            </button>
-          );
-        })}
-      </div>
+        </div>
       </div>
 
       <div className="canvas-tools">
-        <button title="放大" onClick={() => onZoom(Math.min(135, zoom + 10))}><Plus /></button>
+        <button title="放大" onClick={() => onZoom(Math.min(120, zoom + 8))}>
+          <Plus />
+        </button>
         <span>{zoom}%</span>
-        <button title="缩小" onClick={() => onZoom(Math.max(70, zoom - 10))}><Minus /></button>
-        <button title="重置" onClick={onReset}><Target /></button>
+        <button title="缩小" onClick={() => onZoom(Math.max(55, zoom - 8))}>
+          <Minus />
+        </button>
+        <button title="重排" onClick={onReset}>
+          <ArrowsClockwise />
+        </button>
       </div>
     </div>
   );
 }
 
-function DetailPanel({ selectedId, visible, onClose, onExpand }) {
-  const node = knowledgeNodeMap[selectedId];
-  const relations = getNodeRelations(selectedId, defaultEnabledRelations, 6);
+function DetailPanel({ selectedId, enabledRelations, visible, onClose, onFocusNode }) {
+  const selectedNode = knowledgeNodeMap[selectedId];
+  const allRelations = getNodeRelations(selectedId, enabledRelations);
+  const conceptBlocks = buildConceptBlocks(selectedNode, allRelations);
+  const strongRelations = allRelations.slice(0, 6).map((relation) => {
+    const relatedNode = knowledgeNodeMap[getRelatedNodeId(relation, selectedId)];
+    return {
+      relation,
+      relatedNode,
+      explanation: getStrongRelationExplanation(selectedNode, relatedNode, relation),
+    };
+  });
+
   return (
     <aside className={`detail-panel ${visible ? "mobile-visible" : ""}`}>
       <div className="detail-head">
         <div>
-          <span className="node-tag">{stageLabelMap[node.stage]} · {node.nodeType}</span>
-          <h2>{node.name}</h2>
-          <p>{node.keyFormulas?.[0] ?? node.summary}</p>
+          <span className="node-tag">
+            {stageLabelMap[selectedNode.stage]} · {selectedNode.nodeType}
+          </span>
+          <h2>{selectedNode.name}</h2>
+          <p>{selectedNode.keyFormulas?.[0] ?? selectedNode.summary}</p>
         </div>
-        <button onClick={onClose}><X size={22} /></button>
+        <button onClick={onClose}>
+          <X size={22} />
+        </button>
       </div>
+
       <div className="detail-scroll">
         <section>
-          <h3><BookOpenText /> 概念理解</h3>
-          <p>{node.definition ?? node.summary}</p>
+          <h3>
+            <BookOpenText /> 概念理解
+          </h3>
+          {conceptBlocks.understandingParagraphs.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+          {(selectedNode.keyFormulas ?? []).length ? (
+            <div className="formula-pills">
+              {selectedNode.keyFormulas.map((formulaText) => (
+                <span key={formulaText}>{formulaText}</span>
+              ))}
+            </div>
+          ) : null}
         </section>
+
         <section>
-          <h3><ShareNetwork /> 直接连接</h3>
+          <h3>
+            <ShareNetwork /> 直接联系
+          </h3>
           <div className="connection-list">
-            {relations.map((relation) => {
-              const related = knowledgeNodeMap[getRelatedNodeId(relation, selectedId)];
-              const meta = relationMetaMap[relation.type];
-              return (
-                <button key={relation.id} onClick={() => onExpand(related.id)}>
-                  <i style={{ background: meta.color }} />
-                  <span><strong>{related.name}</strong><small>{meta.label}：{relation.reason}</small></span>
-                  <CaretRight />
-                </button>
-              );
-            })}
+            {strongRelations.map(({ relation, relatedNode, explanation }) => (
+              <button key={relation.id} onClick={() => onFocusNode(relatedNode.id)}>
+                <i style={{ background: relationMetaMap[relation.type].color }} />
+                <span>
+                  <strong>{relatedNode.name}</strong>
+                  <small>{explanation}</small>
+                </span>
+                <CaretRight />
+              </button>
+            ))}
           </div>
         </section>
+
         <section className="mistake-section">
-          <h3><WarningCircle weight="fill" /> 常见易错点</h3>
-          <p>{node.commonMistakes?.[0] ?? "注意定义条件和适用范围。"}</p>
+          <h3>
+            <WarningCircle weight="fill" /> 易错点解析
+          </h3>
+          {conceptBlocks.mistakeDetails.map((mistakeItem) => (
+            <div className="mistake-item" key={mistakeItem.title}>
+              <strong>{mistakeItem.title}</strong>
+              <p>{mistakeItem.detail}</p>
+            </div>
+          ))}
         </section>
       </div>
+
       <div className="detail-actions single-action">
-        <button className="primary-action" onClick={() => onExpand(selectedId)}>
-          <ShareNetwork /> 从这里继续发散
+        <button className="primary-action" onClick={() => onFocusNode(selectedId)}>
+          <Compass /> 将此知识点设为当前焦点
         </button>
       </div>
     </aside>
@@ -347,7 +545,7 @@ function DetailPanel({ selectedId, visible, onClose, onExpand }) {
 }
 
 export function App() {
-  const [selectedId, setSelectedId] = useState("quadratic");
+  const [selectedId, setSelectedId] = useState(DEFAULT_SELECTED_ID);
   const [grade, setGrade] = useState("高中");
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
@@ -356,100 +554,105 @@ export function App() {
   const [toast, setToast] = useState("");
   const [labelsVisible, setLabelsVisible] = useState(true);
   const [reasonsVisible, setReasonsVisible] = useState(true);
-  const [zoom, setZoom] = useState(100);
+  const [zoom, setZoom] = useState(DEFAULT_ZOOM);
   const [enabledRelations, setEnabledRelations] = useState(defaultEnabledRelations);
-  const [visibleNodeIds, setVisibleNodeIds] = useState(["quadratic"]);
-  const [rootNodeIds, setRootNodeIds] = useState(["quadratic"]);
-  const [nodePositions, setNodePositions] = useState({ quadratic: { x: 50, y: 50 } });
-  const [nodeLevels, setNodeLevels] = useState({ quadratic: 0 });
-  const [nodeRoots, setNodeRoots] = useState({ quadratic: "quadratic" });
+  const [nodePositions, setNodePositions] = useState(() => createInitialPositions());
+  const [draggingNodeId, setDraggingNodeId] = useState(null);
+  const dragStateRef = useRef(null);
   const selectedNode = knowledgeNodeMap[selectedId];
+  const highlightLevels = getHighlightLevels(selectedId, enabledRelations);
+
+  useEffect(() => {
+    if (!draggingNodeId) return undefined;
+
+    const handlePointerMove = (event) => {
+      if (!dragStateRef.current) return;
+      const dragState = dragStateRef.current;
+      const nextX = clamp(
+        dragState.startNodeX + (event.clientX - dragState.startClientX) / dragState.zoomScale,
+        90,
+        STAGE_WIDTH - 90,
+      );
+      const nextY = clamp(
+        dragState.startNodeY + (event.clientY - dragState.startClientY) / dragState.zoomScale,
+        90,
+        STAGE_HEIGHT - 90,
+      );
+
+      setNodePositions((current) => ({
+        ...current,
+        [dragState.nodeId]: {
+          x: nextX,
+          y: nextY,
+        },
+      }));
+    };
+
+    const handlePointerUp = () => {
+      dragStateRef.current = null;
+      setDraggingNodeId(null);
+    };
+
+    window.addEventListener("pointermove", handlePointerMove);
+    window.addEventListener("pointerup", handlePointerUp);
+    return () => {
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerup", handlePointerUp);
+    };
+  }, [draggingNodeId]);
 
   const showToastMessage = (message) => {
     setToast(message);
     window.setTimeout(() => setToast(""), 2200);
   };
 
-  const expandNode = (nodeId, makeRoot = false) => {
-    const relations = getNodeRelations(nodeId, enabledRelations, 7);
-    const relatedIds = relations.map((relation) => getRelatedNodeId(relation, nodeId));
+  const focusNode = (nodeId) => {
     setSelectedId(nodeId);
     setShowDetail(true);
     setShowSearch(false);
-
-    setRootNodeIds((current) =>
-      makeRoot && !current.includes(nodeId) ? [...current, nodeId] : current,
-    );
-    setVisibleNodeIds((current) => [...new Set([...current, nodeId, ...relatedIds])]);
-    const parentLevel = makeRoot ? 0 : nodeLevels[nodeId] ?? 0;
-    const rootId = makeRoot ? nodeId : nodeRoots[nodeId] ?? nodeId;
-    setNodeLevels((current) => {
-      const next = { ...current, [nodeId]: makeRoot ? 0 : current[nodeId] ?? parentLevel };
-      relatedIds.forEach((relatedId) => {
-        if (next[relatedId] === undefined) next[relatedId] = parentLevel + 1;
-      });
-      return next;
-    });
-    setNodeRoots((current) => {
-      const next = { ...current, [nodeId]: rootId };
-      relatedIds.forEach((relatedId) => {
-        if (!next[relatedId]) next[relatedId] = rootId;
-      });
-      return next;
-    });
-    setNodePositions((current) => {
-      const next = { ...current };
-      const alreadyRoot = rootNodeIds.includes(nodeId);
-      const rootCount = alreadyRoot ? rootNodeIds.length : rootNodeIds.length + 1;
-      const center =
-        makeRoot && !alreadyRoot
-          ? buildRootPosition(rootCount - 1)
-          : next[nodeId] ?? buildRootPosition(rootNodeIds.length);
-      next[nodeId] = center;
-      const rootPosition = makeRoot ? center : next[rootId] ?? center;
-      relatedIds.forEach((relatedId, index) => {
-        if (!next[relatedId]) {
-          next[relatedId] = findOpenPosition(
-            center,
-            rootPosition,
-            index,
-            relatedIds.length,
-            next,
-            parentLevel + 1,
-          );
-        }
-      });
-      return next;
-    });
-    showToastMessage(makeRoot ? `已生成「${knowledgeNodeMap[nodeId].name}」知识网` : `已继续发散「${knowledgeNodeMap[nodeId].name}」`);
+    showToastMessage(`已聚焦「${knowledgeNodeMap[nodeId].name}」`);
   };
 
-  const resetView = () => {
-    setSelectedId("quadratic");
-    setVisibleNodeIds(["quadratic"]);
-    setRootNodeIds(["quadratic"]);
-    setNodePositions({ quadratic: { x: 50, y: 50 } });
-    setNodeLevels({ quadratic: 0 });
-    setNodeRoots({ quadratic: "quadratic" });
-    setZoom(100);
-    setEnabledRelations(defaultEnabledRelations);
+  const resetLayout = () => {
+    setNodePositions(createInitialPositions());
+    setSelectedId(DEFAULT_SELECTED_ID);
+    setZoom(DEFAULT_ZOOM);
     setShowDetail(false);
-    showToastMessage("已清空画布并回到二次函数");
+    showToastMessage("已重排全部知识点布局");
+  };
+
+  const handleNodePointerDown = (event, nodeId) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setDraggingNodeId(nodeId);
+    dragStateRef.current = {
+      nodeId,
+      startClientX: event.clientX,
+      startClientY: event.clientY,
+      startNodeX: nodePositions[nodeId].x,
+      startNodeY: nodePositions[nodeId].y,
+      zoomScale: zoom / 100,
+    };
   };
 
   const searchResults = Object.values(knowledgeNodeMap).filter((node) => {
-    const stageMatches =
+    const matchesStage =
       (grade === "初中" && node.stage === "junior") ||
       (grade === "高中" && node.stage === "senior");
-    return stageMatches && getSearchText(node).includes(search.trim().toLowerCase());
+    return matchesStage && getSearchText(node).includes(search.trim().toLowerCase());
   });
 
   return (
     <main className="app-shell">
       <header className="topbar">
-        <button className="brand" onClick={resetView}>
-          <span><Atom size={29} weight="duotone" /></span>
-          <div><strong>数学知识星图</strong><small>动态发散 · 多网连接</small></div>
+        <button className="brand" onClick={resetLayout}>
+          <span>
+            <Atom size={29} weight="duotone" />
+          </span>
+          <div>
+            <strong>数学知识星图</strong>
+            <small>全量总图 · 拖拽排布 · 关系高亮</small>
+          </div>
         </button>
 
         <div className={`search-wrap ${showSearch ? "mobile-search-open" : ""}`}>
@@ -457,39 +660,59 @@ export function App() {
           <input
             value={search}
             onFocus={() => setShowSearch(true)}
-            onChange={(event) => { setSearch(event.target.value); setShowSearch(true); }}
-            placeholder="输入知识点，生成一张新的知识网…"
+            onChange={(event) => {
+              setSearch(event.target.value);
+              setShowSearch(true);
+            }}
+            placeholder="搜索知识点，直接聚焦到总图中的位置…"
           />
           {showSearch && search ? (
             <div className="search-results">
-              {searchResults.length ? searchResults.slice(0, 12).map((node) => (
-                <button key={node.id} onClick={() => expandNode(node.id, true)}>
-                  <ShareNetwork size={18} />
-                  <span><strong>{node.name}</strong><small>生成新网并连接已有知识</small></span>
-                </button>
-              )) : <p>当前知识库暂无这个知识点</p>}
+              {searchResults.length ? (
+                searchResults.slice(0, 12).map((node) => (
+                  <button key={node.id} onClick={() => focusNode(node.id)}>
+                    <ShareNetwork size={18} />
+                    <span>
+                      <strong>{node.name}</strong>
+                      <small>定位并高亮它的强相关知识</small>
+                    </span>
+                  </button>
+                ))
+              ) : (
+                <p>当前知识库暂无这个知识点</p>
+              )}
             </div>
           ) : null}
         </div>
 
         <div className="stage-switch">
           {["初中", "高中"].map((stage) => (
-            <button key={stage} className={grade === stage ? "active" : ""} onClick={() => setGrade(stage)}>
+            <button
+              key={stage}
+              className={grade === stage ? "active" : ""}
+              onClick={() => setGrade(stage)}
+            >
               {stage}
             </button>
           ))}
         </div>
 
         <div className="graph-summary">
-          <strong>{visibleNodeIds.length}</strong> 节点
+          <strong>{knowledgeStats.nodeCount}</strong> 节点
           <span>·</span>
-          <strong>{rootNodeIds.length}</strong> 张知识网
+          <strong>{knowledgeStats.relationCount}</strong> 条关系
         </div>
 
         <div className="mobile-actions">
-          <button onClick={() => setShowSearch(!showSearch)} aria-label="打开搜索"><MagnifyingGlass size={22} /></button>
-          <button onClick={() => setShowLeft(true)} aria-label="打开知识目录"><TreeStructure size={22} /></button>
-          <button onClick={() => setShowDetail(true)} aria-label="打开知识详情"><BookOpenText size={22} /></button>
+          <button onClick={() => setShowSearch(!showSearch)} aria-label="打开搜索">
+            <MagnifyingGlass size={22} />
+          </button>
+          <button onClick={() => setShowLeft(true)} aria-label="打开知识目录">
+            <BookOpenText size={22} />
+          </button>
+          <button onClick={() => setShowDetail(true)} aria-label="打开知识详情">
+            <ShareNetwork size={22} />
+          </button>
         </div>
       </header>
 
@@ -500,62 +723,108 @@ export function App() {
               grade={grade}
               onGradeChange={setGrade}
               selectedId={selectedId}
-              onStartNetwork={(nodeId) => expandNode(nodeId, true)}
+              onFocusNode={focusNode}
               visible={showLeft}
               onClose={() => setShowLeft(false)}
             />
           </div>
+
           <div className="left-fixed-controls">
             <div className="view-controls">
               <p className="eyebrow">视图控制</p>
-              <label><span>{labelsVisible ? <Eye /> : <EyeSlash />} 节点标签</span><input type="checkbox" checked={labelsVisible} onChange={() => setLabelsVisible(!labelsVisible)} /></label>
-              <label><span><FlowArrow /> 关系说明</span><input type="checkbox" checked={reasonsVisible} onChange={() => setReasonsVisible(!reasonsVisible)} /></label>
+              <label>
+                <span>
+                  {labelsVisible ? <Eye /> : <EyeSlash />} 节点标签
+                </span>
+                <input
+                  type="checkbox"
+                  checked={labelsVisible}
+                  onChange={() => setLabelsVisible(!labelsVisible)}
+                />
+              </label>
+              <label>
+                <span>
+                  <FlowArrow /> 连线说明
+                </span>
+                <input
+                  type="checkbox"
+                  checked={reasonsVisible}
+                  onChange={() => setReasonsVisible(!reasonsVisible)}
+                />
+              </label>
             </div>
+
             <RelationLegend
               enabledRelations={enabledRelations}
-              onToggle={(type) => setEnabledRelations((current) => ({ ...current, [type]: !current[type] }))}
+              onToggle={(type) =>
+                setEnabledRelations((current) => ({
+                  ...current,
+                  [type]: !current[type],
+                }))
+              }
             />
-            <button className="reset-button" onClick={resetView}><Compass /> 清空并重置</button>
+
+            <button className="reset-button" onClick={resetLayout}>
+              <ArrowsClockwise /> 重排全图
+            </button>
           </div>
         </div>
 
         <section className="main-stage">
           <div className="stage-heading">
             <div>
-              <span>当前焦点</span><strong>{stageLabelMap[selectedNode.stage]}</strong><CaretRight />
-              <strong>{domainLabelMap[selectedNode.domain] ?? selectedNode.domain}</strong><CaretRight />
+              <span>当前焦点</span>
+              <strong>{stageLabelMap[selectedNode.stage]}</strong>
+              <CaretRight />
+              <strong>{domainLabelMap[selectedNode.domain] ?? selectedNode.domain}</strong>
+              <CaretRight />
               <b>{selectedNode.name}</b>
             </div>
-            <span className="data-badge">知识库 {knowledgeStats.nodeCount} 节点 · {knowledgeStats.relationCount} 关系</span>
+            <span className="data-badge">
+              总图视图 {knowledgeStats.nodeCount} 节点 · 可拖拽重排
+            </span>
           </div>
-          <KnowledgeWeb
+
+          <KnowledgeGraph
             selectedId={selectedId}
-            visibleNodeIds={visibleNodeIds}
             nodePositions={nodePositions}
-            rootNodeIds={rootNodeIds}
-            nodeLevels={nodeLevels}
+            highlightLevels={highlightLevels}
             enabledRelations={enabledRelations}
             labelsVisible={labelsVisible}
             reasonsVisible={reasonsVisible}
             zoom={zoom}
-            onSelectAndExpand={(nodeId) => expandNode(nodeId, false)}
+            onSelectNode={focusNode}
             onZoom={setZoom}
-            onReset={resetView}
+            onReset={resetLayout}
+            onNodePointerDown={handleNodePointerDown}
           />
         </section>
 
         <DetailPanel
           selectedId={selectedId}
+          enabledRelations={enabledRelations}
           visible={showDetail}
           onClose={() => setShowDetail(false)}
-          onExpand={(nodeId) => expandNode(nodeId, false)}
+          onFocusNode={focusNode}
         />
       </div>
 
-      {(showLeft || showDetail) ? (
-        <button className="mobile-scrim" aria-label="关闭侧边面板" onClick={() => { setShowLeft(false); setShowDetail(false); }} />
+      {showLeft || showDetail ? (
+        <button
+          className="mobile-scrim"
+          aria-label="关闭侧边面板"
+          onClick={() => {
+            setShowLeft(false);
+            setShowDetail(false);
+          }}
+        />
       ) : null}
-      {toast ? <div className="toast"><CheckCircle weight="fill" /> {toast}</div> : null}
+
+      {toast ? (
+        <div className="toast">
+          <CheckCircle weight="fill" /> {toast}
+        </div>
+      ) : null}
     </main>
   );
 }
