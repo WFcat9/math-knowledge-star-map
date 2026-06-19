@@ -16,42 +16,42 @@ const allSeedPayloads = [
 const relationVisualMeta = {
   prerequisite: {
     label: "先修关系",
-    color: "#1677ff",
+    color: "#2298f8",
     dash: [],
   },
   develops_to: {
     label: "发展升级",
-    color: "#1f8f6a",
+    color: "#4bc7f9",
     dash: [9, 6],
   },
   equivalent_to: {
     label: "等价转化",
-    color: "#00aebd",
+    color: "#63dceb",
     dash: [],
   },
   similar_to: {
     label: "相似对比",
-    color: "#8a63d2",
+    color: "#8dbdff",
     dash: [3, 6],
   },
   confused_with: {
     label: "容易混淆",
-    color: "#ef5c55",
+    color: "#5f8fe8",
     dash: [7, 7],
   },
   combines_with: {
     label: "组合解题",
-    color: "#f08c2e",
+    color: "#53aef0",
     dash: [2, 5],
   },
   applies_to: {
     label: "应用扩展",
-    color: "#d18a09",
+    color: "#2b7fd5",
     dash: [3, 7],
   },
   contains: {
     label: "包含关系",
-    color: "#6b7c93",
+    color: "#93abc1",
     dash: [1, 4],
   },
 };
