@@ -158,6 +158,79 @@ function getRelationLineLabel(relation) {
   return relationMetaMap[relation.type]?.label ?? relation.type;
 }
 
+function getRelationPath(fromPosition, toPosition, relationId) {
+  const deltaX = toPosition.x - fromPosition.x;
+  const deltaY = toPosition.y - fromPosition.y;
+  const distance = Math.max(1, Math.hypot(deltaX, deltaY));
+  const midX = (fromPosition.x + toPosition.x) / 2;
+  const midY = (fromPosition.y + toPosition.y) / 2;
+  const normalX = -deltaY / distance;
+  const normalY = deltaX / distance;
+  const seed = relationId.split("").reduce((sum, char) => sum + char.charCodeAt(0), 0);
+  const direction = seed % 2 === 0 ? 1 : -1;
+  const bend = clamp(distance * 0.055, 18, 62) * direction;
+
+  return {
+    path: `M ${fromPosition.x} ${fromPosition.y} Q ${midX + normalX * bend} ${
+      midY + normalY * bend
+    } ${toPosition.x} ${toPosition.y}`,
+    labelX: midX + normalX * bend * 0.72,
+    labelY: midY + normalY * bend * 0.72,
+  };
+}
+
+function getReadableLabelAngle(fromPosition, toPosition) {
+  const angle =
+    (Math.atan2(toPosition.y - fromPosition.y, toPosition.x - fromPosition.x) * 180) / Math.PI;
+  return angle > 90 || angle < -90 ? angle + 180 : angle;
+}
+
+function resolvePositionCollisions(initialPositions) {
+  const nextPositions = structuredClone(initialPositions);
+  const nodeIds = Object.keys(nextPositions);
+  const minGapX = 150;
+  const minGapY = 104;
+
+  for (let iteration = 0; iteration < 90; iteration += 1) {
+    let moved = false;
+
+    for (let firstIndex = 0; firstIndex < nodeIds.length; firstIndex += 1) {
+      for (let secondIndex = firstIndex + 1; secondIndex < nodeIds.length; secondIndex += 1) {
+        const firstId = nodeIds[firstIndex];
+        const secondId = nodeIds[secondIndex];
+        const firstPosition = nextPositions[firstId];
+        const secondPosition = nextPositions[secondId];
+        const deltaX = secondPosition.x - firstPosition.x;
+        const deltaY = secondPosition.y - firstPosition.y;
+        const overlapX = minGapX - Math.abs(deltaX);
+        const overlapY = minGapY - Math.abs(deltaY);
+
+        if (overlapX <= 0 || overlapY <= 0) continue;
+
+        const seed = firstIndex + secondIndex + iteration;
+        const directionX = deltaX === 0 ? (seed % 2 === 0 ? 1 : -1) : Math.sign(deltaX);
+        const directionY = deltaY === 0 ? (seed % 3 === 0 ? 1 : -1) : Math.sign(deltaY);
+        const pushX = Math.min(34, overlapX / 2 + 2) * directionX;
+        const pushY = Math.min(26, overlapY / 2 + 2) * directionY;
+
+        nextPositions[firstId] = {
+          x: clamp(firstPosition.x - pushX, 90, STAGE_WIDTH - 90),
+          y: clamp(firstPosition.y - pushY, 90, STAGE_HEIGHT - 90),
+        };
+        nextPositions[secondId] = {
+          x: clamp(secondPosition.x + pushX, 90, STAGE_WIDTH - 90),
+          y: clamp(secondPosition.y + pushY, 90, STAGE_HEIGHT - 90),
+        };
+        moved = true;
+      }
+    }
+
+    if (!moved) break;
+  }
+
+  return nextPositions;
+}
+
 function getStrongRelationExplanation(selectedNode, relatedNode, relation) {
   const relationLabel = getRelationLineLabel(relation);
   const directionText =
@@ -212,29 +285,35 @@ function createInitialPositions() {
     const center = groupCenterMap[groupKey] ?? { x: STAGE_WIDTH / 2, y: STAGE_HEIGHT / 2 };
     const groupCount = groupNodes.length;
 
-    groupNodes
-      .sort((firstNode, secondNode) => firstNode.name.localeCompare(secondNode.name, "zh-CN"))
-      .forEach((node, index) => {
-        if (index === 0) {
-          nextPositions[node.id] = center;
-          return;
-        }
+    const sortedNodes = groupNodes.sort((firstNode, secondNode) =>
+      firstNode.name.localeCompare(secondNode.name, "zh-CN"),
+    );
+    const defaultIndex = sortedNodes.findIndex((node) => node.id === DEFAULT_SELECTED_ID);
+    if (defaultIndex > 0) {
+      const [defaultNode] = sortedNodes.splice(defaultIndex, 1);
+      sortedNodes.unshift(defaultNode);
+    }
 
-        const ringIndex = Math.floor((index - 1) / 8) + 1;
-        const itemIndex = (index - 1) % 8;
-        const itemCount = Math.min(8, groupCount - (ringIndex - 1) * 8 - 1);
-        const angle = (Math.PI * 2 * itemIndex) / Math.max(itemCount, 1) - Math.PI / 2;
-        const radiusX = 110 + ringIndex * 105;
-        const radiusY = 80 + ringIndex * 85;
+    const columns = clamp(Math.ceil(Math.sqrt(groupCount * 1.45)), 2, 6);
+    const rows = Math.ceil(groupCount / columns);
+    const gapX = groupCount > 12 ? 142 : 154;
+    const gapY = groupCount > 12 ? 104 : 116;
+    const startX = center.x - ((columns - 1) * gapX) / 2;
+    const startY = center.y - ((rows - 1) * gapY) / 2;
 
-        nextPositions[node.id] = {
-          x: clamp(center.x + Math.cos(angle) * radiusX, 80, STAGE_WIDTH - 80),
-          y: clamp(center.y + Math.sin(angle) * radiusY, 90, STAGE_HEIGHT - 90),
-        };
-      });
+    sortedNodes.forEach((node, index) => {
+      const row = Math.floor(index / columns);
+      const column = index % columns;
+      const stagger = row % 2 === 0 ? 0 : gapX * 0.2;
+
+      nextPositions[node.id] = {
+        x: clamp(startX + column * gapX + stagger, 90, STAGE_WIDTH - 90),
+        y: clamp(startY + row * gapY, 90, STAGE_HEIGHT - 90),
+      };
+    });
   }
 
-  return nextPositions;
+  return resolvePositionCollisions(nextPositions);
 }
 
 function RelationLegend({ enabledRelations, onToggle }) {
@@ -345,6 +424,7 @@ function KnowledgeGraph({
   enabledRelations,
   labelsVisible,
   reasonsVisible,
+  canvasRef,
   zoom,
   onSelectNode,
   onZoom,
@@ -359,7 +439,7 @@ function KnowledgeGraph({
   );
 
   return (
-    <div className="web-canvas">
+    <div className="web-canvas" ref={canvasRef}>
       <div className="web-hint">
         <Sparkle weight="fill" />
         全量总图已展开，拖动节点可重排位置，点击任意节点可高亮它的关联层级
@@ -381,25 +461,27 @@ function KnowledgeGraph({
                 selectedId === relation.to ||
                 (highlightLevels[relation.from] !== undefined &&
                   highlightLevels[relation.to] !== undefined);
-              const midX = (fromPosition.x + toPosition.x) / 2;
-              const midY = (fromPosition.y + toPosition.y) / 2;
+              const relationPath = getRelationPath(fromPosition, toPosition, relation.id);
+              const lineLabel = getRelationLineLabel(relation);
+              const labelWidth = Math.max(52, lineLabel.length * 13 + 18);
+              const labelAngle = getReadableLabelAngle(fromPosition, toPosition);
 
               return (
                 <g key={relation.id} className={isActive ? "active" : ""}>
-                  <line
+                  <path
                     className={isActive ? "active" : ""}
-                    x1={fromPosition.x}
-                    y1={fromPosition.y}
-                    x2={toPosition.x}
-                    y2={toPosition.y}
+                    d={relationPath.path}
                     stroke={relationMeta.color}
                     strokeDasharray={relationMeta.dash.join(" ")}
                   />
                   {reasonsVisible ? (
-                    <g className="edge-label-group" transform={`translate(${midX}, ${midY})`}>
-                      <rect x="-28" y="-9" width="56" height="18" rx="9" />
+                    <g
+                      className={`edge-label-group ${isActive ? "active" : ""}`}
+                      transform={`translate(${relationPath.labelX}, ${relationPath.labelY}) rotate(${labelAngle})`}
+                    >
+                      <rect x={-labelWidth / 2} y="-9" width={labelWidth} height="18" rx="9" />
                       <text textAnchor="middle" dominantBaseline="middle">
-                        {getRelationLineLabel(relation)}
+                        {lineLabel}
                       </text>
                     </g>
                   ) : null}
@@ -558,6 +640,8 @@ export function App() {
   const [enabledRelations, setEnabledRelations] = useState(defaultEnabledRelations);
   const [nodePositions, setNodePositions] = useState(() => createInitialPositions());
   const [draggingNodeId, setDraggingNodeId] = useState(null);
+  const [layoutVersion, setLayoutVersion] = useState(0);
+  const canvasRef = useRef(null);
   const dragStateRef = useRef(null);
   const selectedNode = knowledgeNodeMap[selectedId];
   const highlightLevels = getHighlightLevels(selectedId, enabledRelations);
@@ -601,6 +685,25 @@ export function App() {
     };
   }, [draggingNodeId]);
 
+  useEffect(() => {
+    if (draggingNodeId) return;
+    const canvas = canvasRef.current;
+    const position = nodePositions[selectedId];
+    if (!canvas || !position) return;
+
+    const scale = zoom / 100;
+    const maxLeft = Math.max(0, canvas.scrollWidth - canvas.clientWidth);
+    const maxTop = Math.max(0, canvas.scrollHeight - canvas.clientHeight);
+    const nextLeft = clamp(position.x * scale - canvas.clientWidth / 2, 0, maxLeft);
+    const nextTop = clamp(position.y * scale - canvas.clientHeight / 2, 0, maxTop);
+
+    canvas.scrollTo({
+      left: nextLeft,
+      top: nextTop,
+      behavior: "smooth",
+    });
+  }, [selectedId, zoom, layoutVersion, draggingNodeId, nodePositions]);
+
   const showToastMessage = (message) => {
     setToast(message);
     window.setTimeout(() => setToast(""), 2200);
@@ -617,6 +720,7 @@ export function App() {
     setNodePositions(createInitialPositions());
     setSelectedId(DEFAULT_SELECTED_ID);
     setZoom(DEFAULT_ZOOM);
+    setLayoutVersion((current) => current + 1);
     setShowDetail(false);
     showToastMessage("已重排全部知识点布局");
   };
@@ -792,6 +896,7 @@ export function App() {
             enabledRelations={enabledRelations}
             labelsVisible={labelsVisible}
             reasonsVisible={reasonsVisible}
+            canvasRef={canvasRef}
             zoom={zoom}
             onSelectNode={focusNode}
             onZoom={setZoom}

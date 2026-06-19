@@ -966,3 +966,209 @@ body {
   .web-node small { display: none; }
   .data-badge { display: none; }
 }
+
+/* 总图视觉升级：让 88 个知识点拥有足够舞台，并强化蓝白玻璃数学感。 */
+.app-shell {
+  background:
+    radial-gradient(circle at 8% 12%, rgba(22, 119, 255, .14), transparent 24%),
+    radial-gradient(circle at 84% 8%, rgba(0, 174, 189, .12), transparent 26%),
+    linear-gradient(135deg, #edf6ff 0%, #f8fbff 46%, #eef8ff 100%);
+}
+
+.left-rail,
+.detail-panel,
+.main-stage,
+.control-column {
+  border-color: rgba(124, 170, 224, .34);
+  background: linear-gradient(155deg, rgba(255, 255, 255, .88), rgba(241, 248, 255, .72));
+  box-shadow: 0 18px 46px rgba(34, 79, 136, .11);
+  backdrop-filter: blur(16px) saturate(1.18);
+}
+
+.control-column {
+  grid-template-rows: minmax(0, 1fr) auto;
+}
+
+.directory-scroll {
+  padding-right: 7px;
+}
+
+.directory-domain .branch {
+  color: #0f5fbc;
+  background: linear-gradient(90deg, rgba(24, 119, 255, .08), rgba(255, 255, 255, .3));
+  border: 1px solid rgba(137, 185, 239, .28);
+}
+
+.directory-domain .leaf {
+  border-left: 1px solid rgba(24, 119, 255, .12);
+}
+
+.directory-domain .leaf:hover,
+.directory-domain .leaf.active {
+  background: linear-gradient(90deg, rgba(24, 119, 255, .12), rgba(0, 174, 189, .06));
+}
+
+.left-fixed-controls {
+  max-height: 38vh;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, .84);
+  box-shadow: 0 -10px 24px rgba(43, 78, 121, .08);
+  backdrop-filter: blur(12px);
+}
+
+.detail-head {
+  background:
+    linear-gradient(145deg, rgba(24, 119, 255, .1), rgba(255, 255, 255, .24)),
+    radial-gradient(circle at 92% 20%, rgba(0, 174, 189, .16), transparent 32%);
+}
+
+.detail-scroll section {
+  margin: 8px 0;
+  padding: 12px;
+  border: 1px solid rgba(220, 232, 246, .74);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .64);
+}
+
+.web-canvas {
+  min-height: 0;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(24, 119, 255, .13), transparent 20%),
+    radial-gradient(circle at 76% 58%, rgba(0, 174, 189, .1), transparent 24%),
+    radial-gradient(circle at 52% 92%, rgba(239, 189, 99, .1), transparent 20%),
+    linear-gradient(rgba(24,119,255,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(24,119,255,.045) 1px, transparent 1px),
+    #fbfdff;
+  background-size: auto, auto, auto, 32px 32px, 32px 32px, auto;
+}
+
+.web-canvas::before {
+  content: "∑   y=f(x)   △ABC   x²+y²=r²   P(A)";
+  position: sticky;
+  top: calc(100% - 34px);
+  left: 32px;
+  z-index: 1;
+  color: rgba(23, 93, 178, .13);
+  font: italic 16px Georgia, serif;
+  letter-spacing: 18px;
+  pointer-events: none;
+}
+
+.web-stage-wrap,
+.web-stage {
+  width: 2400px;
+  height: 1600px;
+  min-width: 2400px;
+  min-height: 1600px;
+}
+
+.web-stage {
+  transform-origin: top left;
+}
+
+.web-hint {
+  background: rgba(255, 255, 255, .76);
+  border-color: rgba(142, 189, 245, .46);
+  box-shadow: 0 12px 34px rgba(45, 91, 148, .14);
+}
+
+.web-lines path {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+  stroke-width: 1.35;
+  stroke-linecap: round;
+  opacity: .34;
+  animation: line-grow .65s ease both;
+  transition: opacity .2s ease, stroke-width .2s ease, filter .2s ease;
+}
+
+.web-lines path.active {
+  stroke-width: 2.7;
+  opacity: .95;
+  filter: drop-shadow(0 0 4px currentColor);
+}
+
+.edge-label-group {
+  opacity: .44;
+  transition: opacity .2s ease;
+}
+
+.edge-label-group.active {
+  opacity: .96;
+}
+
+.edge-label-group rect {
+  fill: rgba(255, 255, 255, .82);
+  stroke: rgba(121, 158, 201, .48);
+  filter: drop-shadow(0 5px 9px rgba(41, 78, 120, .1));
+}
+
+.edge-label-group text {
+  fill: #3f5878;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.web-node {
+  cursor: grab;
+  border-width: 1.5px;
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--node-bg, white) 92%, white), var(--node-bg, white));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .72),
+    0 10px 26px rgba(37, 81, 135, .12);
+  transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease, opacity .2s ease;
+}
+
+.web-node:active {
+  cursor: grabbing;
+}
+
+.web-node:hover {
+  transform: translate(-50%, -50%) scale(1.04);
+}
+
+.web-node.root-node {
+  box-shadow:
+    0 0 0 10px rgba(24,119,255,.1),
+    0 18px 42px rgba(13,92,190,.32),
+    inset 0 1px 0 rgba(255,255,255,.3);
+}
+
+.canvas-tools {
+  background: rgba(255, 255, 255, .82);
+  border-color: rgba(135, 181, 237, .46);
+  backdrop-filter: blur(12px);
+}
+
+.connection-list button {
+  background: linear-gradient(135deg, rgba(255,255,255,.9), rgba(241,247,255,.82));
+}
+
+@media (max-width: 920px) {
+  .web-stage-wrap,
+  .web-stage {
+    width: 1900px;
+    height: 1280px;
+    min-width: 1900px;
+    min-height: 1280px;
+  }
+
+  .left-fixed-controls {
+    max-height: 42vh;
+  }
+}
+
+@media (max-width: 560px) {
+  .web-stage-wrap,
+  .web-stage {
+    width: 1650px;
+    height: 1120px;
+    min-width: 1650px;
+    min-height: 1120px;
+  }
+
+  .edge-label-group text {
+    font-size: 8px;
+  }
+}
