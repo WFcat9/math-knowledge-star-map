@@ -1135,6 +1135,31 @@ body {
     inset 0 1px 0 rgba(255,255,255,.3);
 }
 
+.web-node.expanded-node:not(.root-node) {
+  box-shadow:
+    0 0 0 6px color-mix(in srgb, var(--node-accent, #1677ff) 14%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, .72),
+    0 12px 28px rgba(37, 81, 135, .16);
+}
+
+.web-node:not(.expanded-node):not(.root-node)::after {
+  content: "+";
+  position: absolute;
+  right: -5px;
+  top: -6px;
+  width: 17px;
+  height: 17px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #1677ff;
+  background: rgba(255, 255, 255, .9);
+  border: 1px solid rgba(111, 168, 236, .55);
+  box-shadow: 0 5px 12px rgba(35, 84, 143, .16);
+  font-size: 12px;
+  font-weight: 800;
+}
+
 .canvas-tools {
   background: rgba(255, 255, 255, .82);
   border-color: rgba(135, 181, 237, .46);

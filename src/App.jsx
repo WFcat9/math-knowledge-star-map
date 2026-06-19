@@ -145,6 +145,27 @@ function getHighlightLevels(selectedId, enabledRelations) {
   return levelMap;
 }
 
+function getVisibleNodeIds(selectedId, expandedNodeIds, enabledRelations) {
+  const visibleIds = new Set([selectedId]);
+
+  for (const nodeId of expandedNodeIds) {
+    visibleIds.add(nodeId);
+    for (const relation of getNodeRelations(nodeId, enabledRelations)) {
+      visibleIds.add(getRelatedNodeId(relation, nodeId));
+    }
+  }
+
+  return visibleIds;
+}
+
+function pickVisiblePositions(nodePositions, visibleNodeIds) {
+  return Object.fromEntries(
+    [...visibleNodeIds]
+      .filter((nodeId) => nodePositions[nodeId])
+      .map((nodeId) => [nodeId, nodePositions[nodeId]]),
+  );
+}
+
 function getNodePalette(nodeId, highlightLevels) {
   const level = highlightLevels[nodeId];
   if (level === 0) return levelPalette.root;
@@ -383,14 +404,20 @@ function KnowledgeDirectory({
           const domainNodes = stageNodes.filter((node) =>
             domain.sections.some((section) => node.sectionPath?.includes(section.id)),
           );
+          const representativeNode = [...domainNodes].sort(
+            (firstNode, secondNode) =>
+              getNodeRelations(secondNode.id, defaultEnabledRelations).length -
+              getNodeRelations(firstNode.id, defaultEnabledRelations).length,
+          )[0];
 
           return (
             <div className="directory-domain" key={domain.id}>
               <button
                 className="branch"
-                onClick={() =>
-                  setOpenDomains((current) => ({ ...current, [domain.id]: !isOpen }))
-                }
+                onClick={() => {
+                  setOpenDomains((current) => ({ ...current, [domain.id]: !isOpen }));
+                  if (representativeNode) onFocusNode(representativeNode.id);
+                }}
               >
                 {isOpen ? <CaretDown /> : <CaretRight />}
                 {domain.name}
@@ -421,6 +448,8 @@ function KnowledgeGraph({
   selectedId,
   nodePositions,
   highlightLevels,
+  expandedNodeIds,
+  totalExpandedCount,
   enabledRelations,
   labelsVisible,
   reasonsVisible,
@@ -442,7 +471,7 @@ function KnowledgeGraph({
     <div className="web-canvas" ref={canvasRef}>
       <div className="web-hint">
         <Sparkle weight="fill" />
-        全量总图已展开，拖动节点可重排位置，点击任意节点可高亮它的关联层级
+        当前从「{knowledgeNodeMap[selectedId].name}」发散出 {Object.keys(nodePositions).length} 个知识点，已展开 {totalExpandedCount} 个发散点
       </div>
 
       <div className="web-stage-wrap">
@@ -495,14 +524,16 @@ function KnowledgeGraph({
             const palette = getNodePalette(nodeId, highlightLevels);
             const relationCount = getNodeRelations(nodeId, enabledRelations).length;
             const isSelected = selectedId === nodeId;
+            const isExpanded = expandedNodeIds.has(nodeId);
             const level = highlightLevels[nodeId];
+            const nodeBadge = level === 0 ? "焦" : isExpanded ? "展" : level ?? "待";
 
             return (
               <button
                 key={nodeId}
                 className={`web-node ${isSelected ? "selected" : ""} ${
                   level === 0 ? "root-node" : ""
-                }`}
+                } ${isExpanded ? "expanded-node" : ""}`}
                 style={{
                   left: `${position.x}px`,
                   top: `${position.y}px`,
@@ -512,11 +543,11 @@ function KnowledgeGraph({
                   "--node-text": palette.text,
                   "--badge-text": palette.badgeText,
                 }}
-                title={`${node.name} · ${relationCount} 条关系`}
+                title={`${node.name} · ${relationCount} 条关系 · 点击继续发散`}
                 onClick={() => onSelectNode(nodeId)}
                 onPointerDown={(event) => onNodePointerDown(event, nodeId)}
               >
-                <span>{level === undefined ? "全" : level === 0 ? "焦" : level}</span>
+                <span>{nodeBadge}</span>
                 <strong>{node.name}</strong>
                 {labelsVisible ? <small>{relationCount} 条关系</small> : null}
               </button>
@@ -639,12 +670,15 @@ export function App() {
   const [zoom, setZoom] = useState(DEFAULT_ZOOM);
   const [enabledRelations, setEnabledRelations] = useState(defaultEnabledRelations);
   const [nodePositions, setNodePositions] = useState(() => createInitialPositions());
+  const [expandedNodeIds, setExpandedNodeIds] = useState(() => new Set([DEFAULT_SELECTED_ID]));
   const [draggingNodeId, setDraggingNodeId] = useState(null);
   const [layoutVersion, setLayoutVersion] = useState(0);
   const canvasRef = useRef(null);
   const dragStateRef = useRef(null);
   const selectedNode = knowledgeNodeMap[selectedId];
   const highlightLevels = getHighlightLevels(selectedId, enabledRelations);
+  const visibleNodeIds = getVisibleNodeIds(selectedId, expandedNodeIds, enabledRelations);
+  const visibleNodePositions = pickVisiblePositions(nodePositions, visibleNodeIds);
 
   useEffect(() => {
     if (!draggingNodeId) return undefined;
@@ -709,20 +743,34 @@ export function App() {
     window.setTimeout(() => setToast(""), 2200);
   };
 
-  const focusNode = (nodeId) => {
+  const startNetworkFromNode = (nodeId) => {
     setSelectedId(nodeId);
+    setExpandedNodeIds(new Set([nodeId]));
     setShowDetail(true);
     setShowSearch(false);
-    showToastMessage(`已聚焦「${knowledgeNodeMap[nodeId].name}」`);
+    showToastMessage(`已从「${knowledgeNodeMap[nodeId].name}」重新发散`);
+  };
+
+  const expandNetworkFromNode = (nodeId) => {
+    setSelectedId(nodeId);
+    setExpandedNodeIds((current) => {
+      const nextExpandedNodeIds = new Set(current);
+      nextExpandedNodeIds.add(nodeId);
+      return nextExpandedNodeIds;
+    });
+    setShowDetail(true);
+    setShowSearch(false);
+    showToastMessage(`已继续发散「${knowledgeNodeMap[nodeId].name}」`);
   };
 
   const resetLayout = () => {
     setNodePositions(createInitialPositions());
     setSelectedId(DEFAULT_SELECTED_ID);
+    setExpandedNodeIds(new Set([DEFAULT_SELECTED_ID]));
     setZoom(DEFAULT_ZOOM);
     setLayoutVersion((current) => current + 1);
     setShowDetail(false);
-    showToastMessage("已重排全部知识点布局");
+    showToastMessage("已回到默认发散起点");
   };
 
   const handleNodePointerDown = (event, nodeId) => {
@@ -774,7 +822,7 @@ export function App() {
             <div className="search-results">
               {searchResults.length ? (
                 searchResults.slice(0, 12).map((node) => (
-                  <button key={node.id} onClick={() => focusNode(node.id)}>
+                  <button key={node.id} onClick={() => startNetworkFromNode(node.id)}>
                     <ShareNetwork size={18} />
                     <span>
                       <strong>{node.name}</strong>
@@ -827,7 +875,7 @@ export function App() {
               grade={grade}
               onGradeChange={setGrade}
               selectedId={selectedId}
-              onFocusNode={focusNode}
+              onFocusNode={startNetworkFromNode}
               visible={showLeft}
               onClose={() => setShowLeft(false)}
             />
@@ -885,20 +933,22 @@ export function App() {
               <b>{selectedNode.name}</b>
             </div>
             <span className="data-badge">
-              总图视图 {knowledgeStats.nodeCount} 节点 · 可拖拽重排
+              当前网络 {visibleNodeIds.size}/{knowledgeStats.nodeCount} 节点 · 点击节点继续发散
             </span>
           </div>
 
           <KnowledgeGraph
             selectedId={selectedId}
-            nodePositions={nodePositions}
+            nodePositions={visibleNodePositions}
             highlightLevels={highlightLevels}
+            expandedNodeIds={expandedNodeIds}
+            totalExpandedCount={expandedNodeIds.size}
             enabledRelations={enabledRelations}
             labelsVisible={labelsVisible}
             reasonsVisible={reasonsVisible}
             canvasRef={canvasRef}
             zoom={zoom}
-            onSelectNode={focusNode}
+            onSelectNode={expandNetworkFromNode}
             onZoom={setZoom}
             onReset={resetLayout}
             onNodePointerDown={handleNodePointerDown}
@@ -910,7 +960,7 @@ export function App() {
           enabledRelations={enabledRelations}
           visible={showDetail}
           onClose={() => setShowDetail(false)}
-          onFocusNode={focusNode}
+          onFocusNode={expandNetworkFromNode}
         />
       </div>
 
