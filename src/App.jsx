@@ -904,6 +904,14 @@ export function App() {
 
   return (
     <main className="app-shell">
+      <div className="math-atmosphere" aria-hidden="true">
+        <span className="math-formula formula-one">y = ax² + bx + c</span>
+        <span className="math-formula formula-two">∑ aₙ · ∫ f(x)dx</span>
+        <span className="math-formula formula-three">sin²θ + cos²θ = 1</span>
+        <span className="math-formula formula-four">x² + y² = r²</span>
+        <span className="math-formula formula-five">P(A ∩ B)</span>
+        <span className="math-formula formula-six">△ABC ∽ △DEF</span>
+      </div>
       <header className="topbar">
         <button className="brand" onClick={resetLayout}>
           <span>
@@ -957,10 +965,10 @@ export function App() {
           ))}
         </div>
 
-        <div className="graph-summary">
-          <strong>{knowledgeStats.nodeCount}</strong> 节点
+        <div className="graph-summary relation-summary">
+          <strong>概念相连</strong>
           <span>·</span>
-          <strong>{knowledgeStats.relationCount}</strong> 条关系
+          <strong>推理成网</strong>
         </div>
 
         <div className="mobile-actions">
